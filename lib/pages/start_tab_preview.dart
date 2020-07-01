@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:tabee/pages/login.dart';
-import 'package:tabee/translate/lang.dart';
+import 'file:///E:/Other/Tabe3/lib/utils/lang.dart';
 
 class StartTabPreview extends StatelessWidget {
   final List<Map<String, dynamic>> tabs = [
     {
-      'title': Lang().text('سدد الرسوم الكترونيا'),
-      'image': 'assets/cash.png',
-      'text': Lang().text('سدد رسوم ابنك وانت من بيتك')
+      'title': lang.text('سدد الرسوم الكترونيا'),
+      'image': 'assets/images/cash.png',
+      'text': lang.text('سدد رسوم ابنك وانت من بيتك')
     },
     {
-      'title': Lang().text('متابعه المسار الاكاديمي للطالب'),
-      'image': 'assets/book.png',
+      'title': lang.text('متابعه المسار الاكاديمي للطالب'),
+      'image': 'assets/images/book.png',
       'text':
-          Lang().text('معرفه مواعيد الاختبارات ومستوى ابنك و ملاحظات المعلمين')
+          lang.text('معرفه مواعيد الاختبارات ومستوى ابنك و ملاحظات المعلمين')
     },
     {
-      'title': Lang().text('متابعه نتائج الاختبارات'),
-      'image': 'assets/result.png',
-      'text': Lang().text('معرفة نتائج الاختبارات وترتيب ابنك وسط زملائه')
+      'title': lang.text('متابعه نتائج الاختبارات'),
+      'image': 'assets/images/result.png',
+      'text': lang.text('معرفة نتائج الاختبارات وترتيب ابنك وسط زملائه')
     }
   ];
   @override
@@ -96,7 +96,7 @@ class StartTabPreview extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()));
                         },
-                        child: Text(Lang().text('متابعة')),
+                        child: Text(lang.text('متابعة')),
                       )),
                 ],
               );

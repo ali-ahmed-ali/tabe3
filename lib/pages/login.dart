@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabee/pages/signup.dart';
-import 'package:tabee/translate/lang.dart';
+import 'package:tabee/utils/lang.dart';
 
 class LoginPage extends StatelessWidget {
   final Map<String, dynamic> _formData = {
@@ -30,14 +30,14 @@ class LoginPage extends StatelessWidget {
             Container(
               margin: EdgeInsetsDirectional.only(top: 30),
               child: Text(
-                Lang().text('تسجيل الدخول'),
+                lang.text('تسجيل الدخول'),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
             Container(
               margin: EdgeInsets.only(top: 40, bottom: 20),
-              child: Image.asset('assets/logowhite.png'),
+              child: Image.asset('assets/images/logowhite.png'),
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
               splashColor: Colors.lightGreenAccent,
               textColor: Colors.white,
               color: Theme.of(context).primaryColor,
-              child: Text(Lang().text('تسجيل الدخول')),
+              child: Text(lang.text('تسجيل الدخول')),
               onPressed: () => _submetButtonPressed(),
             ),
           ),
@@ -91,7 +91,7 @@ class LoginPage extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  Lang().text('تسجيل الان'),
+                  lang.text('تسجيل الان'),
                   style: TextStyle(color: Colors.lightGreenAccent),
                 ),
               ),
@@ -99,7 +99,7 @@ class LoginPage extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                Lang().text('ليس لديك حساب؟'),
+                lang.text('ليس لديك حساب؟'),
                 style: TextStyle(color: Colors.white),
               ),
             ],
@@ -113,18 +113,18 @@ class LoginPage extends StatelessWidget {
     return TextFormField(
       validator: (String value) {
         if (value.isEmpty) {
-          return Lang().text('This is requird');
+          return lang.text('This is requird');
         } else if (!RegExp(
                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
             .hasMatch(value)) {
-          return Lang().text('It should be an email');
+          return lang.text('It should be an email');
         }
         return null;
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person_outline),
-        labelText: Lang().text('E-mail'),
+        labelText: lang.text('E-mail'),
         filled: true,
         fillColor: Colors.white,
       ),
@@ -139,13 +139,13 @@ class LoginPage extends StatelessWidget {
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
-          return Lang().text('This is required');
+          return lang.text('This is required');
         }
         return null;
       },
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.vpn_key),
-        labelText: Lang().text('password'),
+        labelText: lang.text('password'),
         filled: true,
         fillColor: Colors.white,
       ),

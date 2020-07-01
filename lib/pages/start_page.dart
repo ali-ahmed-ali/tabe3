@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
-import 'package:tabee/translate/lang.dart';
+import 'file:///E:/Other/Tabe3/lib/utils/lang.dart';
 
 class StartPage extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class StartPage extends StatelessWidget {
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Expanded(child: Image.asset('assets/logo.png')),
+            Expanded(child: Image.asset('assets/images/logo.png')),
             Container(
               width: _buttonSize,
               height: 40,
@@ -26,7 +26,7 @@ class StartPage extends StatelessWidget {
                           builder: (context) => StartTabPreview()));
                 },
                 child: Text(
-                  Lang().text('Start'),
+                  lang.text('Start'),
                   style: TextStyle(color: Colors.white),
                 ),
               ),

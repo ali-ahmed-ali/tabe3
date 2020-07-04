@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tabee/utils/lang.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart' as ratingStars;
+import 'package:tabee/utils/lang.dart';
 
 class TestResultPage extends StatefulWidget {
   @override
@@ -35,7 +35,8 @@ class _ResultPageState extends State<TestResultPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('First Second Third'),
+        title: Text('Studnet Name'),
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(
             Icons.chevron_left,
@@ -81,8 +82,8 @@ class _ResultPageState extends State<TestResultPage>
                   CircleAvatar(
                     backgroundColor: Theme.of(context).primaryColor,
                     child: Text(
-                      (_getTotalResult().toStringAsFixed(1).toString())+'%',
-                      style: TextStyle(color: Colors.white,fontSize: 11),
+                      (_getTotalResult().toStringAsFixed(1).toString()) + '%',
+                      style: TextStyle(color: Colors.white, fontSize: 11),
                     ),
                   )
                 ],
@@ -227,6 +228,6 @@ class _ResultPageState extends State<TestResultPage>
     for (var i = 0; i < _subjectsGrade.length; i++) {
       total += double.parse(_subjectsGrade[i]['grade'].toString());
     }
-    return (total/(_subjectsGrade.length*100))*100;
+    return (total / (_subjectsGrade.length * 100)) * 100;
   }
 }

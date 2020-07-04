@@ -1,15 +1,31 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tabee/pages/drawer.dart';
+import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/utils/lang.dart';
+import 'package:tabee/widget/dialog_utils.dart';
+import 'package:tabee/widget/drawer.dart';
 
 class HomePage extends StatelessWidget {
   double _phoneHeight;
   final List<Map<String, dynamic>> _menuItems = [
-    {'image': 'assets/images/board.png', 'title': lang.text('Daily school schedule'),'routing':'schedule'},
-    {'image': 'assets/images/percent.png', 'title': lang.text('The Exams'),'routing':'tests'},
-    {'image': 'assets/images/cash.png', 'title': lang.text('Pay the fees'),'routing':'tuitions'},
+    {
+      'image': 'assets/images/board.png',
+      'title': lang.text('Daily school schedule'),
+      'routing': RouteName.schedule,
+    },
+    {
+      'image': 'assets/images/percent.png',
+      'title': lang.text('The Exams'),
+      'routing': RouteName.test,
+    },
+    {
+      'image': 'assets/images/cash.png',
+      'title': lang.text('Pay the fees'),
+      'routing': RouteName.tuitions,
+    },
   ];
+
   @override
   Widget build(BuildContext context) {
     _phoneHeight = MediaQuery.of(context).size.height;
@@ -21,19 +37,43 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(lang.text('Home')),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.translate,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              var selected = await showPreferredLang(
+                  context, false, lang.text("Select language"));
+              print('Selected: $selected');
+            },
+          )
+        ],
       ),
       body: Container(
-        child: ListView.builder(
-            itemCount: _menuItems.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _buildMenuItemView(context, _menuItems[index]['image'],
-                  _menuItems[index]['title'],_menuItems[index]['routing']);
-            }),
+        child: CarouselSlider(
+          items: _menuItems.map((e) {
+            return _buildMenuItemView(
+                context, e['image'], e['title'], e['routing']);
+          }).toList(),
+          options: CarouselOptions(
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
+            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+            autoPlay: false,
+            enlargeCenterPage: true,
+          ),
+        ),
       ),
     );
   }
 
-  _buildMenuItemView(BuildContext context, String image, String title,String pageRoute) {
+  Widget _buildMenuItemView(BuildContext context, String image, String title,
+      String pageRoute) {
     return Container(
       //color: Theme.of(context).primaryColor.withOpacity(.5),
       margin: EdgeInsets.all(20),
@@ -44,21 +84,26 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(image),
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Text(
             lang.text(title),
             style: TextStyle(fontSize: 20),
           ),
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           GestureDetector(
-            onTap: ()
-            {
+            onTap: () {
               Navigator.pushNamed(context, pageRoute);
             },
             child: Text(
-            lang.text("More"),
-            style: TextStyle(color: Theme.of(context).primaryColor),
-          ),
+              lang.text("More"),
+              style: TextStyle(color: Theme
+                  .of(context)
+                  .primaryColor),
+            ),
           ),
           //SizedBox(height: 40,),
         ],

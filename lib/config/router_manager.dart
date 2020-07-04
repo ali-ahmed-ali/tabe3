@@ -10,12 +10,14 @@ import 'package:tabee/pages/splash.dart';
 import 'package:tabee/pages/start_page.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
 import 'package:tabee/pages/test_result.dart';
+import 'package:tabee/pages/time_table_page.dart';
 import 'package:tabee/pages/tuitions.dart';
 
 class RouteName {
   // TODO: When adding new page specify name for it
   static const String splash = '/';
   static const String startPage = '/start';
+  static const String sliderPage = '/slidaerPage';
   static const String languageSelector = 'languageSelector';
   static const String home = 'home';
   static const String login = 'login';
@@ -24,6 +26,8 @@ class RouteName {
   static const String test = 'tests';
   static const String tuitions = 'tuitions';
   static const String news = 'news';
+  static const String schedule = 'schedule';
+  static const String attend = 'attend';
 }
 
 class Router {
@@ -35,6 +39,8 @@ class Router {
         return NoAnimRouteBuilder(SplashPage());
       case RouteName.startPage:
         return NoAnimRouteBuilder(StartPage());
+      case RouteName.sliderPage:
+        return FadeRouteBuilder(StartTabPreview());
       case RouteName.languageSelector:
         return NoAnimRouteBuilder(LanguageSelector());
       case RouteName.home:
@@ -45,6 +51,10 @@ class Router {
         return SlideTopRouteBuilder(StartTabPreview());
       case RouteName.signup:
         return SlideTopRouteBuilder(Signup());
+      case RouteName.schedule:
+        return SlideTopRouteBuilder(TimeTablePage());
+//      case RouteName.attend:
+//        return FadeRouteBuilder();
       case RouteName.test:
         return SlideTopRouteBuilder(TestResultPage());
       case RouteName.tuitions:

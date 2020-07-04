@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/utils/app_builder.dart';
+import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/theme_helper.dart';
 
 void main() => runApp(MyApp());
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
           theme: themeData(platformDarkMode: false),
           debugShowCheckedModeBanner: false,
           onGenerateRoute: Router.generateRoute,
-          initialRoute: RouteName.table,
+          initialRoute: RouteName.startPage,
+          locale: lang.locale,
+          supportedLocales: lang.supportedLocales(),
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

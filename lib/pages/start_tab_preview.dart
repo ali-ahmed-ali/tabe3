@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tabee/config/router_manager.dart';
+
 import '../utils/lang.dart';
 
 class StartTabPreview extends StatelessWidget {
@@ -11,19 +13,23 @@ class StartTabPreview extends StatelessWidget {
     {
       'title': lang.text('Follow the academic path of the student'),
       'image': 'assets/images/book.png',
-      'text':
-          lang.text('Know the dates of the tests, your son\'s level, and the teachers\' notes')
+      'text': lang.text(
+          'Know the dates of the tests, your son\'s level, and the teachers\' notes')
     },
     {
       'title': lang.text('Follow up the results of the tests'),
       'image': 'assets/images/result.png',
-      'text': lang.text('Know the results of the tests and rank your son among his colleagues')
+      'text': lang.text(
+          'Know the results of the tests and rank your son among his colleagues')
     }
   ];
+
   @override
   Widget build(BuildContext context) {
     double _buttonSize = MediaQuery.of(context).size.width;
     return Scaffold(
+        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: true,
         body: DefaultTabController(
             length: tabs.length,
             child: Builder(builder: (context) {
@@ -32,7 +38,7 @@ class StartTabPreview extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: tabs.map(
-                        (value) {
+                            (value) {
                           return Container(
                             margin: EdgeInsets.all(20),
                             child: Column(
@@ -45,7 +51,7 @@ class StartTabPreview extends StatelessWidget {
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                                 Container(
@@ -92,11 +98,12 @@ class StartTabPreview extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         onPressed: () {
                           Navigator.pushReplacementNamed(
-                            context,
-                            'login'
-                          );
+                              context, RouteName.login);
                         },
-                        child: Text(lang.text('Continue'),style: TextStyle(color: Colors.white),),
+                        child: Text(
+                          lang.text('Continue'),
+                          style: TextStyle(color: Colors.white),
+                        ),
                       )),
                 ],
               );

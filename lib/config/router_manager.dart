@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:tabee/anims/page_route_anim.dart';
 import 'package:tabee/pages/home.dart';
 import 'package:tabee/pages/language_selector.dart';
+import 'package:tabee/pages/login.dart';
+import 'package:tabee/pages/news.dart';
+import 'package:tabee/pages/signup.dart';
 import 'package:tabee/pages/splash.dart';
 import 'package:tabee/pages/start_page.dart';
-import 'package:tabee/pages/time_table_page.dart';
+import 'package:tabee/pages/start_tab_preview.dart';
+import 'package:tabee/pages/test_result.dart';
+import 'package:tabee/pages/tuitions.dart';
 
 class RouteName {
   // TODO: When adding new page specify name for it
@@ -14,7 +19,11 @@ class RouteName {
   static const String languageSelector = 'languageSelector';
   static const String home = 'home';
   static const String login = 'login';
-  static const String table = 'table';
+  static const String startTapPreview = 'startTapPreview';
+  static const String signup = 'signup';
+  static const String test = 'tests';
+  static const String tuitions = 'tuitions';
+  static const String news = 'news';
 }
 
 class Router {
@@ -30,8 +39,18 @@ class Router {
         return NoAnimRouteBuilder(LanguageSelector());
       case RouteName.home:
         return SlideTopRouteBuilder(HomePage());
-      case RouteName.table:
-        return SlideTopRouteBuilder(TimeTablePage());
+      case RouteName.login:
+        return SlideTopRouteBuilder(LoginPage());
+      case RouteName.startTapPreview:
+        return SlideTopRouteBuilder(StartTabPreview());
+      case RouteName.signup:
+        return SlideTopRouteBuilder(Signup());
+      case RouteName.test:
+        return SlideTopRouteBuilder(TestResultPage());
+      case RouteName.tuitions:
+        return SlideTopRouteBuilder(TuitionsPage());
+      case RouteName.news:
+        return SlideTopRouteBuilder(NewsPage());
 
       default:
         return CupertinoPageRoute(

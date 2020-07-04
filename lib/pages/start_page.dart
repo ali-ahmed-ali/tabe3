@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
-import 'package:tabee/utils/lang.dart';
+import '../utils/lang.dart';
 
 class StartPage extends StatelessWidget {
   @override
@@ -20,10 +20,9 @@ class StartPage extends StatelessWidget {
               child: RaisedButton(
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.pushReplacementNamed(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => StartTabPreview()));
+                      'startTapPreview');
                 },
                 child: Text(
                   lang.text('Start'),

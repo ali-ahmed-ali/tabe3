@@ -1,47 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:tabee/pages/login.dart';
-import 'package:tabee/utils/lang.dart';
+import '../utils/lang.dart';
 
 class Signup extends StatelessWidget {
   final Map<String, dynamic> _formData = {
-    'email': null,
-    'password': null,
-    'username': null,
+    'name': null,
+    'class': null,
+    'age': null,
+    'health':null
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(lang.text('New Student')),
+        centerTitle: true,
+      ),
       //backgroundColor: Theme.of(context).primaryColor,
       body: Container(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            colors: [
-              Theme.of(context).primaryColor.withOpacity(.3),
-              Theme.of(context).primaryColor.withOpacity(.8),
-              //Colors.black.withOpacity(.7)
-            ],
-            focalRadius: 180,
-            
-            //begin: Alignment.topLeft,
-            //end: Alignment.bottomRight,
-          ),
-        ),
         width: MediaQuery.of(context).size.width,
         child: ListView(
           children: <Widget>[
             Container(
-              margin: EdgeInsetsDirectional.only(top: 30),
-              child: Text(
-                lang.text('انشاء حساب'),
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Container(
               margin: EdgeInsets.only(top: 40, bottom: 20),
               child: Image.asset(
-                'assets/images/logowhite.png',
+                'assets/images/logoblue.png',
                 width: 150,
                 height: 150,
               ),
@@ -65,11 +48,15 @@ class Signup extends StatelessWidget {
           SizedBox(
             height: 10.0,
           ),
-          _buildEmailTextField(),
+          _buildClassTextField(),
           SizedBox(
             height: 10.0,
           ),
-          _buildPasswordTextField(),
+          _buildAgeTextField(),
+          SizedBox(
+            height: 10.0,
+          ),
+          _buildHealthTextField(),
           SizedBox(
             height: 20.0,
           ),
@@ -82,61 +69,36 @@ class Signup extends StatelessWidget {
               splashColor: Colors.lightGreenAccent,
               textColor: Colors.white,
               color: Theme.of(context).primaryColor,
-              child: Text(lang.text('تسجيل')),
+              child: Text(lang.text('Rigester')),
               onPressed: () => _submetButtonPressed(),
             ),
           ),
           SizedBox(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
-                },
-                child: Text(
-                  lang.text('تسجيل الدخول'),
-                  style: TextStyle(color: Colors.lightGreenAccent),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                lang.text(' لديك حساب ؟'),
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          )
+          SizedBox(height: 30,)
         ],
       ),
     );
   }
 
-  Widget _buildEmailTextField() {
+  Widget _buildClassTextField() {
     return TextFormField(
       validator: (String value) {
         if (value.isEmpty) {
           return lang.text('This is requird');
-        } else if (!RegExp(
-                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-            .hasMatch(value)) {
-          return lang.text('It should be an email');
         }
         return null;
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.mail_outline),
-        labelText: lang.text('E-mail'),
+        prefixIcon: Icon(Icons.school),
+        labelText: lang.text('Class'),
         filled: true,
         fillColor: Colors.white,
       ),
       onSaved: (String value) {
-        _formData['email'] = value;
+        _formData['class'] = value;
       },
     );
   }
@@ -152,19 +114,18 @@ class Signup extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person_outline),
-        labelText: lang.text('User Name'),
+        labelText: lang.text('Full Name'),
         filled: true,
         fillColor: Colors.white,
       ),
       onSaved: (String value) {
-        _formData['username'] = value;
+        _formData['name'] = value;
       },
     );
   }
 
-  Widget _buildPasswordTextField() {
+  Widget _buildAgeTextField() {
     return TextFormField(
-      obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
           return lang.text('This is required');
@@ -172,13 +133,33 @@ class Signup extends StatelessWidget {
         return null;
       },
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key),
-        labelText: lang.text('password'),
+        prefixIcon: Icon(Icons.calendar_today),
+        labelText: lang.text('Age'),
         filled: true,
         fillColor: Colors.white,
       ),
       onSaved: (String value) {
-        _formData['password'] = value;
+        _formData['age'] = value;
+      },
+    );
+  }
+
+  Widget _buildHealthTextField() {
+    return TextFormField(
+      validator: (String value) {
+        if (value.isEmpty) {
+          return lang.text('This is required');
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.local_hospital),
+        labelText: lang.text('Health Status'),
+        filled: true,
+        fillColor: Colors.white,
+      ),
+      onSaved: (String value) {
+        _formData['health'] = value;
       },
     );
   }

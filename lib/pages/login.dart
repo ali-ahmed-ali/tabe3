@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tabee/config/router_manager.dart';
-import 'package:tabee/pages/signup.dart';
 import 'package:tabee/utils/lang.dart';
 
 class LoginPage extends StatelessWidget {
@@ -9,7 +7,6 @@ class LoginPage extends StatelessWidget {
     'password': null,
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +29,7 @@ class LoginPage extends StatelessWidget {
             Container(
               margin: EdgeInsetsDirectional.only(top: 30),
               child: Text(
-                lang.text('تسجيل الدخول'),
+                lang.text('Sign in'),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
@@ -45,6 +42,7 @@ class LoginPage extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: _buildForm(context),
             ),
+            SizedBox(height: 30,)
           ],
         ),
       ),
@@ -73,39 +71,13 @@ class LoginPage extends StatelessWidget {
               splashColor: Colors.lightGreenAccent,
               textColor: Colors.white,
               color: Theme.of(context).primaryColor,
-              child: Text(lang.text('Login')),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, RouteName.table);
-              },
+              child: Text(lang.text('Sign in')),
+              onPressed: () => _submetButtonPressed(context),
             ),
           ),
           SizedBox(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                lang.text("'Don\'t an account?"),
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Signup(),
-                    ),
-                  );
-                },
-                child: Text(
-                  lang.text('Sign up'),
-                  style: TextStyle(color: Colors.lightGreenAccent),
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );
@@ -157,12 +129,12 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _submetButtonPressed() async {
+  void _submetButtonPressed(BuildContext context) {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
     //check user here
-//    Navigator.pushReplacementNamed(context, '/home');
+    Navigator.pushReplacementNamed(context, 'home');
   }
 }

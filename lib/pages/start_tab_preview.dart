@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabee/pages/login.dart';
-import 'file:///E:/Other/Tabe3/lib/utils/lang.dart';
+import 'package:tabee/utils/lang.dart';
 
 class StartTabPreview extends StatelessWidget {
   final List<Map<String, dynamic>> tabs = [

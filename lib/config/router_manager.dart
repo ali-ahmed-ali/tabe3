@@ -5,6 +5,7 @@ import 'package:tabee/pages/home.dart';
 import 'package:tabee/pages/language_selector.dart';
 import 'package:tabee/pages/splash.dart';
 import 'package:tabee/pages/start_page.dart';
+import 'package:tabee/pages/time_table_page.dart';
 
 class RouteName {
   // TODO: When adding new page specify name for it
@@ -13,6 +14,7 @@ class RouteName {
   static const String languageSelector = 'languageSelector';
   static const String home = 'home';
   static const String login = 'login';
+  static const String table = 'table';
 }
 
 class Router {
@@ -28,6 +30,8 @@ class Router {
         return NoAnimRouteBuilder(LanguageSelector());
       case RouteName.home:
         return SlideTopRouteBuilder(HomePage());
+      case RouteName.table:
+        return SlideTopRouteBuilder(TimeTablePage());
 
       default:
         return CupertinoPageRoute(

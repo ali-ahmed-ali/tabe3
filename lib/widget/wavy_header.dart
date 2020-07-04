@@ -11,8 +11,9 @@ class WavyHeader extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 100,
-        alignment: Alignment.topCenter,
-        padding: EdgeInsets.all(16.0),
+        alignment: Alignment.centerLeft,
+        padding:
+            EdgeInsets.only(top: 16.0, bottom: 24.0, left: 16.0, right: 16.0),
         decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(16.0)),

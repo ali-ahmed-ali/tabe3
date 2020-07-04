@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
-import 'file:///E:/Other/Tabe3/lib/utils/lang.dart';
+import 'package:tabee/utils/lang.dart';
 
 class StartPage extends StatelessWidget {
   @override

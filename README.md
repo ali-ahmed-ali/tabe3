@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # tabee
 
 A new Flutter project.

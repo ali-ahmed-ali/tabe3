@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           theme: themeData(platformDarkMode: false),
           debugShowCheckedModeBanner: false,
           onGenerateRoute: Router.generateRoute,
-          initialRoute: RouteName.startPage,
+          initialRoute: RouteName.table,
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

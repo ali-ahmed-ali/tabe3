@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/pages/signup.dart';
 import 'package:tabee/utils/lang.dart';
 
@@ -8,6 +9,7 @@ class LoginPage extends StatelessWidget {
     'password': null,
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +73,10 @@ class LoginPage extends StatelessWidget {
               splashColor: Colors.lightGreenAccent,
               textColor: Colors.white,
               color: Theme.of(context).primaryColor,
-              child: Text(lang.text('تسجيل الدخول')),
-              onPressed: () => _submetButtonPressed(),
+              child: Text(lang.text('Login')),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, RouteName.table);
+              },
             ),
           ),
           SizedBox(
@@ -81,6 +85,11 @@ class LoginPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text(
+                lang.text("'Don\'t an account?"),
+                style: TextStyle(color: Colors.white),
+              ),
+              SizedBox(width: 10),
               GestureDetector(
                 onTap: () {
                   Navigator.pushReplacement(
@@ -91,16 +100,9 @@ class LoginPage extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  lang.text('تسجيل الان'),
+                  lang.text('Sign up'),
                   style: TextStyle(color: Colors.lightGreenAccent),
                 ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                lang.text('ليس لديك حساب؟'),
-                style: TextStyle(color: Colors.white),
               ),
             ],
           )
@@ -155,12 +157,12 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _submetButtonPressed() {
+  void _submetButtonPressed() async {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
     //check user here
-    //Navigator.pushReplacementNamed(context, '/home');
+//    Navigator.pushReplacementNamed(context, '/home');
   }
 }

@@ -8,6 +8,11 @@ import 'package:tabee/utils/pref_manager.dart';
 //const String _storageKey = "MyApplication_";
 
 const List<String> _supportedLanguages = ['en', 'ar'];
+const Map<String, String> supportedLanguagesFull = {
+  "en": "English",
+  "ar": "العربية",
+  "tr": "Türkçe"
+};
 
 // TODO: This class used for translations
 
@@ -15,6 +20,7 @@ class GlobalTranslations {
   Locale _locale;
   Map<dynamic, dynamic> _localizedValues;
   VoidCallback _onLocaleChangedCallback;
+  bool isSet = false;
 
   Iterable<Locale> supportedLocales() {
     return _supportedLanguages.map((supportedLanguage) {
@@ -37,7 +43,14 @@ class GlobalTranslations {
       return _locale.languageCode;
   }
 
+  get currentLanguageFull =>
+      _locale == null ? 'en' : supportedLanguagesFull[_locale.languageCode];
+
   get locale => _locale;
+
+  bool isRtl() {
+    return currentLanguage.contains('ar');
+  }
 
   Future<Null> init([String language]) async {
     if (_locale == null) {
@@ -55,7 +68,7 @@ class GlobalTranslations {
   }
 
   Future<Null> setNewLanguage(
-      [String newLanguage, bool saveInPrefs = false]) async {
+      [String newLanguage, bool saveInPrefs = true]) async {
     String language = newLanguage;
     if (language == null) {
       language = await getPreferredLanguage();
@@ -78,7 +91,7 @@ class GlobalTranslations {
     if (_onLocaleChangedCallback != null) {
       _onLocaleChangedCallback();
     }
-
+    isSet = true;
     return null;
   }
 

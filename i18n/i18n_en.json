@@ -1,1 +1,17 @@
-{}
+{
+  "i18n_en": "English",
+  "i18n_ar": "العربية",
+  "Start": "Start",
+  "Choose the language you prefer": "Choose the language you prefer",
+  "Pay the fees electronically": "Pay the fees electronically",
+  "Pay your son's fees while you are at the home": "Pay your son's fees while you are at the home",
+  "Follow the academic path of the student": "Follow the academic path of the student",
+  "Know the dates of the tests, your son's level, and the teacher's notes": "Know the dates of the tests, your son's level, and the teachers notes",
+  "Follow up the results of the tests": "Follow up the results of the tests",
+  "Know the results of the tests and rank your son among his colleagues": "Know the results of the tests and rank your son among his colleagues",
+  "Continue": "Continue",
+  "Sign in": "Sign in",
+  "Email address": "Email address",
+  "Password": "Password",
+  "Loading": "Loading"
+}

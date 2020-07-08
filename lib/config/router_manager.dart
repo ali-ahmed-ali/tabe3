@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/anims/page_route_anim.dart';
+import 'package:tabee/pages/conversations_page.dart';
 import 'package:tabee/pages/home.dart';
 import 'package:tabee/pages/language_selector.dart';
 import 'package:tabee/pages/login.dart';
@@ -28,6 +29,7 @@ class RouteName {
   static const String news = 'news';
   static const String schedule = 'schedule';
   static const String attend = 'attend';
+  static const String conversations = 'conversations';
 }
 
 class Router {
@@ -38,7 +40,7 @@ class Router {
       case RouteName.splash:
         return NoAnimRouteBuilder(SplashPage());
       case RouteName.startPage:
-        return NoAnimRouteBuilder(StartPage());
+        return FadeRouteBuilder(StartPage());
       case RouteName.sliderPage:
         return FadeRouteBuilder(StartTabPreview());
       case RouteName.languageSelector:
@@ -61,6 +63,8 @@ class Router {
         return SlideTopRouteBuilder(TuitionsPage());
       case RouteName.news:
         return SlideTopRouteBuilder(NewsPage());
+      case RouteName.conversations:
+        return SlideTopRouteBuilder(ConversationsPage());
 
       default:
         return CupertinoPageRoute(

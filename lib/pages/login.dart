@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/widget/custom_edit_text.dart';
+import 'package:tabee/widget/custome_button.dart';
+import 'package:tabee/widget/dialog_utils.dart';
 
 class LoginPage extends StatelessWidget {
   final Map<String, dynamic> _formData = {
@@ -14,22 +17,20 @@ class LoginPage extends StatelessWidget {
   FocusNode emailFocusNode = new FocusNode();
   FocusNode passwordFocusNode = new FocusNode();
 
+  BuildContext context;
+
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     return Scaffold(
       //backgroundColor: Color.fromRGBO(169, 221, 243, 1),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Theme
-                  .of(context)
-                  .primaryColorDark,
+              Theme.of(context).primaryColorDark,
               Colors.black.withOpacity(.5),
-              Theme
-                  .of(context)
-                  .primaryColor
-                  .withOpacity(.9),
+              Theme.of(context).primaryColor.withOpacity(.9),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -85,33 +86,25 @@ class LoginPage extends StatelessWidget {
             },
             validator: emailValidator,
             fontColor: Colors.white,
-            hint: lang.text("Email address"),
           ),
 //          _buildPasswordTextField(),
           CustomEditText(
             focusNode: passwordFocusNode,
             controller: passwordController,
-            labelText: lang.text("Email address"),
+            labelText: lang.text("Password"),
             keyboardType: TextInputType.emailAddress,
             validator: emailValidator,
             fontColor: Colors.white,
-            hint: lang.text("Email address"),
+            textInputAction: TextInputAction.done,
             isPassword: true,
             prefix: Icon(Icons.lock_outline, color: Colors.white),
           ),
           SizedBox(height: 30),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 40,
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: RaisedButton(
-              elevation: 3,
-              splashColor: Colors.lightGreenAccent,
-              textColor: Colors.white,
-              color: Theme.of(context).primaryColor,
-              child: Text(lang.text('Sign in')),
-              onPressed: () => _submitButtonPressed(context),
-            ),
+          CustomButton(
+            label: Text(lang.text('Sign in')),
+            onPressed: () {
+              _submitButtonPressed();
+            },
           ),
           SizedBox(
             height: 10,
@@ -125,71 +118,23 @@ class LoginPage extends StatelessWidget {
     if (value.isEmpty) {
       return lang.text('This is requird');
     } else if (!RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(value)) {
       return lang.text('It should be an email');
     }
     return null;
   }
 
-  Widget _buildEmailTextField() {
-    return TextFormField(
-      validator: (String value) {
-        if (value.isEmpty) {
-          return lang.text('This is requird');
-        } else if (!RegExp(
-                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-            .hasMatch(value)) {
-          return lang.text('It should be an email');
-        }
-        return null;
-      },
-      keyboardType: TextInputType.emailAddress,
-      style: TextStyle(color: Colors.white),
-      onFieldSubmitted: (value) {},
-      decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.person_outline,
-            color: Colors.white,
-          ),
-          labelText: lang.text('E-mail'),
-          labelStyle: TextStyle(color: Colors.white)
-//        filled: true,
-//        fillColor: Colors.white,
-      ),
-      onSaved: (String value) {
-        _formData['email'] = value;
-      },
-    );
-  }
-
-  Widget _buildPasswordTextField() {
-    return TextFormField(
-      obscureText: true,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return lang.text('This is required');
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key),
-        labelText: lang.text('password'),
-        filled: true,
-        fillColor: Colors.white,
-      ),
-      onSaved: (String value) {
-        _formData['password'] = value;
-      },
-    );
-  }
-
-  void _submitButtonPressed(BuildContext context) {
+  void _submitButtonPressed() async {
+    print('logging in');
     if (!_formKey.currentState.validate()) {
       return;
     }
-    _formKey.currentState.save();
+    showLoadingDialog(context);
     //check user here
-    Navigator.pushReplacementNamed(context, 'home');
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, RouteName.home);
+    });
   }
 }

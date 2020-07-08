@@ -18,7 +18,7 @@ class FadeRouteBuilder extends PageRouteBuilder {
   FadeRouteBuilder(this.page)
       : super(
             pageBuilder: (context, animation, secondaryAnimation) => page,
-            transitionDuration: Duration(milliseconds: 500),
+            transitionDuration: Duration(milliseconds: 700),
             transitionsBuilder: (context, animation, secondaryAnimation,
                     child) =>
                 FadeTransition(

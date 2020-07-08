@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           theme: themeData(platformDarkMode: false),
           debugShowCheckedModeBanner: false,
           onGenerateRoute: Router.generateRoute,
-          initialRoute: RouteName.startPage,
+          initialRoute: RouteName.splash,
           locale: lang.locale,
           supportedLocales: lang.supportedLocales(),
           localizationsDelegates: [

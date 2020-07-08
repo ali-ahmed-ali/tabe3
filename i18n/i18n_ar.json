@@ -1,1 +1,17 @@
-{}
+{
+  "i18n_en": "English",
+  "i18n_ar": "العربية",
+  "Start": "إبدأ",
+  "Choose the language you prefer": "الرجاء إختيار اللغة المفضلة",
+  "Pay the fees electronically": "دفع الرسوم الكترونيا",
+  "Pay your son's fees while you are at the home": "ادفع رسوم ابنك أثناء تواجدك في المنزل",
+  "Follow the academic path of the student": "اتبع المسار الأكاديمي للطالب",
+  "Know the dates of the tests, your son's level, and the teacher's notes": "تعرف على مواعيد الاختبارات ومستوى ابنك وملاحظات المعلم",
+  "Follow up the results of the tests": "متابعة نتائج الاختبارات",
+  "Know the results of the tests and rank your son among his colleagues": "اعرف نتائج الاختبارات وصنف ابنك بين زملائه",
+  "Continue": "استمر",
+  "Sign in": "تسجيل الدخول",
+  "Email address": "البريد الإلكتروني",
+  "Password": "كلمة المرور",
+  "Loading": "جار التحميل"
+}

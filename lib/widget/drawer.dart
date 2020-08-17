@@ -96,9 +96,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('Advertisements board')),
           leading: Icon(
             Icons.public,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         ListTile(
@@ -109,9 +107,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('Daily school schedule')),
           leading: Icon(
             Icons.schedule,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         ListTile(
@@ -121,9 +117,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('Student profile')),
           leading: Icon(
             Icons.assignment,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         ListTile(
@@ -133,9 +127,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('Pay the fees')),
           leading: Icon(
             Icons.payment,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         ListTile(
@@ -145,9 +137,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('Register new student')),
           leading: Icon(
             Icons.person_add,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         ListTile(
@@ -155,9 +145,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('About us')),
           leading: Icon(
             Icons.people,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ],

@@ -63,9 +63,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   Text(
                     userData['name'] ?? "Username",
-                    style: TextStyle(color: Theme
-                        .of(context)
-                        .primaryColor),
+                    style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                   SizedBox(
                     height: 10,

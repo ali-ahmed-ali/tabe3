@@ -96,20 +96,20 @@ class _LoginPageState extends State<LoginPage> {
 //          _buildEmailTextField(),
           errorMessage != null
               ? Container(
-            padding: const EdgeInsets.all(8.0),
-            margin: const EdgeInsets.only(bottom: 8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              color: Colors.red.withOpacity(.8),
-            ),
-            child: Text(
-              errorMessage,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
-            ),
-          )
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.only(bottom: 8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.red.withOpacity(.8),
+                  ),
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                )
               : Container(),
           CustomEditText(
             prefix: Icon(Icons.phone, color: Colors.white),

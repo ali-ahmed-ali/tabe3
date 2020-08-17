@@ -78,8 +78,8 @@ class _CustomTableState extends State<CustomTable> {
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 18.0,
-                  ),
-            )
+                        ),
+                  )
                 : widget.title,
           ),
           Container(

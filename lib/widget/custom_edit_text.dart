@@ -87,7 +87,7 @@ class _CustomEditTextState extends State<CustomEditText> {
                           borderSide: BorderSide(color: widget.fontColor)),
                       labelText: widget.labelText ?? widget.hint,
                       labelStyle:
-                      TextStyle(fontSize: 14, color: widget.fontColor),
+                          TextStyle(fontSize: 14, color: widget.fontColor),
                     ),
                   ),
                 ),

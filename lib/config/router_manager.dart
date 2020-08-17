@@ -1,18 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/anims/page_route_anim.dart';
+import 'package:tabee/pages/auth/reset_password.dart';
+import 'package:tabee/pages/auth/update_password.dart';
+import 'package:tabee/pages/auth/verify.dart';
 import 'package:tabee/pages/conversations_page.dart';
 import 'package:tabee/pages/home.dart';
 import 'package:tabee/pages/language_selector.dart';
-import 'package:tabee/pages/login.dart';
 import 'package:tabee/pages/news.dart';
-import 'package:tabee/pages/signup.dart';
 import 'package:tabee/pages/splash.dart';
 import 'package:tabee/pages/start_page.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
 import 'package:tabee/pages/test_result.dart';
 import 'package:tabee/pages/time_table_page.dart';
 import 'package:tabee/pages/tuitions.dart';
+
+import 'file:///D:/Projects/Android/Tabee3/Tabe3/lib/pages/auth/login.dart';
+import 'file:///D:/Projects/Android/Tabee3/Tabe3/lib/pages/auth/signup.dart';
 
 class RouteName {
   // TODO: When adding new page specify name for it
@@ -22,6 +26,8 @@ class RouteName {
   static const String languageSelector = 'languageSelector';
   static const String home = 'home';
   static const String login = 'login';
+  static const String resetPwd = 'resetPwd';
+  static const String verify = 'verify';
   static const String startTapPreview = 'startTapPreview';
   static const String signup = 'signup';
   static const String test = 'tests';
@@ -30,6 +36,8 @@ class RouteName {
   static const String schedule = 'schedule';
   static const String attend = 'attend';
   static const String conversations = 'conversations';
+
+  static const String updatePassword = "updatePassword";
 }
 
 class Router {
@@ -49,6 +57,12 @@ class Router {
         return SlideTopRouteBuilder(HomePage());
       case RouteName.login:
         return SlideTopRouteBuilder(LoginPage());
+      case RouteName.resetPwd:
+        return SlideTopRouteBuilder(ResetPassword());
+      case RouteName.verify:
+        return SlideTopRouteBuilder(VerifyScreen());
+      case RouteName.updatePassword:
+        return SlideTopRouteBuilder(UpdatePassword());
       case RouteName.startTapPreview:
         return SlideTopRouteBuilder(StartTabPreview());
       case RouteName.signup:

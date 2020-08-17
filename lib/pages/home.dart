@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     _phoneHeight = MediaQuery.of(context).size.height;
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       drawer: Drawer(
@@ -94,6 +93,7 @@ class _HomePageState extends State<HomePage> {
               title: item["title"],
               onPressed: () {
                 print('Route to: ${item["routing"]}');
+                Navigator.pushNamed(context, item["routing"]);
               },
             );
           },

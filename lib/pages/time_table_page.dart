@@ -31,7 +31,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
   ];
   List data = [
     [
-      Text(lang.text("French and other shit")),
+      Text(lang.text("French")),
       Text(lang.text("French")),
       Text(lang.text("French")),
       Text(lang.text("French")),

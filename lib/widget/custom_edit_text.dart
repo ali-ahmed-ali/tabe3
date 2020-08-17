@@ -63,6 +63,7 @@ class _CustomEditTextState extends State<CustomEditText> {
                 SizedBox(width: 8.0),
                 Expanded(
                   child: TextFormField(
+                    validator: widget.validator,
                     enabled: widget.enabled,
                     focusNode: widget.focusNode,
                     keyboardType: widget.keyboardType,
@@ -76,12 +77,17 @@ class _CustomEditTextState extends State<CustomEditText> {
                     inputFormatters: widget.formatter ?? [],
                     style: TextStyle(fontSize: 14, color: widget.fontColor),
                     decoration: InputDecoration(
+                      errorStyle: TextStyle(
+                        color: Colors.red[700],
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
+                      ),
 //                  hintText: widget.hint,
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: widget.fontColor)),
                       labelText: widget.labelText ?? widget.hint,
                       labelStyle:
-                          TextStyle(fontSize: 14, color: widget.fontColor),
+                      TextStyle(fontSize: 14, color: widget.fontColor),
                     ),
                   ),
                 ),

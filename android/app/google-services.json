@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "701799914185",
+    "firebase_url": "https://tab3-c8687.firebaseio.com",
+    "project_id": "tab3-c8687",
+    "storage_bucket": "tab3-c8687.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701799914185:android:2b61d9d9404f3e93878b18",
+        "android_client_info": {
+          "package_name": "com.moggal.tab3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701799914185-89q31lor3o69t9j83tcj227m3a8pbg1c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL7AlVH9FvVYL9Hb4NU7tAuwyT3dV0-OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701799914185-89q31lor3o69t9j83tcj227m3a8pbg1c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

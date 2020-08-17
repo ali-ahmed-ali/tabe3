@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/config/router_manager.dart';
+import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/app_builder.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
+import 'package:tabee/utils/push_notification.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class SplashPage extends StatefulWidget {
@@ -13,16 +17,48 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final PrefManager _manager = new PrefManager();
+  final Repository _repository = new Repository();
 
   @override
   void initState() {
+    init();
     Future.delayed(Duration(seconds: 3), () {
-      init();
+      checkSession();
     });
     super.initState();
   }
 
+  void initLang() async {
+    initLang() async {
+      await lang.init();
+      timeago.setLocaleMessages('ar', timeago.ArMessages());
+      timeago.setLocaleMessages('en', timeago.EnMessages());
+      timeago.setLocaleMessages('tr', timeago.TrMessages());
+      AppBuilder.of(context).rebuild();
+    }
+  }
+
   void init() async {
+    PushNotificationsManager(
+        context: context,
+        getToken: (token) async {
+          print('token: $token');
+          String oldToken =
+              await _manager.get("firebase_notification_token", "");
+          Map userData = json.decode(await _manager.get("customer", "{}"));
+
+          if (userData != null &&
+              userData.containsKey("id") &&
+              oldToken != token) {
+            Map response =
+                await _repository.updateToken(userData["id"].toString(), token);
+            print('update token response: $response');
+          }
+          await _manager.set("firebase_notification_token", token);
+        }).init();
+  }
+
+  void checkSession() async {
     await configLang();
     String token = await _manager.get("token", null);
     bool firstLaunch = await _manager.get("firstLaunch", true);

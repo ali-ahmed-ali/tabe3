@@ -1,4 +1,4 @@
-package com.example.tabee
+package com.moggal.tab3
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

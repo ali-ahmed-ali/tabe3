@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import '../utils/lang.dart';
+
+import '../../utils/lang.dart';
 
 class Signup extends StatelessWidget {
   final Map<String, dynamic> _formData = {
     'name': null,
     'class': null,
     'age': null,
-    'health':null
+    'health': null
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +78,9 @@ class Signup extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          SizedBox(height: 30,)
+          SizedBox(
+            height: 30,
+          )
         ],
       ),
     );

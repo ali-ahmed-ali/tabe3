@@ -1,16 +1,39 @@
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/utils/lang.dart';
+import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/widget/circle_image.dart';
 
-class DrawerWidget extends StatelessWidget {
-  Map<String, dynamic> userData = {
-    'username': 'User Name',
-    'email': 'info@gmail.com'
-  };
+class DrawerWidget extends StatefulWidget {
+  @override
+  _DrawerWidgetState createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
+  PrefManager _manager = new PrefManager();
+
+  Map<dynamic, dynamic> userData = {};
+
+  @override
+  void initState() {
+    loadUserData();
+    super.initState();
+  }
+
+  void loadUserData() async {
+    String userDataString = await _manager.get("customer", "{}");
+    print('userDataString: $userDataString');
+    setState(() {
+      userData = json.decode(userDataString);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('userData: $userData');
     return ListView(
       children: <Widget>[
         Container(
@@ -20,29 +43,35 @@ class DrawerWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   CircleImage(
-                    child: Image(
-                      image: AssetImage('assets/images/profile.jpg'),
-                      fit: BoxFit.cover,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "https://cdn.pixabay.com/photo/2016/04/26/07/20/woman-1353803__340.png",
                       width: 80,
                       height: 80,
+                      placeholder: (error, url) => Image(
+                        image: AssetImage('assets/images/profile.jpg'),
+                        fit: BoxFit.cover,
+                        width: 80,
+                        height: 80,
+                      ),
                     ),
-                    borderColor: Theme
-                        .of(context)
-                        .primaryColor,
+                    borderColor: Theme.of(context).primaryColor,
                     borderWidth: 1,
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    userData['username'],
-                    style: TextStyle(color: Theme.of(context).primaryColor),
+                    userData['name'] ?? "Username",
+                    style: TextStyle(color: Theme
+                        .of(context)
+                        .primaryColor),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    userData['email'],
+                    userData['mobile'] ?? "-",
                     style: TextStyle(color: Colors.grey),
                   ),
                 ],
@@ -103,7 +132,7 @@ class DrawerWidget extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, RouteName.tuitions);
           },
-          title: Text(lang.text('Payment of fees')),
+          title: Text(lang.text('Pay the fees')),
           leading: Icon(
             Icons.payment,
             color: Theme

@@ -47,7 +47,7 @@ class _CustomTableState extends State<CustomTable> {
     firstColumn = widget.firstColumnData.map((e) => DataCell(e)).toList();
     int cols = widget.columnData.length;
     int rows = widget.firstColumnData.length;
-    for(int r = 0; r < rows; r ++) {
+    for (int r = 0; r < rows; r++) {
       List<DataCell> cells = [];
       cells.add(firstColumn[r]);
       // TODO:  Put first  col to @firstColumnData;
@@ -63,6 +63,10 @@ class _CustomTableState extends State<CustomTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        border: Border.all(width: .5, color: Theme.of(context).primaryColor),
+        borderRadius: BorderRadius.circular(16.0),
+      ),
       child: Column(
         children: <Widget>[
           WavyHeader(
@@ -74,8 +78,8 @@ class _CustomTableState extends State<CustomTable> {
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 18.0,
-                        ),
-                  )
+                  ),
+            )
                 : widget.title,
           ),
           Container(

@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
+import 'lang.dart';
+
 String timerFormat(int value) {
   if (value == null) {
     return '--:--';
@@ -25,4 +29,12 @@ String timerFormat(int value) {
   }
 
   return '${hours != '00' ? hours + ':' : ''}$minutes:$second';
+}
+
+EdgeInsets getMargin() {
+  if (lang.isRtl()) {
+    return const EdgeInsets.only(left: 4.0);
+  } else {
+    return const EdgeInsets.only(right: 4.0);
+  }
 }

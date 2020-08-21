@@ -19,6 +19,8 @@ class _SplashPageState extends State<SplashPage> {
   final PrefManager _manager = new PrefManager();
   final Repository _repository = new Repository();
 
+  PushNotificationsManager _pushNotificationsManager;
+
   @override
   void initState() {
     init();
@@ -39,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void init() async {
-    PushNotificationsManager(
+    _pushNotificationsManager = PushNotificationsManager(
         context: context,
         getToken: (token) async {
           print('token: $token');
@@ -54,17 +56,21 @@ class _SplashPageState extends State<SplashPage> {
                 await _repository.updateToken(userData["id"].toString(), token);
             print('update token response: $response');
           }
+
           await _manager.set("firebase_notification_token", token);
-        }).init();
+        });
+    await _pushNotificationsManager.init();
+    await _pushNotificationsManager.subscribeToTopic("test");
   }
 
   void checkSession() async {
     await configLang();
     String token = await _manager.get("token", null);
+    String user = await _manager.get("customer", null);
     bool firstLaunch = await _manager.get("firstLaunch", true);
     if (firstLaunch) {
       Navigator.pushNamed(context, RouteName.startPage);
-    } else if (token == null) {
+    } else if (user == null) {
       Navigator.pushNamed(context, RouteName.login);
     } else {
       Navigator.pushNamed(context, RouteName.home);

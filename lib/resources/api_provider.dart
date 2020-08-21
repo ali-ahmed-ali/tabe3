@@ -77,6 +77,31 @@ class ApiProvider {
     });
   }
 
+  Future<Map<String, dynamic>> readMessages(
+      Map<String, dynamic> request) async {
+    return await _doRequest("/readMessages", Method.POST, request);
+  }
+
+  Future<Map<String, dynamic>> sendMessage(Map<String, dynamic> request) async {
+    DateTime time = DateTime.now();
+    return await _doRequest("/SendMessage", Method.POST, request);
+  }
+
+  Future<Map<String, dynamic>> getThread(int customerId) async {
+    return await _doRequest("/getThreads", Method.POST, {
+      "customer_id": customerId,
+    });
+  }
+
+  Future<Map<String, dynamic>> markAsRead(int customerId, int threadId,
+      [List msgsIds]) async {
+    return await _doRequest("/msgReaded", Method.POST, {
+      "customer_id": customerId,
+      "thread_id": threadId,
+      "m_ids": msgsIds,
+    });
+  }
+
   Future<Map<String, dynamic>> _doRequest(String path, Method method,
       [Map<String, dynamic> requestFromUser]) async {
     var connectivityResult = await Connectivity().checkConnectivity();

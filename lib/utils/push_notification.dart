@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/utils/notification_manager.dart';
 import 'package:tabee/utils/pref_manager.dart';
 
@@ -62,15 +61,15 @@ class PushNotificationsManager {
         onMessage: (message) async {
           onBackgroundMessageHandler(message);
           print('onMessage: $message');
-          _notificationManager.showNotificationWithPicture(message);
+          _notificationManager.showNotification(message);
         },
         onLaunch: (message) async {
           print('onLaunch: $message');
-          await Navigator.pushNamed(context, RouteName.splash);
+//          await Navigator.pushNamed(context, RouteName.splash);
         },
         onResume: (message) async {
           print('onResume: $message');
-          Navigator.pushNamed(context, RouteName.splash);
+//          Navigator.pushNamed(context, RouteName.splash);
         },
         onBackgroundMessage: onBackgroundMessageHandler,
       );

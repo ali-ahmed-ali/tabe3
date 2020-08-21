@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tabee/utils/utils.dart';
+import 'package:tabee/widget/circle_image.dart';
 
 class ChatListViewItem extends StatelessWidget {
-  final AssetImage image;
+  final Widget image;
   final String name;
   final String lastMessage;
   final String time;
   final bool hasUnreadMessage;
   final int newMessageCount;
+  final bool showTick;
 
   final VoidCallback onTap;
 
@@ -19,12 +22,12 @@ class ChatListViewItem extends StatelessWidget {
       this.time,
       this.hasUnreadMessage,
       this.newMessageCount,
-      this.onTap})
+      this.onTap,
+      this.showTick = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       color: Colors.white,
       child: Column(
@@ -36,16 +39,35 @@ class ChatListViewItem extends StatelessWidget {
                 child: ListTile(
                   title: Text(
                     name ?? "",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
-                  subtitle: Text(
-                    lastMessage,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12),
+                  subtitle: Row(
+                    children: <Widget>[
+                      showTick
+                          ? Container(
+                              margin: getMargin(),
+                              child: Icon(
+                                Icons.done,
+                                size: 15,
+                                color: Theme.of(context).primaryColor,
+                              ))
+                          : Container(),
+                      Flexible(
+                        child: Text(
+                          lastMessage,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  leading: CircleAvatar(
-                    backgroundImage: image,
+                  leading: CircleImage(
+                    child: image,
+                    borderWidth: 0.0,
                   ),
                   trailing: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

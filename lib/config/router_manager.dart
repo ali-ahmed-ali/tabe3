@@ -11,7 +11,7 @@ import 'package:tabee/pages/news.dart';
 import 'package:tabee/pages/splash.dart';
 import 'package:tabee/pages/start_page.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
-import 'package:tabee/pages/test_result.dart';
+import 'package:tabee/pages/student_result.dart';
 import 'package:tabee/pages/time_table_page.dart';
 import 'package:tabee/pages/tuitions.dart';
 

@@ -168,9 +168,10 @@ class _LoginPageState extends State<LoginPage> {
   String mobileValidator(String value) {
     if (value.isEmpty) {
       return lang.text('This is required');
-    } else if (!value.startsWith("249")) {
-      return lang.text("Phone number must start with 249");
     }
+    /* else if (!value.startsWith("249")) {
+//      return lang.text("Phone number must start with 249");
+    }*/
     /*else if (!RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(value)) {
@@ -199,8 +200,8 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    String mobile = mobileController.text;
-    String password = passwordController.text;
+    String mobile = mobileController.text.trim();
+    String password = passwordController.text.trim();
     showLoadingDialog(context);
     //check user here
     print('Mobile is: $mobile, password is: $password');

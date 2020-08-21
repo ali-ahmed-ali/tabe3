@@ -28,4 +28,17 @@ class Repository {
   Future<Map<String, dynamic>> updateToken(
           String customerId, String newToken) =>
       apiProvider.updateToken(customerId, newToken);
+
+  Future<Map<String, dynamic>> readMessages(Map<String, dynamic> request) =>
+      apiProvider.readMessages(request);
+
+  Future<Map<String, dynamic>> sendMessage(Map<String, dynamic> request) =>
+      apiProvider.sendMessage(request);
+
+  Future<Map<String, dynamic>> getThread(int customerId) =>
+      apiProvider.getThread(customerId);
+
+  Future<Map<String, dynamic>> markAsRead(int customerId, int threadId,
+          [List msgsId]) =>
+      apiProvider.markAsRead(customerId, threadId, msgsId);
 }

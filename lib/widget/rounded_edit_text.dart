@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class RoundedEditText extends StatelessWidget {
   final TextEditingController controller;
+  final FocusNode focusNode;
   final String hint;
   final List formatters;
   final TextInputType keyboardType;
@@ -22,7 +23,8 @@ class RoundedEditText extends StatelessWidget {
       this.textInputAction,
       this.validator,
       this.onFieldSubmitted,
-      this.attachFile})
+      this.attachFile,
+      @required this.focusNode})
       : super(key: key);
 
   @override
@@ -45,6 +47,8 @@ class RoundedEditText extends StatelessWidget {
               Expanded(
                 child: TextField(
                   controller: controller,
+                  keyboardType: keyboardType,
+                  maxLines: null,
                   decoration: InputDecoration(
                     hintText: hint,
                     border: InputBorder.none,

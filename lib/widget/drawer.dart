@@ -148,6 +148,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        ListTile(
+          onTap: () async {
+            await _manager.remove("customer");
+            await _manager.remove("firebase_notification_token");
+            Navigator.pushNamedAndRemoveUntil(context, RouteName.splash,
+                ModalRoute.withName(RouteName.splash));
+          },
+          title: Text(lang.text('Logout')),
+          leading: Icon(
+            Icons.exit_to_app,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
       ],
     );
   }

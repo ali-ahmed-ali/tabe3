@@ -288,6 +288,7 @@ class Bubble extends StatelessWidget {
   Bubble({
     this.child,
     this.time,
+    this.sending = false,
     Radius radius,
     BubbleNip nip,
     double nipWidth,
@@ -330,6 +331,7 @@ class Bubble extends StatelessWidget {
 
   final Widget child;
   final String time;
+  final bool sending;
   final Color color;
   final double elevation;
   final Color shadowColor;

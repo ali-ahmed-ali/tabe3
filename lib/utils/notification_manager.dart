@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/resources/repository.dart';
 
 class NotificationManager {
@@ -25,14 +24,13 @@ class NotificationManager {
   Future onSelectNotification(String payload) async {
     // When user clicks notification
     log("onSelectNotification: $payload");
-    await Navigator.pushNamed(_context, RouteName.splash);
   }
 
   Future<void> init(BuildContext context) async {
     _context = context;
     if (!_initialized) {
       var initSettingsAndroid =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
+          AndroidInitializationSettings('@mipmap/launcher_icon');
       var initSettingsIOS = IOSInitializationSettings(
           requestAlertPermission: true,
           requestBadgePermission: false,
@@ -54,9 +52,9 @@ class NotificationManager {
     var action = AndroidNotificationChannelAction.CreateIfNotExists;
 
     String groupKey = 'CHINGUITEL_OFFERS';
-    String groupChannelId = 'OFFERS';
-    String groupChannelName = 'Offer chnnel';
-    String groupChannelDescription = 'This channel for ChinguitelApp';
+    String groupChannelId = 'TAB3';
+    String groupChannelName = 'Tab3 Channel';
+    String groupChannelDescription = 'This channel for Tab3 App';
 
     var androidDetails = AndroidNotificationDetails(
         groupChannelId, groupChannelName, groupChannelDescription,
@@ -66,7 +64,8 @@ class NotificationManager {
         groupKey: groupKey,
         playSound: true,
         showWhen: true,
-        enableLights: true);
+        enableLights: true,
+        channelShowBadge: true);
     var iOSDetails = IOSNotificationDetails();
     var notificationDetails = NotificationDetails(androidDetails, iOSDetails);
     await _notification.show(0, title, body, notificationDetails,

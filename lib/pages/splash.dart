@@ -69,9 +69,11 @@ class _SplashPageState extends State<SplashPage> {
     String user = await _manager.get("customer", null);
     bool firstLaunch = await _manager.get("firstLaunch", true);
     if (firstLaunch) {
-      Navigator.pushNamed(context, RouteName.startPage);
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteName.startPage, ModalRoute.withName(RouteName.splash));
     } else if (user == null) {
-      Navigator.pushNamed(context, RouteName.login);
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteName.login, ModalRoute.withName(RouteName.splash));
     } else {
       Navigator.pushNamed(context, RouteName.home);
     }

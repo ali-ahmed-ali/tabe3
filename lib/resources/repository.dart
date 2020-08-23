@@ -41,4 +41,22 @@ class Repository {
   Future<Map<String, dynamic>> markAsRead(int customerId, int threadId,
           [List msgsId]) =>
       apiProvider.markAsRead(customerId, threadId, msgsId);
+
+  Future<Map<String, dynamic>> getStudents(int customerId) =>
+      apiProvider.getStudents(customerId);
+
+  Future<Map<String, dynamic>> getContacts(int customerId) =>
+      apiProvider.getContacts(customerId);
+
+  Future<Map<String, dynamic>> getExams(int studentId) =>
+      apiProvider.getExams(studentId);
+
+  Future<Map<String, dynamic>> getResult(int examId, int studentId) =>
+      apiProvider.getResult(examId, studentId);
+
+  Future<Map<String, dynamic>> getNews(int studentId) =>
+      apiProvider.getNews(studentId);
+
+  Future<Map<String, dynamic>> getTimeTable(int studentId) =>
+      apiProvider.getTimeTable(studentId);
 }

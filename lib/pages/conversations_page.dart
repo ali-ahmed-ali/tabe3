@@ -26,9 +26,12 @@ class _ConversationsPageState extends State<ConversationsPage> {
   Map userData = {};
   bool loading = false;
 
+  bool loadingContact = true;
+
   @override
   void initState() {
     loadConversations();
+    getContacts();
     super.initState();
   }
 
@@ -56,8 +59,27 @@ class _ConversationsPageState extends State<ConversationsPage> {
     }
   }
 
+  List contacts = [];
+
+  void getContacts() async {
+    setState(() {
+      loadingContact = true;
+    });
+    Map response = await _repository.getContacts(9);
+    print('contact response: $response');
+    setState(() {
+      loadingContact = false;
+    });
+    if (response.containsKey("success") && response["success"]) {
+      setState(() {
+        contacts = response["available_contact"];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('userData: $userData');
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -72,7 +94,17 @@ class _ConversationsPageState extends State<ConversationsPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          Map contact = await showContactDialog();
+          if (contact != null && contact.containsKey("customer_id")) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ChatPage(
+                threadId: 0,
+                toId: contact["customer_id"] ?? 0,
+              );
+            }));
+          }
+        },
         child: Icon(
           Icons.message,
           color: Colors.white,
@@ -167,6 +199,82 @@ class _ConversationsPageState extends State<ConversationsPage> {
         height: 50,
         fit: BoxFit.cover,
       ),
+    );
+  }
+
+  Future<Map> showContactDialog() async {
+    var contact = await showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            width: 330,
+            child: getList(),
+          ),
+        );
+      },
+    );
+
+    print('Selected contact: $contact');
+    return contact;
+  }
+
+  Widget getList() {
+    if (loadingContact) {
+      return Container(
+        padding: EdgeInsets.all(16.0),
+        child: LoadingWidget(),
+      );
+    } else {
+      if (contacts.length == 0) {
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          child: EmptyWidget(
+            size: 128,
+          ),
+        );
+      } else {
+        return widgetList();
+      }
+    }
+  }
+
+  Widget widgetList() {
+    print("$userData}");
+    return ListView.separated(
+      itemCount: contacts.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          child: ListTile(
+            onTap: () {
+              Navigator.of(context).pop(contacts[index]);
+            },
+            leading: CircleAvatar(
+              child: CachedNetworkImage(
+                imageUrl:
+                    contacts[index]["image"] ?? "assets/images/person1.jpg",
+                placeholder: (error, url) => Image.asset(
+                  "assets/images/person1.jpg",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
+            ),
+            title: Text(contacts[index]["customer_name"] ?? ""),
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider(
+          height: 1,
+          color: Colors.grey,
+        );
+      },
     );
   }
 }

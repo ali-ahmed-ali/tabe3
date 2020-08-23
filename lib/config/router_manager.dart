@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/anims/page_route_anim.dart';
+import 'package:tabee/pages/about_us.dart';
 import 'package:tabee/pages/auth/reset_password.dart';
 import 'package:tabee/pages/auth/update_password.dart';
 import 'package:tabee/pages/auth/verify.dart';
 import 'package:tabee/pages/conversations_page.dart';
+import 'package:tabee/pages/exams_page.dart';
 import 'package:tabee/pages/home.dart';
 import 'package:tabee/pages/language_selector.dart';
 import 'package:tabee/pages/news.dart';
@@ -31,11 +33,13 @@ class RouteName {
   static const String startTapPreview = 'startTapPreview';
   static const String signup = 'signup';
   static const String test = 'tests';
+  static const String exams = 'exams';
   static const String tuitions = 'tuitions';
   static const String news = 'news';
   static const String schedule = 'schedule';
   static const String attend = 'attend';
   static const String conversations = 'conversations';
+  static const String aboutUs = 'aboutUs';
 
   static const String updatePassword = "updatePassword";
 }
@@ -73,12 +77,16 @@ class Router {
 //        return FadeRouteBuilder();
       case RouteName.test:
         return SlideTopRouteBuilder(TestResultPage());
+      case RouteName.exams:
+        return SlideTopRouteBuilder(ExamsPage());
       case RouteName.tuitions:
         return SlideTopRouteBuilder(TuitionsPage());
       case RouteName.news:
         return SlideTopRouteBuilder(NewsPage());
       case RouteName.conversations:
         return SlideTopRouteBuilder(ConversationsPage());
+      case RouteName.aboutUs:
+        return SlideTopRouteBuilder(AboutUs());
 
       default:
         return CupertinoPageRoute(

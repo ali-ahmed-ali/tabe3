@@ -1,8 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart' as ratingStars;
+import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/lang.dart';
+import 'package:tabee/utils/pref_manager.dart';
+import 'package:tabee/widget/circle_image.dart';
+import 'package:tabee/widget/empty_widget.dart';
+import 'package:tabee/widget/loading_widget.dart';
 
 class TestResultPage extends StatefulWidget {
+  final Map student;
+  final Map exam;
+
+  const TestResultPage({Key key, this.student, this.exam}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ResultPageState();
@@ -11,31 +22,46 @@ class TestResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<TestResultPage>
     with SingleTickerProviderStateMixin {
+  final Repository _repository = new Repository();
+  final PrefManager _manager = new PrefManager();
   String rank = 'First';
   double total = 0.0;
+  bool loading = false;
   TabController _controller;
-  List<Map<String, dynamic>> _subjectsGrade = [
-    {'sub_name': 'Arabic', 'grade': 100},
-    {'sub_name': 'English', 'grade': 60},
-    {'sub_name': 'Math', 'grade': 85},
-    {'sub_name': 'Science', 'grade': 90},
-    {'sub_name': 'Geographic', 'grade': 100},
-    {'sub_name': 'Quran', 'grade': 100},
-  ];
+  List _subjectsGrade = [];
   String _comment =
-      'ggh jgjh gjh gjkh hj hj g jhg hghjghgjhgh gh hjg hjg hjghjghg jhg hg jhg';
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip';
 
   @override
   void initState() {
-    super.initState();
     _controller = TabController(length: 2, vsync: this);
+    getResults();
+    super.initState();
+  }
+
+  void getResults() async {
+    setState(() {
+      loading = true;
+    });
+    Map response = await _repository.getResult(
+        widget.exam["id"], widget.student["student_id"]);
+    print('Result response: $response');
+    setState(() {
+      loading = false;
+      if (response.containsKey("success") && response["success"]) {
+        setState(() {
+          _subjectsGrade = response["exam_ids"];
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Studnet Name'),
+        title:
+            Text("${widget.student["student_name"] ?? lang.text("Undefined")}"),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
@@ -46,32 +72,46 @@ class _ResultPageState extends State<TestResultPage>
             Navigator.pop(context);
           },
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.favorite_border),
-            onPressed: () {},
-          )
-        ],
+//        actions: <Widget>[
+//          IconButton(
+//            icon: Icon(Icons.favorite_border),
+//            onPressed: () {},
+//          )
+//        ],
       ),
       body: Container(
+        padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: <Widget>[
+            SizedBox(height: 16.0),
             Center(
-              child: Image.asset(
-                'assets/images/profile.jpg',
-                height: 150,
-                width: 150,
+              child: CircleImage(
+                child: CachedNetworkImage(
+                  imageUrl:
+                      "https://cdn.pixabay.com/photo/2016/04/26/07/20/woman-1353803__340.png",
+                  width: 100,
+                  height: 100,
+                  placeholder: (error, url) => Image(
+                    image: AssetImage('assets/images/profile.jpg'),
+                    fit: BoxFit.cover,
+                    width: 80,
+                    height: 80,
+                  ),
+                ),
+                borderColor: Theme.of(context).primaryColor,
+                borderWidth: 1,
               ),
             ),
+            SizedBox(height: 8),
             Text(
-              lang.text('First Term Result'),
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              widget.student["student_class"] ?? lang.text("Undefined"),
+              style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             SizedBox(
-              height: 10,
+              height: 8,
             ),
-            Container(
+            /*Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -88,12 +128,20 @@ class _ResultPageState extends State<TestResultPage>
                   )
                 ],
               ),
-            ),
+            ),*/
             Container(
               margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: Divider(),
             ),
-            _buildTabs(),
+            loading
+                ? Container(
+                    child: Center(
+                      child: LoadingWidget(
+                        useLoader: true,
+                      ),
+                    ),
+                  )
+                : _buildTabs(),
           ],
         ),
       ),
@@ -133,29 +181,18 @@ class _ResultPageState extends State<TestResultPage>
           margin: EdgeInsets.only(bottom: 20),
           height: 200,
           child: TabBarView(controller: _controller, children: <Widget>[
-            ListView(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: _getTableRows(),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
+            _subjectsGrade.isNotEmpty
+                ? ListView(
                     children: <Widget>[
-                      Expanded(
-                          child: Center(
-                        child: Text(lang.text('Grade')),
-                      )),
-                      Expanded(
-                          child: Center(
-                        child: Text(lang.text(rank)),
-                      )),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: _getTableRows(),
+                      ),
                     ],
+                  )
+                : Center(
+                    child: EmptyWidget(),
                   ),
-                )
-              ],
-            ),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 height: 200,
@@ -168,25 +205,42 @@ class _ResultPageState extends State<TestResultPage>
 
   _getTableRows() {
     return Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        border: TableBorder.all(color: Colors.grey),
-        children: _subjectsGrade.map((item) {
-          return TableRow(
-              decoration: BoxDecoration(
-                color: _getColorsFromPercent(
-                    double.parse(item['grade'].toString())),
-              ),
-              children: [
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(item['sub_name']),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(item['grade'].toString()),
-                ),
-              ]);
-        }).toList());
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      border: TableBorder.all(color: Colors.grey),
+      children: getTableData(),
+    );
+  }
+
+  List<TableRow> getTableData() {
+//    _subjectsGrade.insert(0, {
+//      "obtained_marks": double.parse("0.0"),
+//      "subject": "Subject name",
+//    });
+    return _subjectsGrade.map((item) {
+      return TableRow(
+          decoration: BoxDecoration(
+            color: _getColorsFromPercent(
+                double.parse("${item['obtained_marks'] ?? "0.0"}")),
+          ),
+          children: [
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Text(item['subject'] ?? lang.text("Undefined")),
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Text(item['obtained_marks'].toString()),
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Text(item['minimum_marks'].toString()),
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Text(item['maximum_marks'].toString()),
+            ),
+          ]);
+    }).toList();
   }
 
   Color _getColorsFromPercent(double percent) {

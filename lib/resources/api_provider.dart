@@ -102,6 +102,43 @@ class ApiProvider {
     });
   }
 
+  Future<Map<String, dynamic>> getStudents(int customerId) async {
+    return await _doRequest("/getStudents", Method.POST, {
+      "customer_id": customerId,
+    });
+  }
+
+  Future<Map<String, dynamic>> getContacts(int customerId) async {
+    return await _doRequest("/getContacts", Method.POST, {
+      "customer_id": 9,
+    });
+  }
+
+  Future<Map<String, dynamic>> getExams(int studentId) async {
+    return await _doRequest("/GetExams", Method.POST, {
+      "student_id": studentId,
+    });
+  }
+
+  Future<Map<String, dynamic>> getResult(int examId, int studentId) async {
+    return await _doRequest("/GetResult", Method.POST, {
+      "student_id": studentId,
+      "exam_id": examId,
+    });
+  }
+
+  Future<Map<String, dynamic>> getNews(int studentId) async {
+    return await _doRequest("/StudentAnnouncements", Method.POST, {
+      "student_id": studentId,
+    });
+  }
+
+  Future<Map<String, dynamic>> getTimeTable(int studentId) async {
+    return await _doRequest("/getStudentTimetable", Method.POST, {
+      "student_id": studentId,
+    });
+  }
+
   Future<Map<String, dynamic>> _doRequest(String path, Method method,
       [Map<String, dynamic> requestFromUser]) async {
     var connectivityResult = await Connectivity().checkConnectivity();

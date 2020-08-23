@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     {
       'image': 'assets/icons/score.svg',
       'title': lang.text('The Exams'),
-      'routing': RouteName.test,
+      'routing': RouteName.exams,
     },
     {
       'image': 'assets/icons/charge.svg',
@@ -35,8 +35,8 @@ class _HomePageState extends State<HomePage> {
     },
     {
       'image': 'assets/icons/charge.svg',
-      'title': lang.text('Pay the fees'),
-      'routing': RouteName.tuitions,
+      'title': lang.text('Attendance'),
+      'routing': RouteName.attend,
     },
   ];
 
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.translate,
+              Icons.language,
               color: Colors.white,
             ),
             onPressed: () async {

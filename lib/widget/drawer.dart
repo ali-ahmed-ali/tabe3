@@ -33,7 +33,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('userData: $userData');
     return ListView(
       children: <Widget>[
         Container(
@@ -46,28 +45,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     child: CachedNetworkImage(
                       imageUrl:
                           "https://cdn.pixabay.com/photo/2016/04/26/07/20/woman-1353803__340.png",
-                      width: 80,
-                      height: 80,
+                      width: 60,
+                      height: 60,
                       placeholder: (error, url) => Image(
                         image: AssetImage('assets/images/profile.jpg'),
                         fit: BoxFit.cover,
-                        width: 80,
-                        height: 80,
+                        width: 60,
+                        height: 60,
                       ),
                     ),
                     borderColor: Theme.of(context).primaryColor,
                     borderWidth: 1,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 8),
                   Text(
                     userData['name'] ?? "Username",
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 4),
                   Text(
                     userData['mobile'] ?? "-",
                     style: TextStyle(color: Colors.grey),
@@ -110,16 +105,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        ListTile(
-          onTap: () {
-            Navigator.pushNamed(context, RouteName.test);
-          },
-          title: Text(lang.text('Student profile')),
-          leading: Icon(
-            Icons.assignment,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
+//        ListTile(
+//          onTap: () {
+//            Navigator.pushNamed(context, RouteName.exams);
+//          },
+//          title: Text(lang.text('Student profile')),
+//          leading: Icon(
+//            Icons.assignment,
+//            color: Theme.of(context).primaryColor,
+//          ),
+//        ),
         ListTile(
           onTap: () {
             Navigator.pushNamed(context, RouteName.tuitions);
@@ -141,7 +136,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, RouteName.aboutUs);
+          },
           title: Text(lang.text('About us')),
           leading: Icon(
             Icons.people,

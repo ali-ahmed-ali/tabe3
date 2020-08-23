@@ -42,6 +42,7 @@ dependencies:
   device_info: ^0.4.2+4
   google_maps_flutter: ^0.5.21+7
   flutter_spinkit: ^4.1.2+1
+  flutter_html: ^1.0.0
 
 dev_dependencies:
   flutter_test:

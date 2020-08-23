@@ -23,5 +23,17 @@
   "Advertisements board": "Advertisements board",
   "Student profile": "Student profile",
   "Register new student": "Register new student",
-  "About us": "About us"
+  "About us": "About us",
+  "Logout": "Logout",
+  "Chats": "Chats",
+  "Teacher": "Teacher",
+  "Type a message": "Type a message",
+  "loading": "Loading",
+  "No data found": "No data found",
+  "Exams": "Exams",
+  "Please choose a student to see which exams he is sitting for": "Please choose a student to see which exams he is sitting for",
+  "Please choose the exam whose scores you want to know": "Please choose the exam whose scores you want to know",
+  "News": "News",
+  "about_us_long": "<b>Moqal Company</b> is a leading Sudanese technical company specialized in the field of programming websites and mobile phone applications of various kinds and creating systems in addition to the service of installing surveillance cameras systems and networking networks, where we have experience of up to more than six years in this field and we have a professional and creative human cadre in providing fields Mentioned with high quality and efficiency",
+  "Select student": "Select student"
 }

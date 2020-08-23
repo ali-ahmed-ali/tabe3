@@ -197,7 +197,7 @@ class _ChatPageState extends State<ChatPage> {
                             ),
                             SizedBox(height: 8.0),
                             Text(
-                              "Teacher",
+                              lang.text("Teacher"),
                               style: TextStyle(color: Colors.white),
                             ),
                           ],

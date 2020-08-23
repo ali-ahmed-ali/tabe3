@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabee/utils/lang.dart';
+import 'package:tabee/widget/empty_widget.dart';
 
 class TuitionsPage extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class TuitionsPage extends StatefulWidget {
 
 class _TuitionsState extends State<TuitionsPage> {
   int _totalPrice;
+  bool available = false;
   List<Map<String, dynamic>> all = [
     {'title': lang.text('Tuitions Fees'), 'value': true, 'price': 5000},
     {'title': lang.text('Uniform'), 'value': true, 'price': 500},
@@ -32,73 +34,83 @@ class _TuitionsState extends State<TuitionsPage> {
             }),
       ),
       body: Container(
-        margin: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Text(
-                'First Second Third',
-                style: TextStyle(fontSize: 17),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: Text(
-                lang.text('Sixth Class'),
-                style: TextStyle(fontSize: 15),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildChechBoxes(0),
-            _buildChechBoxes(1),
-            _buildChechBoxes(2),
-            _buildChechBoxes(3),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(right: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Text(
-                          lang.text('Total'),
-                        )),
-                        Text(
-                          '\$${_getTotal().toString()}',
-                          style: TextStyle(color: Colors.blueGrey,fontSize: 20),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      child: RaisedButton(
-                          color: Theme.of(context).primaryColor,
-                          child: Text(
-                            lang.text('Fee Approve'),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {}),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    )
-                  ],
+        margin: EdgeInsets.all(8),
+        child: !available
+            ? Container(
+                child: Center(
+                  child: EmptyWidget(
+                    message: lang.text("Coming soon"),
+                    size: 64,
+                  ),
                 ),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      'First Second Third',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      lang.text('Sixth Class'),
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _buildChechBoxes(0),
+                  _buildChechBoxes(1),
+                  _buildChechBoxes(2),
+                  _buildChechBoxes(3),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Text(
+                                lang.text('Total'),
+                              )),
+                              Text(
+                                '\$${_getTotal().toString()}',
+                                style: TextStyle(
+                                    color: Colors.blueGrey, fontSize: 20),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: RaisedButton(
+                                color: Theme.of(context).primaryColor,
+                                child: Text(
+                                  lang.text('Fee Approve'),
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {}),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -114,7 +126,7 @@ class _TuitionsState extends State<TuitionsPage> {
         ),
         Text(
           all[index]['price'].toString(),
-          style: TextStyle(color: Colors.blueGrey,fontSize: 15),
+          style: TextStyle(color: Colors.blueGrey, fontSize: 15),
         ),
         SizedBox(
           width: 20,

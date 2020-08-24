@@ -62,8 +62,11 @@ class _HomePageState extends State<HomePage> {
               var selected = await showPreferredLang(
                   context, false, lang.text("Select language"));
               print('Selected: $selected');
-              lang.setNewLanguage(selected, true);
+              await lang.setNewLanguage(selected, true);
+              setState(() {});
               AppBuilder.of(context).rebuild();
+              Navigator.pushNamedAndRemoveUntil(context, RouteName.splash,
+                  ModalRoute.withName(RouteName.splash));
             },
           )
         ],

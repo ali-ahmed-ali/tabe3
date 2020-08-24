@@ -173,7 +173,7 @@ class _ResultPageState extends State<TestResultPage>
               text: lang.text('Degrees'),
             ),
             Tab(
-              text: lang.text('Comment'),
+              text: lang.text('Comments'),
             )
           ]),
         ),

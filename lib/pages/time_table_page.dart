@@ -36,16 +36,16 @@ class _TimeTablePageState extends State<TimeTablePage> {
     Text(lang.text("Thu")),
     Text(lang.text("Fri")),
   ];
-  List data = [
+  List<List> data = [
     [
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
+      Text(lang.text("French1")),
+      Text(lang.text("French2")),
+      Text(lang.text("French3")),
+      Text(lang.text("French4")),
+      Text(lang.text("French5")),
+      Text(lang.text("French6")),
+      Text(lang.text("French7")),
+      Text(lang.text("French8")),
     ],
     [
       Center(child: Text(lang.text("French"))),
@@ -181,7 +181,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
     setState(() {
       loadingTable = false;
     });
-    print('time table response: $response');
+    print('time table response: $response');///////////////////////////////////////////////
     int max = 0;
     if (response.containsKey("success") && response["success"]) {
       response["timetable"].forEach((key, value) {
@@ -191,30 +191,36 @@ class _TimeTablePageState extends State<TimeTablePage> {
           print('MAX >>>>>>>>>>>> $max');
         });
       });
-      response["timetable"].forEach((key, value) {
-        setState(() {
-          /*
-          data.add((response["timetable"][key] as List)
-              .map((e) => Text(e.toString()))
-              .toList());
 
-          print('############ DAYS: $days');
-          print('############ DATA: $data');*/
-
-          List<Widget> temp = [];
-          columns = [];
-          for (int i = 0; i < max; i++) {
-            columns.add(new Text("Lec: $i"));
-            if ((value as List).length - 1 < i) {
-              temp.add(new Text(value.toString()));
-            } else {
-              temp.add(new Container(
-                color: Colors.grey,
-              ));
-            }
-          }
-          data.add(temp);
+      setState(()
+      {
+        Map<String,dynamic> allDays = response["timetable"];
+        List<List> allDaysList = [];
+        allDays.forEach((key, value) {
+          allDaysList.add(value);
         });
+        for(int i=0;i<7;i++)
+          {
+            List day = allDaysList.elementAt(i);
+
+            List newdayvalue = [];
+            for(int k = 0;k<8;k++)
+            {
+              if(k>=day.length)
+                {
+                  //data.elementAt(i).removeAt(k);
+                  newdayvalue.add(Text("-"));
+
+                }
+                else
+                  {
+                    //data.elementAt(i).removeAt(k);
+                    newdayvalue.add(Text(day.elementAt(k)['subject_name']));
+                  }
+
+            }
+            data.add(newdayvalue);
+          }
       });
     }
   }

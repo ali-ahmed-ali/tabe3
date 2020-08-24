@@ -17,8 +17,8 @@ import 'package:tabee/pages/student_result.dart';
 import 'package:tabee/pages/time_table_page.dart';
 import 'package:tabee/pages/tuitions.dart';
 
-import 'file:///D:/Projects/Android/Tabee3/Tabe3/lib/pages/auth/login.dart';
-import 'file:///D:/Projects/Android/Tabee3/Tabe3/lib/pages/auth/signup.dart';
+import 'package:tabee/pages/auth/login.dart';
+import 'package:tabee/pages/auth/signup.dart';
 
 class RouteName {
   // TODO: When adding new page specify name for it

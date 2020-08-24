@@ -87,7 +87,7 @@ class _CustomTableState extends State<CustomTable> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
-                dividerThickness: widget.divider,
+                //dividerThickness: widget.divider,
                 columnSpacing: widget.columnSpacing,
                 columns: dataColumn,
                 rows: dataRow,

@@ -27,100 +27,13 @@ class _TimeTablePageState extends State<TimeTablePage> {
     Text(lang.text("Lecture 7")),
     Text(lang.text("Lecture 8")),
   ];
-  List<Widget> days = [
-    Text(lang.text("Sat")),
-    Text(lang.text("Sun")),
-    Text(lang.text("Mon")),
-    Text(lang.text("Tue")),
-    Text(lang.text("Wed")),
-    Text(lang.text("Thu")),
-    Text(lang.text("Fri")),
-  ];
-  List<List> data = [
-    [
-      Text(lang.text("French1")),
-      Text(lang.text("French2")),
-      Text(lang.text("French3")),
-      Text(lang.text("French4")),
-      Text(lang.text("French5")),
-      Text(lang.text("French6")),
-      Text(lang.text("French7")),
-      Text(lang.text("French8")),
-    ],
-    [
-      Center(child: Text(lang.text("French"))),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-    ],
-    [
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-    ],
-    [
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-    ],
-    [
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-    ],
-    [
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-    ],
-    [
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-    ],
-    [
-      Text(lang.text("French")),
-      Text(lang.text("French")),
-//      Text(lang.text("French")),
-//      Text(lang.text("French")),
-//      Text(lang.text("French")),
-//      Text(lang.text("French")),
-//      Text(lang.text("French")),
-      Text(lang.text("Dsfsdfsdfsd")),
-    ],
-  ];
+  List<Widget> days = [];
+  List<List> data = [];
 
   bool loading = false;
-  List students = [];
+  List students = [
+    {"student_id": -1, "student_name": lang.text("--  Select Student  --")}
+  ];
   Map selectedStudent = {};
   Map userData = {};
 
@@ -154,7 +67,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        students = response["available_student"];
+        students.addAll(response["available_student"]);
         if (students.isNotEmpty) selectedStudent = students[0];
       });
     } else {
@@ -181,46 +94,38 @@ class _TimeTablePageState extends State<TimeTablePage> {
     setState(() {
       loadingTable = false;
     });
-    print('time table response: $response');///////////////////////////////////////////////
+//    print(
+//        'time table response: $response'); ///////////////////////////////////////////////
     int max = 0;
     if (response.containsKey("success") && response["success"]) {
       response["timetable"].forEach((key, value) {
         setState(() {
           days.add(new Text(key.toString()));
           max = (value as List).length > max ? (value as List).length : max;
-          print('MAX >>>>>>>>>>>> $max');
         });
       });
 
-      setState(()
-      {
-        Map<String,dynamic> allDays = response["timetable"];
+      setState(() {
+        Map<String, dynamic> allDays = response["timetable"];
         List<List> allDaysList = [];
         allDays.forEach((key, value) {
           allDaysList.add(value);
         });
-        for(int i=0;i<7;i++)
-          {
-            List day = allDaysList.elementAt(i);
+        for (int i = 0; i < 7; i++) {
+          List day = allDaysList.elementAt(i);
 
-            List newdayvalue = [];
-            for(int k = 0;k<8;k++)
-            {
-              if(k>=day.length)
-                {
-                  //data.elementAt(i).removeAt(k);
-                  newdayvalue.add(Text("-"));
-
-                }
-                else
-                  {
-                    //data.elementAt(i).removeAt(k);
-                    newdayvalue.add(Text(day.elementAt(k)['subject_name']));
-                  }
-
+          List newdayvalue = [];
+          for (int k = 0; k < 8; k++) {
+            if (k >= day.length) {
+              //data.elementAt(i).removeAt(k);
+              newdayvalue.add(Text("-"));
+            } else {
+              //data.elementAt(i).removeAt(k);
+              newdayvalue.add(Text(day.elementAt(k)['subject_name']));
             }
-            data.add(newdayvalue);
           }
+          data.add(newdayvalue);
+        }
       });
     }
   }
@@ -236,7 +141,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
           child: Container(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 loading
@@ -247,12 +152,13 @@ class _TimeTablePageState extends State<TimeTablePage> {
                     : CustomDropdownList(
                         labels: students,
                         selectedId: selectedStudent != null
-                            ? selectedStudent["id"].toString()
-                            : students[0]["id"].toString(),
+                            ? selectedStudent["student_id"].toString()
+                            : students[0]["student_id"].toString(),
                         onChange: (data) {
                           print('Data: $data');
                           setState(() {
                             selectedStudent = data;
+                            print('selectedStudent: $selectedStudent');
                           });
                           getTimeTable(data["student_id"]);
                         },
@@ -260,11 +166,14 @@ class _TimeTablePageState extends State<TimeTablePage> {
                         selectedKey: "student_id",
                         label: lang.text("Select student"),
                       ),
-                SizedBox(height: 16),
+                SizedBox(height: 64),
                 loadingTable
-                    ? Center(
-                        child: LoadingWidget(
-                          useLoader: true,
+                    ? Container(
+                        height: 64,
+                        child: Center(
+                          child: LoadingWidget(
+                            useLoader: true,
+                          ),
                         ),
                       )
                     : data.isNotEmpty

@@ -80,51 +80,54 @@ class _ResetPasswordState extends State<ResetPassword> {
   }
 
   Widget _buildForm(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
 //          _buildEmailTextField(),
-          errorMessage != null
-              ? Container(
-                  padding: const EdgeInsets.all(8.0),
-                  margin: const EdgeInsets.only(bottom: 8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.red.withOpacity(.8),
-                  ),
-                  child: Text(
-                    errorMessage,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
+            errorMessage != null
+                ? Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.only(bottom: 8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.red.withOpacity(.8),
                     ),
-                  ),
-                )
-              : Container(),
-          CustomEditText(
-            prefix: Icon(Icons.phone, color: Colors.white),
-            controller: mobileController,
-            labelText: lang.text("Mobile"),
-            keyboardType: TextInputType.phone,
-            validator: mobileValidator,
-            textInputAction: TextInputAction.next,
-            isPhoneNumber: true,
-            countryCode: "249",
-            fontColor: Colors.white,
-          ),
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  )
+                : Container(),
+            CustomEditText(
+              prefix: Icon(Icons.phone, color: Colors.white),
+              controller: mobileController,
+              labelText: lang.text("Mobile"),
+              keyboardType: TextInputType.phone,
+              validator: mobileValidator,
+              textInputAction: TextInputAction.next,
+              isPhoneNumber: true,
+              countryCode: "249",
+              fontColor: Colors.white,
+            ),
 //          _buildPasswordTextField(),
-          SizedBox(height: 24),
-          CustomButton(
-            label: Text(lang.text('Reset')),
-            onPressed: () {
-              _submitButtonPressed();
-            },
-          ),
-          SizedBox(
-            height: 10,
-          ),
-        ],
+            SizedBox(height: 24),
+            CustomButton(
+              label: Text(lang.text('Reset')),
+              onPressed: () {
+                _submitButtonPressed();
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -132,9 +135,10 @@ class _ResetPasswordState extends State<ResetPassword> {
   String mobileValidator(String value) {
     if (value.isEmpty) {
       return lang.text('This is required');
-    } else if (!value.startsWith("249")) {
-      return lang.text("Phone number must start with 249");
     }
+    /* else if (!value.startsWith("249")) {
+      return lang.text("Phone number must start with 249");
+    }*/
     /*else if (!RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(value)) {

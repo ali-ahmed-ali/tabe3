@@ -38,8 +38,17 @@
   "Select student": "Select student",
   "Degrees": "Degrees",
   "Comments": "Comments",
-  "Forget password? rest it":  "Forget password? reset it",
+  "Forget password? rest it": "Forget password? reset it",
   "Mobile": "Mobile",
   "Reset password": "Reset password",
-  "Reset": "Reset"
+  "Reset": "Reset",
+  "--  Select Student  --": "--  Select Student  --",
+  "OTP not received?": "OTP not received?",
+  "Retry": "Retry",
+  "Verification": "Verification",
+  "OTP Has been sent to you on your mobile phone. Please enter it below": "OTP Has been sent to you on your mobile phone. Please enter it below",
+  "Verify": "Verify",
+  "Resend": "Resend",
+  "Start date: ": "Start date: ",
+  "End date: ": "End date: "
 }

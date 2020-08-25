@@ -97,10 +97,28 @@ class _ConversationsPageState extends State<ConversationsPage> {
         onPressed: () async {
           Map contact = await showContactDialog();
           if (contact != null && contact.containsKey("customer_id")) {
+            for (int i = 0; i < conversations.length; i++) {
+              print(
+                  '${contact["customer_id"].toString() == conversations[i]["from"].toString()} ||| ${contact["customer_id"].toString() == conversations[i]["to"].toString()}');
+              if (contact["customer_id"].toString() ==
+                      conversations[i]["from"].toString() ||
+                  contact["customer_id"].toString() ==
+                      conversations[i]["to"].toString()) {}
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ChatPage(
+                  threadId: conversations[i]["thread_id"] ?? 0,
+                  toId: contact["customer_id"] ?? 0,
+                  toName: contact["customer_name"] ?? "",
+                );
+              }));
+
+              return;
+            }
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return ChatPage(
                 threadId: 0,
                 toId: contact["customer_id"] ?? 0,
+                toName: contact["customer_name"] ?? "",
               );
             }));
           }

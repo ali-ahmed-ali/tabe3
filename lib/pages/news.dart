@@ -57,7 +57,7 @@ class _NewsPageState extends State<NewsPage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        students = response["available_student"];
+        students.addAll(response["available_student"]);
         if (students.isNotEmpty) selectedStudent = students[0];
       });
     } else {
@@ -117,7 +117,7 @@ class _NewsPageState extends State<NewsPage> {
                   )
                 : CustomDropdownList(
                     labels: students,
-                    selectedId: selectedStudent["id"],
+                    selectedId: selectedStudent["student_id"].toString(),
                     onChange: (data) {
                       print('Data: $data');
                       setState(() {

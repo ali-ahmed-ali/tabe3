@@ -29,6 +29,7 @@ class CustomDropdownList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var dropdownValue = labels[0];
+    print('selected id: $selectedId');
     for (int i = 0; i < labels.length; i++) {
       if (labels[i][selectedKey].toString() == selectedId.toString()) {
         dropdownValue = labels[i];

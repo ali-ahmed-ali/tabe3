@@ -16,8 +16,10 @@ import 'package:tabee/widget/rounded_edit_text.dart';
 class ChatPage extends StatefulWidget {
   final int threadId;
   final toId;
+  final toName;
 
-  const ChatPage({Key key, @required this.threadId, this.toId = -1})
+  const ChatPage(
+      {Key key, @required this.threadId, this.toId = -1, this.toName})
       : super(key: key);
 
   @override
@@ -82,7 +84,6 @@ class _ChatPageState extends State<ChatPage> {
       return;
     }
     from = int.parse(userData["id"]);
-    print('from: $from => to: ${widget.toId}');
     Map response = await _repository.readMessages({
       "customer_id": int.parse(userData["id"]),
       "thread_id": widget.threadId,
@@ -186,16 +187,16 @@ class _ChatPageState extends State<ChatPage> {
                           backgroundImage:
                               AssetImage("assets/images/person1.jpg"),
                         ),
-                        SizedBox(width: 8.0),
+                        SizedBox(width: 4.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(
-                              threadName,
+                              widget.threadId == 0 ? widget.toName : threadName,
                               style: TextStyle(color: Colors.white),
                             ),
-                            SizedBox(height: 8.0),
+                            SizedBox(height: 4.0),
                             Text(
                               lang.text("Teacher"),
                               style: TextStyle(color: Colors.white),

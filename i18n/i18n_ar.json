@@ -40,6 +40,14 @@
   "Forget password? rest it": "نسيت كلمة المرور؟ اعادة تعيينها",
   "Mobile": "رقم الهاتف",
   "Reset password": "اعادة تعيين كلمة المرور",
-  "Reset": "اعادة تعيين"
-
+  "Reset": "اعادة تعيين",
+  "--  Select Student  --": "--  اختر طالب  --",
+  "OTP not received?": "لم تصلك رسالة",
+  "Retry": "إعادة محاولة",
+  "Verification": "التحقق",
+  "OTP Has been sent to you on your mobile phone. Please enter it below": "تم ارسال رسالة على هاتفك، الرجاء التقق منها و ادخالها",
+  "Verify": "تحقق",
+  "Resend": "إعادة ارسال",
+  "Start date: ": "تاريخ البداية: ",
+  "End date: ": "تاريخ النهاية: "
 }

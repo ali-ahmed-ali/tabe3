@@ -52,9 +52,9 @@ class _CustomTableState extends State<CustomTable> {
       cells.add(firstColumn[r]);
       // TODO:  Put first  col to @firstColumnData;
       (widget.data[r] as List).forEach((element) {
-        print('Element $element');
+//        print('Element $element');
         cells.add(DataCell(element));
-        print('Cells: $cells');
+//        print('Cells: $cells');
       });
       dataRow.add(new DataRow(cells: cells));
     }

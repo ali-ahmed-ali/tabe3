@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tabee/utils/lang.dart';
 
 class CustomEditText extends StatefulWidget {
   final String countryCode;
@@ -21,6 +20,8 @@ class CustomEditText extends StatefulWidget {
   final List formatter;
   final String labelText;
 
+  final TextDirection textDirection;
+
   const CustomEditText({
     Key key,
     this.hint,
@@ -40,6 +41,7 @@ class CustomEditText extends StatefulWidget {
     this.formatter,
     this.validator,
     this.labelText,
+    this.textDirection,
   }) : super(key: key);
 
   @override
@@ -94,8 +96,7 @@ class _CustomEditTextState extends State<CustomEditText> {
               ],
             ),
             Align(
-              alignment:
-                  !lang.isRtl() ? Alignment.centerRight : Alignment.centerLeft,
+              alignment: Alignment.centerRight,
               child: widget.isPassword
                   ? IconButton(
                       icon: Icon(Icons.remove_red_eye, color: widget.fontColor),

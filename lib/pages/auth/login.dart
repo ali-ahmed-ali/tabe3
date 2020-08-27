@@ -90,78 +90,82 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _buildForm(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
 //          _buildEmailTextField(),
-          errorMessage != null
-              ? Container(
-                  padding: const EdgeInsets.all(8.0),
-                  margin: const EdgeInsets.only(bottom: 8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.red.withOpacity(.8),
-                  ),
-                  child: Text(
-                    errorMessage,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
+            errorMessage != null
+                ? Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.only(bottom: 8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.red.withOpacity(.8),
                     ),
-                  ),
-                )
-              : Container(),
-          CustomEditText(
-            prefix: Icon(Icons.phone, color: Colors.white),
-            focusNode: emailFocusNode,
-            controller: mobileController,
-            labelText: lang.text("Mobile"),
-            keyboardType: TextInputType.phone,
-            onFieldSubmitted: (value) {
-              FocusScope.of(context).requestFocus(passwordFocusNode);
-            },
-            validator: mobileValidator,
-            textInputAction: TextInputAction.next,
-            isPhoneNumber: true,
-            countryCode: "249",
-            fontColor: Colors.white,
-          ),
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  )
+                : Container(),
+            CustomEditText(
+              textDirection: TextDirection.ltr,
+              prefix: Icon(Icons.phone, color: Colors.white),
+              focusNode: emailFocusNode,
+              controller: mobileController,
+              labelText: lang.text("Mobile"),
+              keyboardType: TextInputType.phone,
+              onFieldSubmitted: (value) {
+                FocusScope.of(context).requestFocus(passwordFocusNode);
+              },
+              validator: mobileValidator,
+              textInputAction: TextInputAction.next,
+              isPhoneNumber: true,
+              countryCode: "249",
+              fontColor: Colors.white,
+            ),
 //          _buildPasswordTextField(),
-          CustomEditText(
-            focusNode: passwordFocusNode,
-            controller: passwordController,
+            CustomEditText(
+              focusNode: passwordFocusNode,
+              controller: passwordController,
 //            validator: passwordValidator,
-            labelText: lang.text("Password"),
-            fontColor: Colors.white,
-            textInputAction: TextInputAction.done,
-            isPassword: true,
-            prefix: Icon(Icons.lock_outline, color: Colors.white),
-          ),
-          SizedBox(height: 8),
-          MaterialButton(
-            onPressed: () {
-              Navigator.pushNamed(context, RouteName.resetPwd);
-            },
-            child: Text(
-              lang.text("Forget password? rest it"),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
+              labelText: lang.text("Password"),
+              fontColor: Colors.white,
+              textInputAction: TextInputAction.done,
+              isPassword: true,
+              prefix: Icon(Icons.lock_outline, color: Colors.white),
+            ),
+            SizedBox(height: 8),
+            MaterialButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RouteName.resetPwd);
+              },
+              child: Text(
+                lang.text("Forget password? rest it"),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 24),
-          CustomButton(
-            label: Text(lang.text('Sign in')),
-            onPressed: () {
-              _submitButtonPressed();
-            },
-          ),
-          SizedBox(
-            height: 10,
-          ),
-        ],
+            SizedBox(height: 24),
+            CustomButton(
+              label: Text(lang.text('Sign in')),
+              onPressed: () {
+                _submitButtonPressed();
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
       ),
     );
   }

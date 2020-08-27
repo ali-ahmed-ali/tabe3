@@ -111,12 +111,15 @@ class _VerifyScreenState extends State<VerifyScreen> {
                       width: 200,
                       height: 200,
                     ),
-                    Text(
-                      lang.text(
-                          "OTP Has been sent to you on your mobile phone. Please enter it below"),
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      maxLines: 3,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Text(
+                        lang.text(
+                            "OTP Has been sent to you on your mobile phone. Please enter it below"),
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        maxLines: 3,
+                      ),
                     ),
                     SizedBox(
                       height: 24.0,

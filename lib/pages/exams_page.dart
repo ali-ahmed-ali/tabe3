@@ -29,7 +29,7 @@ class _ExamsPageState extends State<ExamsPage> {
   List students = [
     {
       "student_id": -1,
-      "student_name": lang.text("-- Select student --"),
+      "student_name": lang.text("--  Select Student  --"),
     }
   ];
   List exams = [];
@@ -58,7 +58,7 @@ class _ExamsPageState extends State<ExamsPage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        students = response["available_student"];
+        students.addAll(response["available_student"]);
         if (students.isNotEmpty) selectedStudent = students[0];
       });
     } else {
@@ -132,6 +132,7 @@ class _ExamsPageState extends State<ExamsPage> {
                       },
                       displayLabel: "student_name",
                       selectedKey: "student_id",
+                      selectedId: selectedStudent["student_id"].toString(),
                     ),
               SizedBox(height: 8),
               Divider(
@@ -230,13 +231,13 @@ class _ExamsPageState extends State<ExamsPage> {
               style: TextStyle(fontWeight: FontWeight.w400),
               children: [
                 TextSpan(
-                  text: lang.text("Start date:"),
+                  text: lang.text("End date:"),
                   style: TextStyle(
                     color: Colors.black,
                   ),
                 ),
                 TextSpan(
-                  text: lang.text(" ${exam["start_date"]}"),
+                  text: lang.text(" ${exam["end_date"]}"),
                   style: TextStyle(
                     color: Colors.grey,
                   ),

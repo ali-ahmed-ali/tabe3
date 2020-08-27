@@ -85,7 +85,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
   }
 
   void getTimeTable(int studentID) async {
-    
+
   }
 
   @override

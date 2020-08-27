@@ -27,6 +27,17 @@ class _TimeTablePageState extends State<TimeTablePage> {
     Text(lang.text("Lecture 7")),
     Text(lang.text("Lecture 8")),
   ];
+  List<Widget> mainColumns = [
+    Container(),
+    Text(lang.text("Lecture 1")),
+    Text(lang.text("Lecture 2")),
+    Text(lang.text("Lecture 3")),
+    Text(lang.text("Lecture 4")),
+    Text(lang.text("Lecture 5")),
+    Text(lang.text("Lecture 6")),
+    Text(lang.text("Lecture 7")),
+    Text(lang.text("Lecture 8")),
+  ];
   List<Widget> days = [
     Text(lang.text("Sat")),
     Text(lang.text("Sun")),
@@ -176,6 +187,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
     setState(() {
       days = [];
       data = [];
+      columns = [];
     });
     Map response = await _repository.getTimeTable(studentID);
     setState(() {
@@ -199,12 +211,28 @@ class _TimeTablePageState extends State<TimeTablePage> {
         allDays.forEach((key, value) {
           allDaysList.add(value);
         });
+        int maxSubject = 0;
+        for(int i=0;i<7;i++)
+          {
+            print('Max subject count : $maxSubject');
+            if(allDaysList.elementAt(i).length>maxSubject)
+              {
+                maxSubject = allDaysList.elementAt(i).length;
+
+              }
+
+          }
+
+          for(int i=0;i<=maxSubject;i++)
+            {
+              columns.add(mainColumns.elementAt(i));
+            }
         for(int i=0;i<7;i++)
           {
             List day = allDaysList.elementAt(i);
 
             List newdayvalue = [];
-            for(int k = 0;k<8;k++)
+            for(int k = 0;k<maxSubject;k++)
             {
               if(k>=day.length)
                 {

@@ -16,6 +16,7 @@ import 'package:tabee/pages/start_tab_preview.dart';
 import 'package:tabee/pages/student_result.dart';
 import 'package:tabee/pages/time_table_page.dart';
 import 'package:tabee/pages/tuitions.dart';
+import 'package:tabee/pages/student_attend_calend.dart';
 
 import 'package:tabee/pages/auth/login.dart';
 import 'package:tabee/pages/auth/signup.dart';
@@ -87,6 +88,8 @@ class Router {
         return SlideTopRouteBuilder(ConversationsPage());
       case RouteName.aboutUs:
         return SlideTopRouteBuilder(AboutUs());
+      case RouteName.attend:
+        return SlideTopRouteBuilder(StudentAttendCalendPage());
 
       default:
         return CupertinoPageRoute(

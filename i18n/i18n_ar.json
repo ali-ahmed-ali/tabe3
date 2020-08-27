@@ -40,6 +40,11 @@
   "Forget password? rest it": "نسيت كلمة المرور؟ اعادة تعيينها",
   "Mobile": "رقم الهاتف",
   "Reset password": "اعادة تعيين كلمة المرور",
-  "Reset": "اعادة تعيين"
+  "Reset": "اعادة تعيين",
+  "Daily attendance": "الحضور اليومي",
+  "Selected day": "اليوم المحدد",
+  "absence": "غياب",
+  "holiday": "عطلة",
+  "weekend": "عطلة نهاية الاسبوع"
 
 }

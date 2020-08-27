@@ -41,5 +41,10 @@
   "Forget password? rest it":  "Forget password? reset it",
   "Mobile": "Mobile",
   "Reset password": "Reset password",
-  "Reset": "Reset"
+  "Reset": "Reset",
+  "Daily attendance": "Daily attendance",
+  "Selected day": "Selected day",
+  "absence": "absence",
+  "holiday": "holiday",
+  "weekend": "weekend"
 }

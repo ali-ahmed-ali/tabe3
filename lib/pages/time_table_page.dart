@@ -174,38 +174,38 @@ class _TimeTablePageState extends State<TimeTablePage> {
                 SizedBox(height: 16),
                 loading
                     ? Container(
-                  height: 32,
-                  child: LoadingWidget(useLoader: true, size: 24),
-                )
+                        height: 32,
+                        child: LoadingWidget(useLoader: true, size: 24),
+                      )
                     : CustomDropdownList(
-                  labels: students,
-                  selectedId: selectedStudent != null
-                      ? selectedStudent["student_id"].toString()
-                      : students[0]["student_id"].toString(),
-                  onChange: (data) {
-                    print('Data: $data');
-                    setState(() {
-                      selectedStudent = data;
-                    });
-                    getTimeTable(data["student_id"]);
-                  },
-                  displayLabel: "student_name",
-                  selectedKey: "student_id",
-                  label: lang.text("Select student"),
+                        labels: students,
+                        selectedId: selectedStudent != null
+                            ? selectedStudent["student_id"].toString()
+                            : students[0]["student_id"].toString(),
+                        onChange: (data) {
+                          print('Data: $data');
+                          setState(() {
+                            selectedStudent = data;
+                          });
+                          getTimeTable(data["student_id"]);
+                        },
+                        displayLabel: "student_name",
+                        selectedKey: "student_id",
+                        label: lang.text("Select student"),
                       ),
                 SizedBox(height: 16),
                 loadingTable
                     ? Flexible(
-                  child: LoadingWidget(
-                    useLoader: true,
-                    size: 64,
-                  ),
-                )
+                        child: LoadingWidget(
+                          useLoader: true,
+                          size: 64,
+                        ),
+                      )
                     : data.isNotEmpty
-                    ? CustomTable(
-                  title: lang.text("Daily school schedule"),
-                  data: data,
-                  columnData: columns,
+                        ? CustomTable(
+                            title: lang.text("Daily school schedule"),
+                            data: data,
+                            columnData: columns,
                             firstColumnData: days,
                             columnSpacing: 16,
                             divider: 0,

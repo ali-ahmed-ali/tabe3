@@ -118,39 +118,39 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
               children: <Widget>[
                 loading
                     ? Container(
-                  height: 64,
-                  child: LoadingWidget(useLoader: true, size: 24),
-                )
+                        height: 64,
+                        child: LoadingWidget(useLoader: true, size: 24),
+                      )
                     : CustomDropdownList(
-                  labels: students,
-                  selectedId: selectedStudent != null
-                      ? selectedStudent["student_id"].toString()
-                      : students[0]["student_id"].toString(),
-                  onChange: (data) {
-                    print('Data: $data');
-                    setState(() {
-                      selectedStudent = data;
-                    });
-                    getCal(data["student_id"]);
-                  },
-                  displayLabel: "student_name",
-                  selectedKey: "student_id",
-                  label: lang.text("Select student"),
-                ),
+                        labels: students,
+                        selectedId: selectedStudent != null
+                            ? selectedStudent["student_id"].toString()
+                            : students[0]["student_id"].toString(),
+                        onChange: (data) {
+                          print('Data: $data');
+                          setState(() {
+                            selectedStudent = data;
+                          });
+                          getCal(data["student_id"]);
+                        },
+                        displayLabel: "student_name",
+                        selectedKey: "student_id",
+                        label: lang.text("Select student"),
+                      ),
                 SizedBox(height: 16),
                 loadingCal
                     ? Center(
-                  child: LoadingWidget(
-                    useLoader: true,
-                    size: 32,
-                  ),
-                )
+                        child: LoadingWidget(
+                          useLoader: true,
+                          size: 32,
+                        ),
+                      )
                     : absence.length > 0 //offdays.isNotEmpty
-                    ? _buildCalender()
-                    : EmptyWidget(
-                  subMessage:
-                  lang.text("Please select student to get table"),
-                ),
+                        ? _buildCalender()
+                        : EmptyWidget(
+                            subMessage:
+                                lang.text("Please select student to get table"),
+                          ),
                 SizedBox(
                   height: 16,
                 ),
@@ -164,9 +164,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
                               width: 10,
                               height: 10,
                               decoration: BoxDecoration(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -279,18 +277,14 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
             holidays: absence,
             daysOfWeekStyle: DaysOfWeekStyle(
                 weekendStyle: TextStyle(
-                  color: Colors.grey,
-                )),
+              color: Colors.grey,
+            )),
             initialCalendarFormat: CalendarFormat.month,
             calendarStyle: CalendarStyle(
                 markersColor: Colors.green,
                 holidayStyle: TextStyle(color: Colors.white),
-                todayColor: Theme
-                    .of(context)
-                    .primaryColor,
-                selectedColor: Theme
-                    .of(context)
-                    .primaryColor,
+                todayColor: Theme.of(context).primaryColor,
+                selectedColor: Theme.of(context).primaryColor,
                 todayStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0,
@@ -333,7 +327,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
                   margin: const EdgeInsets.all(4.0),
                   alignment: Alignment.center,
                   decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+                      BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
                   child: Text(
                     date.day.toString(),
                     style: TextStyle(color: Colors.grey),
@@ -342,9 +336,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
                   margin: const EdgeInsets.all(4.0),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(10.0)),
                   child: Text(
                     date.day.toString(),

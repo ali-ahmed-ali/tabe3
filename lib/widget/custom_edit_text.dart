@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomEditText extends StatefulWidget {
   final String countryCode;
@@ -17,7 +18,7 @@ class CustomEditText extends StatefulWidget {
   final Function(String) onFieldSubmitted;
   final Function(String) validator;
   final FocusNode focusNode;
-  final List formatter;
+  final List<TextInputFormatter> formatter;
   final String labelText;
 
   final TextDirection textDirection;

@@ -61,12 +61,15 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               var selected = await showPreferredLang(
                   context, false, lang.text("Select language"));
+              var currentLang = lang.currentLanguage;
               print('Selected: $selected');
               await lang.setNewLanguage(selected, true);
               setState(() {});
               AppBuilder.of(context).rebuild();
-              Navigator.pushNamedAndRemoveUntil(context, RouteName.splash,
-                  ModalRoute.withName(RouteName.splash));
+              if (selected != currentLang) {
+                Navigator.pushNamedAndRemoveUntil(context, RouteName.splash,
+                    ModalRoute.withName(RouteName.splash));
+              }
             },
           )
         ],

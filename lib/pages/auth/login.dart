@@ -17,11 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final Map<String, dynamic> _formData = {
-    'email': null,
-    'password': null,
-  };
-
   PrefManager _manager = new PrefManager();
   Repository _repository = new Repository();
 
@@ -129,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
               isPhoneNumber: true,
               countryCode: "249",
               fontColor: Colors.white,
+              formatter: [new WhitelistingTextInputFormatter(RegExp("[0-9]"))],
             ),
 //          _buildPasswordTextField(),
             CustomEditText(
@@ -171,8 +167,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   String mobileValidator(String value) {
+    RegExp regExp = new RegExp(r'^(?:[+0]9)?[0-9]{10}$');
     if (value.isEmpty) {
       return lang.text('This is required');
+    }
+    if (!regExp.hasMatch(value)) {
+      return lang.text("Invalid phone number");
     }
     /* else if (!value.startsWith("249")) {
 //      return lang.text("Phone number must start with 249");
@@ -224,6 +224,7 @@ class _LoginPageState extends State<LoginPage> {
         "country_name": response["customer"]["country_name"] ?? false,
         "city_id": response["customer"]["city_id"] ?? false,
         "city_name": response["customer"]["city_name"] ?? false,
+        "user_type": response["customer"]["user_type"] ?? "P",
       };
       bool saved = await _manager.set("customer", json.encode(user));
       PushNotificationsManager(
@@ -242,8 +243,5 @@ class _LoginPageState extends State<LoginPage> {
         errorMessage = response["msg"];
       });
     }
-    // Bypass login
-//    Navigator.pushNamedAndRemoveUntil(
-//        context, RouteName.home, (route) => false);
   }
 }

@@ -59,4 +59,10 @@ class Repository {
 
   Future<Map<String, dynamic>> getTimeTable(int studentId) =>
       apiProvider.getTimeTable(studentId);
+
+  Future<Map<String, dynamic>> getAttendance(int studentId) =>
+      apiProvider.getAttendance(studentId);
+
+  Future<Map<String, dynamic>> registerStudent(Map<String, dynamic> student) =>
+      apiProvider.registerStudent(student);
 }

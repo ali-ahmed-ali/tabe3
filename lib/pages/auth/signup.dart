@@ -26,7 +26,7 @@ class Signup extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 40, bottom: 20),
               child: Image.asset(
-                'assets/images/logoblue.png',
+                'assets/images/logo.png',
                 width: 150,
                 height: 150,
               ),
@@ -71,7 +71,7 @@ class Signup extends StatelessWidget {
               splashColor: Colors.lightGreenAccent,
               textColor: Colors.white,
               color: Theme.of(context).primaryColor,
-              child: Text(lang.text('Rigester')),
+              child: Text(lang.text('Register')),
               onPressed: () => _submetButtonPressed(),
             ),
           ),
@@ -90,7 +90,7 @@ class Signup extends StatelessWidget {
     return TextFormField(
       validator: (String value) {
         if (value.isEmpty) {
-          return lang.text('This is requird');
+          return lang.text('This is required');
         }
         return null;
       },
@@ -111,7 +111,7 @@ class Signup extends StatelessWidget {
     return TextFormField(
       validator: (String value) {
         if (value.isEmpty) {
-          return lang.text('This is requird');
+          return lang.text('This is required');
         }
         return null;
       },

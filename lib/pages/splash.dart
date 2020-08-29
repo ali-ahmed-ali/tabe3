@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     init();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(milliseconds: 700), () {
       checkSession();
     });
     super.initState();
@@ -69,13 +69,11 @@ class _SplashPageState extends State<SplashPage> {
     String user = await _manager.get("customer", null);
     bool firstLaunch = await _manager.get("firstLaunch", true);
     if (firstLaunch) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, RouteName.startPage, ModalRoute.withName(RouteName.splash));
+      Navigator.pushReplacementNamed(context, RouteName.startPage);
     } else if (user == null) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, RouteName.login, ModalRoute.withName(RouteName.splash));
+      Navigator.pushReplacementNamed(context, RouteName.login);
     } else {
-      Navigator.pushNamed(context, RouteName.home);
+      Navigator.pushReplacementNamed(context, RouteName.home);
     }
   }
 

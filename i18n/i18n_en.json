@@ -57,5 +57,6 @@
   "Full Name": "Full Name",
   "Age": "Age",
   "Health Status": "Health Status",
-  "Please select student to get table": "Please select student to get table"
+  "Please select student to get table": "Please select student to get table",
+  "-- Select class --": "-- Select class --"
 }

@@ -56,5 +56,6 @@
   "Full Name": "الإسم بالكامل",
   "Age": "العمر",
   "Health Status": "الحالة الصحية",
-  "Please select student to get table": "الرجاء اختيار طالب لعرض الجدول"
+  "Please select student to get table": "الرجاء اختيار طالب لعرض الجدول",
+  "-- Select class --": "-- اختيار فصل --"
 }

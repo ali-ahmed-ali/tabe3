@@ -225,6 +225,7 @@ class _LoginPageState extends State<LoginPage> {
         "city_id": response["customer"]["city_id"] ?? false,
         "city_name": response["customer"]["city_name"] ?? false,
         "user_type": response["customer"]["user_type"] ?? "P",
+        "available_class": response["available_class"] ?? [],
       };
       bool saved = await _manager.set("customer", json.encode(user));
       PushNotificationsManager(

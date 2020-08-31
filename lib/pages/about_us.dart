@@ -14,90 +14,92 @@ class AboutUs extends StatelessWidget {
         title: Text(lang.text("About us")),
       ),
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              "assets/images/logo.png",
-              width: 200,
-              height: 200,
-            ),
-            SizedBox(height: 8.0),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.grey,
-              width: double.infinity,
-              child: Text(
-                lang.text("About us"),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Image.asset(
+                "assets/images/logo.png",
+                width: 200,
+                height: 200,
+              ),
+              SizedBox(height: 8.0),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.grey,
+                width: double.infinity,
+                child: Text(
+                  lang.text("About us"),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                  ),
                 ),
               ),
-            ),
 //            SizedBox(height: 8.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child:
-                  /*Text(
-                lang.text("about_us_long"),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                  fontSize: 14.0,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                    /*Text(
+                  lang.text("about_us_long"),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                    fontSize: 14.0,
+                  ),
+                )*/
+                    Html(
+                  data: lang.text("about_us_long"),
+                  style: {
+                    "b": Style(
+                      color: Theme.of(context).primaryColorDark,
+                    )
+                  },
                 ),
-              )*/
-                  Html(
-                data: lang.text("about_us_long"),
-                style: {
-                  "b": Style(
+              ),
+              SizedBox(height: 8),
+              Divider(),
+              Container(
+                color: Colors.grey,
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  lang.text("Contact us"),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              _buildSocialRow(
+                  Icon(
+                    Icons.language,
+                    size: 32,
                     color: Theme.of(context).primaryColorDark,
                   )
-                },
-              ),
-            ),
-            SizedBox(height: 8),
-            Divider(),
-            Container(
-              color: Colors.grey,
-              width: double.infinity,
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                lang.text("Contact us"),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
-            _buildSocialRow(
-                Icon(
-                  Icons.language,
-                  size: 32,
-                  color: Theme.of(context).primaryColorDark,
-                )
-                /* SvgPicture.asset(
-                  "assets/icons/website.svg",
-                  width: 32,
-                  color: Theme.of(context).primaryColorDark,
-                )*/
-                ,
-                lang.text("Visit our website"),
-                "http://Www.moggal.com",
-                Theme.of(context).primaryColorDark),
-            SizedBox(height: 8),
-            _buildSocialRow(
-                SvgPicture.asset(
-                  "assets/icons/phone.svg",
-                  width: 32,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-                lang.text("Call us"),
-                "tel:249110160580",
-                Theme.of(context).primaryColorDark),
-          ],
+                  /* SvgPicture.asset(
+                    "assets/icons/website.svg",
+                    width: 32,
+                    color: Theme.of(context).primaryColorDark,
+                  )*/
+                  ,
+                  lang.text("Visit our website"),
+                  "http://Www.moggal.com",
+                  Theme.of(context).primaryColorDark),
+              SizedBox(height: 8),
+              _buildSocialRow(
+                  SvgPicture.asset(
+                    "assets/icons/phone.svg",
+                    width: 32,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
+                  lang.text("Call us"),
+                  "tel:249110160580",
+                  Theme.of(context).primaryColorDark),
+              SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );

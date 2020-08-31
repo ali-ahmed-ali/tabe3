@@ -34,7 +34,7 @@ class _ResultPageState extends State<TestResultPage>
 
   @override
   void initState() {
-    _controller = TabController(length: 2, vsync: this);
+    _controller = TabController(length: 1, vsync: this);
     getResults();
     super.initState();
   }
@@ -82,6 +82,8 @@ class _ResultPageState extends State<TestResultPage>
       body: Container(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
+          shrinkWrap: true,
+          primary: false,
           children: <Widget>[
             SizedBox(height: 16.0),
             Center(
@@ -138,6 +140,7 @@ class _ResultPageState extends State<TestResultPage>
                     child: Center(
                       child: LoadingWidget(
                         useLoader: true,
+                        size: 32,
                       ),
                     ),
                   )
@@ -172,9 +175,6 @@ class _ResultPageState extends State<TestResultPage>
             Tab(
               text: lang.text('Degrees'),
             ),
-            Tab(
-              text: lang.text('Comments'),
-            )
           ]),
         ),
         Container(
@@ -193,10 +193,6 @@ class _ResultPageState extends State<TestResultPage>
                 : Center(
                     child: EmptyWidget(),
                   ),
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                height: 200,
-                child: Text(_comment)),
           ]),
         )
       ],

@@ -53,6 +53,8 @@ class _ConversationsPageState extends State<ConversationsPage> {
     if (response.containsKey("success") && response["success"]) {
       setState(() {
         conversations = (response["data"]);
+        conversations.sort((a, b) => DateTime.parse(a["time"].toString())
+            .compareTo(DateTime.parse(b["time"].toString())));
       });
     } else {
       print(response["msg"]);
@@ -98,27 +100,27 @@ class _ConversationsPageState extends State<ConversationsPage> {
           Map contact = await showContactDialog();
           if (contact != null && contact.containsKey("customer_id")) {
             for (int i = 0; i < conversations.length; i++) {
-              print(
-                  '${contact["customer_id"].toString() == conversations[i]["from"].toString()} ||| ${contact["customer_id"].toString() == conversations[i]["to"].toString()}');
               if (contact["customer_id"].toString() ==
                       conversations[i]["from"].toString() ||
                   contact["customer_id"].toString() ==
-                      conversations[i]["to"].toString()) {}
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ChatPage(
-                  threadId: conversations[i]["thread_id"] ?? 0,
-                  toId: contact["customer_id"] ?? 0,
-                  toName: contact["customer_name"] ?? "",
-                );
-              }));
-
-              return;
+                      conversations[i]["to"].toString()) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ChatPage(
+                    threadId: conversations[i]["thread_id"] ?? 0,
+                    toId: contact["customer_id"] ?? 0,
+                    toName: contact["customer_name"] ?? "",
+                    customer: contact,
+                  );
+                }));
+                return;
+              }
             }
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return ChatPage(
                 threadId: 0,
                 toId: contact["customer_id"] ?? 0,
                 toName: contact["customer_name"] ?? "",
+                customer: contact,
               );
             }));
           }
@@ -197,6 +199,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
           return ChatPage(
             threadId: conversation["thread_id"],
             toId: to,
+            thread: conversation,
           );
         }));
         await loadConversations();

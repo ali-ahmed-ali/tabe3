@@ -6,7 +6,6 @@ import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/widget/custom_dropdown_list.dart';
-import 'package:tabee/widget/empty_widget.dart';
 import 'package:tabee/widget/loading_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -18,8 +17,8 @@ class StudentAttendCalendPage extends StatefulWidget {
 
 class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
   CalendarController _controller;
-  final Map<DateTime, List> absence = {};
-  final Map<DateTime, List> holidays = {};
+  Map<DateTime, List> absence = {};
+  Map<DateTime, List> holidays = {};
 
   //5-> Friday 6->Saturday
   List<int> weekend = [];
@@ -90,12 +89,20 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
     });
     print('CAl response: $response');
     if (response.containsKey("success") && response["success"]) {
-      (response["holidays"] as List).forEach((element) {
-        holidays[DateTime.parse(element["date"])] = [element["name"]];
-      });
-      (response["attendance"] as List).forEach((element) {
-        absence[DateTime.parse(element["date"])] = [element["student_name"]];
-      });
+      if ((response["holidays"] as List).isNotEmpty) {
+        (response["holidays"] as List).forEach((element) {
+          holidays[DateTime.parse(element["date"])] = [element["name"]];
+        });
+      } else {
+        holidays = {};
+      }
+      if ((response["attendance"] as List).isNotEmpty) {
+        (response["attendance"] as List).forEach((element) {
+          absence[DateTime.parse(element["date"])] = [element["student_name"]];
+        });
+      } else {
+        absence = {};
+      }
       (response["official_holidays"] as List).forEach((element) {
         weekend.add(element);
       });
@@ -145,12 +152,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
                           size: 32,
                         ),
                       )
-                    : absence.length > 0 //offdays.isNotEmpty
-                        ? _buildCalender()
-                        : EmptyWidget(
-                            subMessage:
-                                lang.text("Please select student to get table"),
-                          ),
+                    : _buildCalender(),
                 SizedBox(
                   height: 16,
                 ),

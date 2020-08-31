@@ -17,9 +17,16 @@ class ChatPage extends StatefulWidget {
   final int threadId;
   final toId;
   final toName;
+  final Map<String, dynamic> thread;
+  final Map<String, dynamic> customer;
 
   const ChatPage(
-      {Key key, @required this.threadId, this.toId = -1, this.toName})
+      {Key key,
+      @required this.threadId,
+      this.toId = -1,
+      this.toName,
+      this.thread,
+      this.customer})
       : super(key: key);
 
   @override
@@ -28,7 +35,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List chat = [];
-  String threadName = lang.text("Failed to load name");
+  String threadName = lang.text("Loading name");
 
   BubbleStyle styleSomebody;
 
@@ -61,9 +68,12 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
-      loadMessages();
-    });
+//    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+    print('Conversation: ${widget.thread}');
+    print('Customer: ${widget.customer}');
+    print('Thread_ID: ${widget.threadId}');
+    loadMessages();
+//    });
     super.initState();
   }
 
@@ -75,7 +85,23 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
+  int currentThreadId = 0;
   void loadMessages() async {
+    if (widget.thread != null && widget.thread.containsKey("thread_name")) {
+      setState(() {
+        threadName = widget.thread["thread_name"];
+      });
+      currentThreadId = widget.thread["id"];
+    } else if (widget.customer != null &&
+        widget.customer.containsKey("customer_name")) {
+      setState(() {
+        threadName = widget.customer["customer_name"];
+      });
+    } else {
+      setState(() {
+        threadName = lang.text("Failed to load name");
+      });
+    }
     setState(() {
       loading = true;
     });
@@ -193,7 +219,7 @@ class _ChatPageState extends State<ChatPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(
-                              widget.threadId == 0 ? widget.toName : threadName,
+                              threadName,
                               style: TextStyle(color: Colors.white),
                             ),
                             SizedBox(height: 4.0),

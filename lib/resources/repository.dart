@@ -65,4 +65,7 @@ class Repository {
 
   Future<Map<String, dynamic>> registerStudent(Map<String, dynamic> student) =>
       apiProvider.registerStudent(student);
+
+  Future<Map<String, dynamic>> getRegisterStudent(int customerId) =>
+      apiProvider.getRegisterStudent(customerId);
 }

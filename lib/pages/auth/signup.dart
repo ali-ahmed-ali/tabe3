@@ -11,6 +11,10 @@ import 'package:tabee/widget/dialog_utils.dart';
 import '../../utils/lang.dart';
 
 class Signup extends StatefulWidget {
+  final Map student;
+
+  const Signup({Key key, this.student}) : super(key: key);
+
   @override
   _SignupState createState() => _SignupState();
 }
@@ -20,7 +24,7 @@ class _SignupState extends State<Signup> {
     'name': null,
     'class': null,
     'age': null,
-    'health': null
+    'health_condition': null
   };
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -85,6 +89,7 @@ class _SignupState extends State<Signup> {
   }
 
   _buildForm(BuildContext context) {
+    print('student: ${widget.student}');
     return Form(
       key: _formKey,
       child: Column(
@@ -96,7 +101,21 @@ class _SignupState extends State<Signup> {
           SizedBox(
             height: 8.0,
           ),
-          _buildClassTextField(),
+          widget.student != null
+              ? Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.class_,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(width: 8),
+                      Text("${widget.student["class_name"]}"),
+                    ],
+                  ),
+                )
+              : _buildClassTextField(),
           SizedBox(
             height: 8.0,
           ),
@@ -116,7 +135,7 @@ class _SignupState extends State<Signup> {
           ),
           CustomButton(
             label: lang.text('Register'),
-            onPressed: () => register(),
+            onPressed: widget.student != null ? null : () => register(),
           ),
           SizedBox(
             height: 10,
@@ -134,12 +153,13 @@ class _SignupState extends State<Signup> {
       displayLabel: "name",
       selectedKey: "id",
       labels: classes,
+      enabled: widget.student != null,
       selectedId: selectedClass["id"].toString(),
       prefix: Icon(Icons.class_),
       onChange: (data) {
         setState(() {
           selectedClass = data;
-          _formData["class"] = data["id"];
+          _formData["class_id"] = data["id"];
         });
       },
     );
@@ -153,7 +173,10 @@ class _SignupState extends State<Signup> {
         }
         return null;
       },
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.text,
+      enabled: widget.student == null,
+      initialValue:
+          "${widget.student != null ? widget.student["name"] ?? "" : ""}",
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person_outline),
         labelText: lang.text('Full Name'),
@@ -175,6 +198,9 @@ class _SignupState extends State<Signup> {
         return null;
       },
       keyboardType: TextInputType.number,
+      initialValue:
+          "${widget.student != null ? widget.student["age"] ?? "" : ""}",
+      enabled: widget.student == null,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_today),
         labelText: lang.text('Age'),
@@ -195,6 +221,9 @@ class _SignupState extends State<Signup> {
         }
         return null;
       },
+      initialValue:
+          "${widget.student != null ? widget.student["health_condition"] ?? "" : ""}",
+      enabled: widget.student == null,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.local_hospital),
         labelText: lang.text('Health Status'),
@@ -202,7 +231,7 @@ class _SignupState extends State<Signup> {
         fillColor: Colors.white,
       ),
       onSaved: (String value) {
-        _formData['health'] = value;
+        _formData['health_condition'] = value;
       },
     );
   }
@@ -213,6 +242,7 @@ class _SignupState extends State<Signup> {
     }
     _formKey.currentState.save();
     showLoadingDialog(context);
+    _formData["customer_id"] = userData["id"];
     Map response = await _repository.registerStudent(_formData);
     print('response: $response');
     Navigator.pop(context);

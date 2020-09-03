@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/anims/page_route_anim.dart';
 import 'package:tabee/pages/about_us.dart';
+import 'package:tabee/pages/auth/login.dart';
 import 'package:tabee/pages/auth/reset_password.dart';
+import 'package:tabee/pages/auth/signup.dart';
 import 'package:tabee/pages/auth/update_password.dart';
 import 'package:tabee/pages/auth/verify.dart';
 import 'package:tabee/pages/conversations_page.dart';
@@ -10,16 +12,14 @@ import 'package:tabee/pages/exams_page.dart';
 import 'package:tabee/pages/home.dart';
 import 'package:tabee/pages/language_selector.dart';
 import 'package:tabee/pages/news.dart';
+import 'package:tabee/pages/pending_requests.dart';
 import 'package:tabee/pages/splash.dart';
 import 'package:tabee/pages/start_page.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
+import 'package:tabee/pages/student_attend_calend.dart';
 import 'package:tabee/pages/student_result.dart';
 import 'package:tabee/pages/time_table_page.dart';
 import 'package:tabee/pages/tuitions.dart';
-import 'package:tabee/pages/student_attend_calend.dart';
-
-import 'package:tabee/pages/auth/login.dart';
-import 'package:tabee/pages/auth/signup.dart';
 
 class RouteName {
   // TODO: When adding new page specify name for it
@@ -33,6 +33,7 @@ class RouteName {
   static const String verify = 'verify';
   static const String startTapPreview = 'startTapPreview';
   static const String signup = 'signup';
+  static const String registerRequest = 'registerRequest';
   static const String test = 'tests';
   static const String exams = 'exams';
   static const String tuitions = 'tuitions';
@@ -72,6 +73,8 @@ class Router {
         return SlideTopRouteBuilder(StartTabPreview());
       case RouteName.signup:
         return SlideTopRouteBuilder(Signup());
+      case RouteName.registerRequest:
+        return SlideTopRouteBuilder(PendingRequests());
       case RouteName.schedule:
         return SlideTopRouteBuilder(TimeTablePage());
 //      case RouteName.attend:

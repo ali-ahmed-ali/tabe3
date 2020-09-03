@@ -38,3 +38,18 @@ EdgeInsets getMargin() {
     return const EdgeInsets.only(right: 4.0);
   }
 }
+
+String getStatus(String status) {
+  switch (status) {
+    case "new":
+      return lang.text("New");
+    case "confirm":
+      return lang.text("Confirmed Student");
+    case "registered":
+      return lang.text("Registered");
+    case "refused":
+      return lang.text("Refused");
+    default:
+      return lang.text("Pending");
+  }
+}

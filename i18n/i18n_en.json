@@ -58,5 +58,11 @@
   "Age": "Age",
   "Health Status": "Health Status",
   "Please select student to get table": "Please select student to get table",
-  "-- Select class --": "-- Select class --"
+  "-- Select class --": "-- Select class --",
+  "Registrations requests": "Registrations requests",
+  "New": "New",
+  "Confirmed Student": "Confirmed Student",
+  "Registered": "Registered",
+  "Refused": "Refused",
+  "Pending": "Pending"
 }

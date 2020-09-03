@@ -57,5 +57,11 @@
   "Age": "العمر",
   "Health Status": "الحالة الصحية",
   "Please select student to get table": "الرجاء اختيار طالب لعرض الجدول",
-  "-- Select class --": "-- اختيار فصل --"
+  "-- Select class --": "-- اختيار فصل --",
+  "Registrations requests": "طلبات التسجيل",
+  "New": "جديد",
+  "Confirmed Student": "طالب مؤكد",
+  "Registered": "مسجل",
+  "Refused": "مرفوض",
+  "Pending": "قيد التحقق"
 }

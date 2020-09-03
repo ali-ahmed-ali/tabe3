@@ -11,6 +11,7 @@ class CustomDropdownList extends StatelessWidget {
   final Color backgroundColor;
   final Widget prefix;
   final bool isLoading;
+  final bool enabled;
 
   CustomDropdownList({
     Key key,
@@ -24,6 +25,7 @@ class CustomDropdownList extends StatelessWidget {
     this.backgroundColor,
     this.prefix,
     this.isLoading = true,
+    this.enabled,
   }) : super(key: key);
 
   @override

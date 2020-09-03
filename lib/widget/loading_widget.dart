@@ -25,7 +25,7 @@ class LoadingWidget extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               SizedBox(height: 16),
-              Flexible(child: Text(message ?? lang.text("loading")))
+              Text(message ?? lang.text("loading"))
             ],
           )
         : Row(

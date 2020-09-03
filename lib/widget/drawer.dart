@@ -128,7 +128,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         ListTile(
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, RouteName.signup);
+            Navigator.pushNamed(context, RouteName.registerRequest);
           },
           title: Text(lang.text('Register new student')),
           leading: Icon(

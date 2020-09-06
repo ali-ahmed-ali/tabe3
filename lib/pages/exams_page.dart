@@ -29,7 +29,7 @@ class _ExamsPageState extends State<ExamsPage> {
   List students = [
     {
       "student_id": -1,
-      "student_name": lang.text("--  Select Student  --"),
+      "student_name": lang.text("-- Select Student --"),
     }
   ];
   List exams = [];

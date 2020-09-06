@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/widget/custom_dropdown_list.dart';
 import 'package:tabee/widget/custom_table.dart';
+import 'package:tabee/widget/dialog_utils.dart';
 import 'package:tabee/widget/empty_widget.dart';
 import 'package:tabee/widget/loading_widget.dart';
 
@@ -18,14 +20,14 @@ class TimeTablePage extends StatefulWidget {
 class _TimeTablePageState extends State<TimeTablePage> {
   List<Widget> columns = [
     Container(),
-    Text(lang.text("Lecture 1")),
-    Text(lang.text("Lecture 2")),
-    Text(lang.text("Lecture 3")),
-    Text(lang.text("Lecture 4")),
-    Text(lang.text("Lecture 5")),
-    Text(lang.text("Lecture 6")),
-    Text(lang.text("Lecture 7")),
-    Text(lang.text("Lecture 8")),
+    Text(lang.text("Lecture") + " 1"),
+    Text(lang.text("Lecture") + " 2"),
+    Text(lang.text("Lecture") + " 3"),
+    Text(lang.text("Lecture") + " 4"),
+    Text(lang.text("Lecture") + " 5"),
+    Text(lang.text("Lecture") + " 6"),
+    Text(lang.text("Lecture") + " 7"),
+    Text(lang.text("Lecture") + " 8"),
   ];
   List<Widget> mainColumns = [
     Container(),
@@ -45,7 +47,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
   List students = [
     {
       "student_id": -1,
-      "student_name": lang.text("--  Select Student  --"),
+      "student_name": lang.text("-- Select Student --"),
     }
   ];
   Map selectedStudent = {};
@@ -135,6 +137,8 @@ class _TimeTablePageState extends State<TimeTablePage> {
           }
         }
 
+        maxSubject = response["max_lec"];
+
         for (int i = 0; i <= maxSubject; i++) {
           columns.add(mainColumns.elementAt(i));
         }
@@ -148,12 +152,59 @@ class _TimeTablePageState extends State<TimeTablePage> {
               newdayvalue.add(Text("-"));
             } else {
               //data.elementAt(i).removeAt(k);
-              newdayvalue.add(Text(day.elementAt(k)['subject_name']));
+              newdayvalue.add(InkWell(
+                onTap: () {
+                  openChatWithTeacher(day.elementAt(k));
+                },
+                child: Column(
+                  children: <Widget>[
+                    Text(day.elementAt(k)['subject_name']),
+                    SizedBox(height: 4),
+                    Text(day.elementAt(k)['teacher'] ?? ""),
+                  ],
+                ),
+              ));
             }
           }
           data.add(newdayvalue);
         }
       });
+    }
+  }
+
+  void openChatWithTeacher(Map subjectData) async {
+    bool openChat = await showCustomDialog(context,
+        title: Text(
+          lang.text("Contact with teacher"),
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Column(
+          children: <Widget>[
+            Text(lang.text("Start conversation with teacher")),
+            SizedBox(height: 8),
+            Text("${lang.text("Teacher name")}:  ${subjectData["teacher"]}"),
+          ],
+        ),
+        positiveLabel: Text(
+          lang.text("Start chat"),
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        positiveColor: Theme.of(context).primaryColor,
+        negativeLabel: Text(
+          lang.text("Dismiss"),
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        negativeColor: Colors.grey[400]);
+    print('openChat: $openChat');
+    if (openChat) {
+      Navigator.pushNamed(context, RouteName.conversations);
     }
   }
 

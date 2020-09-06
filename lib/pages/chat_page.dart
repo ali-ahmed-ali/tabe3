@@ -86,6 +86,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   int currentThreadId = 0;
+
   void loadMessages() async {
     if (widget.thread != null && widget.thread.containsKey("thread_name")) {
       setState(() {
@@ -179,12 +180,20 @@ class _ChatPageState extends State<ChatPage> {
       margin: BubbleEdges.only(top: 8.0, left: 50.0, right: 8.0),
       alignment: Alignment.topRight,
     );
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: true,
-      appBar: null,
-      body: Container(
-        child: SafeArea(
+    return Container(
+      decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+          image: DecorationImage(
+              image: AssetImage("assets/images/chat_pg.jpg"),
+              fit: BoxFit.fitHeight,
+              repeat: ImageRepeat.repeatY,
+              colorFilter: ColorFilter.linearToSrgbGamma())),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: true,
+        appBar: null,
+        body: SafeArea(
           child: Stack(
             fit: StackFit.loose,
             children: <Widget>[
@@ -230,13 +239,13 @@ class _ChatPageState extends State<ChatPage> {
                           ],
                         ),
                         Spacer(),
-                        IconButton(
+                        /*IconButton(
                           onPressed: () {},
                           icon: Icon(
                             Icons.call,
                             color: Colors.white,
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
@@ -244,13 +253,13 @@ class _ChatPageState extends State<ChatPage> {
                     fit: FlexFit.tight,
                     child: Container(
                       padding: const EdgeInsets.only(bottom: 64.0),
-                      decoration: BoxDecoration(
+                      /*decoration: BoxDecoration(
                           color:
                               Theme.of(context).primaryColor.withOpacity(0.1),
                           image: DecorationImage(
                               image: AssetImage("assets/images/chat_pg.jpg"),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.linearToSrgbGamma())),
+                              fit: BoxFit.fitHeight,
+                              colorFilter: ColorFilter.linearToSrgbGamma())),*/
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
@@ -282,7 +291,7 @@ class _ChatPageState extends State<ChatPage> {
                                       if (index == firstUnreadMsg &&
                                           chat[index]["from"].toString() ==
                                               userData["id"].toString() &&
-                                          unreadMsgCount > -1) {
+                                          unreadMsgCount > 0) {
                                         return Container(
                                           color: Theme.of(context)
                                               .primaryColor
@@ -325,7 +334,8 @@ class _ChatPageState extends State<ChatPage> {
                             controller: controller,
                             hint: lang.text('Type a message'),
                             keyboardType: TextInputType.multiline,
-                            attachFile: IconButton(
+                            attachFile: SizedBox(),
+                            /*IconButton(
                               onPressed: () {
                                 log("send attachments");
                               },
@@ -334,7 +344,7 @@ class _ChatPageState extends State<ChatPage> {
                                 size: 30,
                                 color: Theme.of(context).hintColor,
                               ),
-                            ),
+                            ),*/
                             focusNode: FocusNode(),
                           ),
                         ),

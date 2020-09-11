@@ -239,7 +239,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
                               width: 10,
                               height: 10,
                               decoration: BoxDecoration(
-                                color: Colors.grey,
+                                color: Theme.of(context).primaryColor,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -273,13 +273,14 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TableCalendar(
+
             events: holidays,
             formatAnimation: FormatAnimation.scale,
             weekendDays: weekend,
             holidays: absence,
             daysOfWeekStyle: DaysOfWeekStyle(
                 weekendStyle: TextStyle(
-              color: Colors.grey,
+              color: Theme.of(context).primaryColor,
             )),
             initialCalendarFormat: CalendarFormat.month,
             calendarStyle: CalendarStyle(

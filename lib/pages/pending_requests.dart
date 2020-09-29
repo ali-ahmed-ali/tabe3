@@ -74,36 +74,36 @@ class _PendingRequestsState extends State<PendingRequests> {
         },
         child: Container(
           padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: loading
-                ? Container(
-                    child: Center(
-                      child: LoadingWidget(
-                        useLoader: true,
-                      ),
+          child: loading
+              ? Container(
+                  child: Center(
+                    child: LoadingWidget(
+                      useLoader: true,
                     ),
-                  )
-                : students.isEmpty
-                    ? Center(
-                        child: EmptyWidget(),
-                      )
-                    : Column(
-                        children: <Widget>[
-                          ListView.separated(
-                            itemBuilder: (context, index) {
-                              return buildStudentRow(students[index]);
-                            },
-                            separatorBuilder: (context, index) {
-                              return Divider(color: Colors.black, height: 3);
-                            },
-                            itemCount: students.length,
-                            shrinkWrap: true,
-                            primary: false,
-                          ),
-                          SizedBox(height: 32)
-                        ],
-                      ),
-          ),
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: students.isEmpty
+                      ? Center(
+                          child: EmptyWidget(),
+                        )
+                      : Column(
+                          children: <Widget>[
+                            ListView.separated(
+                              itemBuilder: (context, index) {
+                                return buildStudentRow(students[index]);
+                              },
+                              separatorBuilder: (context, index) {
+                                return Divider(color: Colors.black, height: 3);
+                              },
+                              itemCount: students.length,
+                              shrinkWrap: true,
+                              primary: false,
+                            ),
+                            SizedBox(height: 32)
+                          ],
+                        ),
+                ),
         ),
       ),
     );

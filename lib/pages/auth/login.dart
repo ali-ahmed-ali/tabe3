@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
               onFieldSubmitted: (value) {
                 FocusScope.of(context).requestFocus(passwordFocusNode);
               },
-              validator: mobileValidator,
+              // validator: mobileValidator,
               textInputAction: TextInputAction.next,
               isPhoneNumber: true,
               countryCode: "249",
@@ -214,7 +214,6 @@ class _LoginPageState extends State<LoginPage> {
     print('login response: $response');
     Navigator.pop(context);
     if (response.containsKey("success") && response["success"]) {
-      print('type id: ${response["customer"]["id"].toString()}');
       Map<String, dynamic> user = {
         "id": response["customer"]["id"].toString(),
         "name": response["customer"]["name"] ?? "",

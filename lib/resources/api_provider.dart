@@ -156,6 +156,29 @@ class ApiProvider {
     });
   }
 
+  Future<Map<String, dynamic>> getPayslips(int studentId) async {
+    return await _doRequest("/GetPayslips", Method.POST, {
+      "student_id": studentId,
+    });
+  }
+
+  Future<Map<String, dynamic>> getPayslipLines(int payslipId) async {
+    return await _doRequest("/GetPayslipLines", Method.POST, {
+      "payslip_id": payslipId,
+    });
+  }
+
+  Future<Map<String, dynamic>> confirmLinesPayment(
+      List<int> payslipLineIds) async {
+    return await _doRequest("/ConfirmLinesPayment", Method.POST, {
+      "payslip_line_ids": payslipLineIds,
+    });
+  }
+
+  Future<Map<String, dynamic>> getClasses() async {
+    return await _doRequest("/getClasses", Method.POST, {});
+  }
+
   Future<Map<String, dynamic>> _doRequest(String path, Method method,
       [Map<String, dynamic> requestFromUser]) async {
     var connectivityResult = await Connectivity().checkConnectivity();
@@ -245,6 +268,22 @@ class ApiProvider {
             data["success"] = true;
           }
           return data;
+        }
+        if (response.statusCode == 404) {
+          return {
+            "success": false,
+            "code": response.statusCode,
+            "error_code": response.statusCode, // 500
+            "msg": lang.text("Current request not found")
+          };
+        }
+        if (response.statusCode == 500) {
+          return {
+            "success": false,
+            "code": response.statusCode,
+            "error_code": response.statusCode, // 500
+            "msg": lang.text("Server error")
+          };
         } else {
           return {
             "success": false,

@@ -13,18 +13,18 @@ class _StartTabPreviewState extends State<StartTabPreview> {
   final List<Map<String, dynamic>> tabs = [
     {
       'title': lang.text('Pay the fees electronically'),
-      'image': 'assets/images/cash.png',
+      'image': 'assets/images/3.png',
       'text': lang.text("Pay your son's fees while you are at the home")
     },
     {
       'title': lang.text('Follow the academic path of the student'),
-      'image': 'assets/images/book.png',
+      'image': 'assets/images/1.png',
       'text': lang.text(
           "Know the dates of the tests, your son's level, and the teacher's notes")
     },
     {
       'title': lang.text('Follow up the results of the tests'),
-      'image': 'assets/images/result.png',
+      'image': 'assets/images/2.png',
       'text': lang.text(
           'Know the results of the tests and rank your son among his colleagues')
     }

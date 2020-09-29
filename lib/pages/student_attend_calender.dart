@@ -2,20 +2,22 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/widget/custom_dropdown_list.dart';
+import 'package:tabee/widget/empty_widget.dart';
 import 'package:tabee/widget/loading_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class StudentAttendCalendPage extends StatefulWidget {
+class StudentAttendCalenderPage extends StatefulWidget {
   @override
-  _StudentAttendCalendPageState createState() =>
-      _StudentAttendCalendPageState();
+  _StudentAttendCalenderPageState createState() =>
+      _StudentAttendCalenderPageState();
 }
 
-class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
+class _StudentAttendCalenderPageState extends State<StudentAttendCalenderPage> {
   CalendarController _controller;
   Map<DateTime, List> absence = {};
   Map<DateTime, List> holidays = {};
@@ -27,7 +29,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
   List students = [
     {
       "student_id": -1,
-      "student_name": lang.text("--  Select Student  --"),
+      "student_name": lang.text("-- Select Student --"),
     }
   ];
   Map selectedStudent = {};
@@ -64,7 +66,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        students.addAll(response["available_student"]);
+        students.addAll(response["result"]["available_student"]);
         if (students.isNotEmpty) selectedStudent = students[0];
       });
     } else {
@@ -120,7 +122,7 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
           child: Container(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 loading
@@ -141,23 +143,24 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
                           getCal(data["student_id"]);
                         },
                         displayLabel: "student_name",
-                        selectedKey: "student_id",
-                        label: lang.text("Select student"),
-                      ),
+                  selectedKey: "student_id",
+                ),
                 SizedBox(height: 16),
                 loadingCal
                     ? Center(
-                        child: LoadingWidget(
-                          useLoader: true,
-                          size: 32,
-                        ),
-                      )
-                    : _buildCalender(),
+                  child: LoadingWidget(
+                    useLoader: true,
+                    size: 32,
+                  ),
+                )
+                    : selectedStudent["student_id"] != -1
+                    ? weekend.isEmpty ? EmptyWidget() : _buildCalender()
+                    : Container(),
                 SizedBox(
                   height: 16,
                 ),
                 Container(
-                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    margin: EdgeInsets.symmetric(horizontal: 32),
                     child: Column(
                       children: [
                         Row(
@@ -166,7 +169,9 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
                               width: 10,
                               height: 10,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -273,14 +278,12 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TableCalendar(
-
             events: holidays,
-            formatAnimation: FormatAnimation.scale,
             weekendDays: weekend,
             holidays: absence,
             daysOfWeekStyle: DaysOfWeekStyle(
                 weekendStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
+                  color: Colors.grey,
             )),
             initialCalendarFormat: CalendarFormat.month,
             calendarStyle: CalendarStyle(
@@ -303,6 +306,31 @@ class _StudentAttendCalendPageState extends State<StudentAttendCalendPage> {
             ),
             startingDayOfWeek: StartingDayOfWeek.saturday,
             onDaySelected: (date, events) {
+              print(
+                  'date: ${holidays.containsKey(
+                      date.toString().substring(0, date
+                          .toString()
+                          .length))}');
+              // _scaffoldKey.currentState.showSnackBar(SnackBar(
+              //     // content: Text(),
+              //     ));
+              print(
+                  'Date in different format: ${DateFormat("yyyy-mm-dd").format(
+                      DateTime.parse(date.toIso8601String()))}');
+              holidays.forEach((key, value) {
+                print(
+                    '>>>>>> $key\n>>>>>> ${DateFormat("yyyy-MM-dd 00:00:00.000")
+                        .format(date)}');
+                if (key.toIso8601String().contains(
+                    DateFormat("yyyy-MM-dd 00:00:00.000").format(date))) {
+                  print('>>>>> Yes bitch');
+                }
+              });
+              print('Holidays: $holidays');
+              if (holidays.containsKey(DateFormat("YYYY-mm-dd")
+                  .format(DateTime.parse(date.toIso8601String())))) {
+                print('yes bitch');
+              }
               print(date.toIso8601String());
             },
             builders: CalendarBuilders(

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/pages/student_result.dart';
 import 'package:tabee/resources/repository.dart';
+import 'package:tabee/utils/app_builder.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/widget/custom_dropdown_list.dart';
@@ -58,8 +59,8 @@ class _ExamsPageState extends State<ExamsPage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        students.addAll(response["available_student"]);
-        if (students.isNotEmpty) selectedStudent = students[0];
+        students.addAll((response["result"]["available_student"]));
+        selectedStudent = students[0];
       });
     } else {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -71,9 +72,11 @@ class _ExamsPageState extends State<ExamsPage> {
         ),
       ));
     }
+    AppBuilder.of(context).rebuild();
   }
 
   void getExams(int studentID) async {
+    exams.clear();
     showLoadingDialog(context);
     Map response = await _repository.getExams(studentID);
     print('Exam response: $response');
@@ -161,18 +164,20 @@ class _ExamsPageState extends State<ExamsPage> {
                         return Divider();
                       },
                       itemCount: exams.length)
-                  : Container(
-                      padding: const EdgeInsets.only(top: 64),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Center(
-                            child: EmptyWidget(),
+                  : selectedStudent["student_id"] != -1
+                      ? Container(
+                          padding: const EdgeInsets.only(top: 64),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Center(
+                                child: EmptyWidget(),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
+                        )
+                      : Container(),
             ],
           ),
         ),

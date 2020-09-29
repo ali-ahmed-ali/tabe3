@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart' as ratingStars;
 import 'package:tabee/resources/repository.dart';
@@ -28,7 +27,14 @@ class _ResultPageState extends State<TestResultPage>
   double total = 0.0;
   bool loading = false;
   TabController _controller;
-  List _subjectsGrade = [];
+  List _subjectsGrade = [
+    {
+      "subject": lang.text("Subject"),
+      "obtained_marks": lang.text("Obtained Mark"),
+      "minimum_marks": lang.text("Minimum Mark"),
+      "maximum_marks": lang.text("Maximum Mark"),
+    }
+  ];
   String _comment =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip';
 
@@ -50,7 +56,7 @@ class _ResultPageState extends State<TestResultPage>
       loading = false;
       if (response.containsKey("success") && response["success"]) {
         setState(() {
-          _subjectsGrade = response["exam_ids"];
+          _subjectsGrade.addAll(response["exam_ids"]);
         });
       }
     });
@@ -58,6 +64,7 @@ class _ResultPageState extends State<TestResultPage>
 
   @override
   Widget build(BuildContext context) {
+    print('>>>>>>>>>> ${_subjectsGrade}');
     return Scaffold(
       appBar: AppBar(
         title:
@@ -86,23 +93,29 @@ class _ResultPageState extends State<TestResultPage>
           primary: false,
           children: <Widget>[
             SizedBox(height: 16.0),
-            Center(
-              child: CircleImage(
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "https://cdn.pixabay.com/photo/2016/04/26/07/20/woman-1353803__340.png",
-                  width: 100,
-                  height: 100,
-                  placeholder: (error, url) => Image(
-                    image: AssetImage('assets/images/profile.jpg'),
-                    fit: BoxFit.cover,
-                    width: 80,
-                    height: 80,
+            CircleImage(
+              child: Container(
+                width: 80,
+                height: 80,
+                child: Center(
+                  child: Text(
+                    (widget.student["student_name"] ?? lang.text("Undefined"))
+                        .toString()
+                        .characters
+                        .elementAt(0),
+                    softWrap: true,
+                    locale: lang.locale,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                borderColor: Theme.of(context).primaryColor,
-                borderWidth: 1,
               ),
+              borderColor: Theme
+                  .of(context)
+                  .primaryColor,
+              borderWidth: 1,
             ),
             SizedBox(height: 8),
             Text(
@@ -137,13 +150,13 @@ class _ResultPageState extends State<TestResultPage>
             ),
             loading
                 ? Container(
-                    child: Center(
-                      child: LoadingWidget(
-                        useLoader: true,
-                        size: 32,
-                      ),
-                    ),
-                  )
+              child: Center(
+                child: LoadingWidget(
+                  useLoader: true,
+                  size: 32,
+                ),
+              ),
+            )
                 : _buildTabs(),
           ],
         ),
@@ -186,7 +199,11 @@ class _ResultPageState extends State<TestResultPage>
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: _getTableRows(),
+                        child: Column(
+                          children: [
+                            _getTableRows(),
+                          ],
+                        ),
                       ),
                     ],
                   )
@@ -202,7 +219,12 @@ class _ResultPageState extends State<TestResultPage>
   _getTableRows() {
     return Table(
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      border: TableBorder.all(color: Colors.grey),
+      border: TableBorder.all(
+        color: Theme
+            .of(context)
+            .primaryColor
+            .withOpacity(.5),
+      ),
       children: getTableData(),
     );
   }
@@ -213,10 +235,11 @@ class _ResultPageState extends State<TestResultPage>
 //      "subject": "Subject name",
 //    });
     return _subjectsGrade.map((item) {
+      print('item >>>>>> $item');
       return TableRow(
           decoration: BoxDecoration(
-            color: _getColorsFromPercent(
-                double.parse("${item['obtained_marks'] ?? "0.0"}")),
+            // color: _getColorsFromPercent(
+            //     double.parse("${item['obtained_marks'] ?? "0.0"}")),
           ),
           children: [
             Container(

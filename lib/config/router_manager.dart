@@ -10,13 +10,14 @@ import 'package:tabee/pages/auth/verify.dart';
 import 'package:tabee/pages/conversations_page.dart';
 import 'package:tabee/pages/exams_page.dart';
 import 'package:tabee/pages/home.dart';
+import 'package:tabee/pages/invoices.dart';
 import 'package:tabee/pages/language_selector.dart';
 import 'package:tabee/pages/news.dart';
 import 'package:tabee/pages/pending_requests.dart';
 import 'package:tabee/pages/splash.dart';
 import 'package:tabee/pages/start_page.dart';
 import 'package:tabee/pages/start_tab_preview.dart';
-import 'package:tabee/pages/student_attend_calend.dart';
+import 'package:tabee/pages/student_attend_calender.dart';
 import 'package:tabee/pages/student_result.dart';
 import 'package:tabee/pages/time_table_page.dart';
 import 'package:tabee/pages/tuitions.dart';
@@ -36,7 +37,8 @@ class RouteName {
   static const String registerRequest = 'registerRequest';
   static const String test = 'tests';
   static const String exams = 'exams';
-  static const String tuitions = 'tuitions';
+  static const String fees = 'tuitions';
+  static const String invoices = 'invoices';
   static const String news = 'news';
   static const String schedule = 'schedule';
   static const String attend = 'attend';
@@ -83,8 +85,10 @@ class Router {
         return SlideTopRouteBuilder(TestResultPage());
       case RouteName.exams:
         return SlideTopRouteBuilder(ExamsPage());
-      case RouteName.tuitions:
+      case RouteName.fees:
         return SlideTopRouteBuilder(TuitionsPage());
+      case RouteName.invoices:
+        return SlideTopRouteBuilder(Invoices());
       case RouteName.news:
         return SlideTopRouteBuilder(NewsPage());
       case RouteName.conversations:
@@ -92,7 +96,7 @@ class Router {
       case RouteName.aboutUs:
         return SlideTopRouteBuilder(AboutUs());
       case RouteName.attend:
-        return SlideTopRouteBuilder(StudentAttendCalendPage());
+        return SlideTopRouteBuilder(StudentAttendCalenderPage());
 
       default:
         return CupertinoPageRoute(

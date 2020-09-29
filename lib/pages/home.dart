@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tabee/config/router_manager.dart';
+import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/app_builder.dart';
 import 'package:tabee/utils/lang.dart';
+import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/widget/dashboard_card.dart';
 import 'package:tabee/widget/dialog_utils.dart';
 import 'package:tabee/widget/drawer.dart';
+import 'package:tabee/widget/loading_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,29 +21,69 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double _phoneHeight;
+  Repository _repository = new Repository();
+  PrefManager _manager = new PrefManager();
+  bool loading = false;
 
-  final List<Map<String, dynamic>> _menuItems = [
-    {
-      'image': 'assets/icons/appointment.svg',
-      'title': lang.text('Daily school schedule'),
-      'routing': RouteName.schedule,
-    },
-    {
-      'image': 'assets/icons/score.svg',
-      'title': lang.text('The Exams'),
-      'routing': RouteName.exams,
-    },
-    {
-      'image': 'assets/icons/charge.svg',
-      'title': lang.text('Pay the fees'),
-      'routing': RouteName.tuitions,
-    },
-    {
-      'image': 'assets/icons/charge.svg',
-      'title': lang.text('Attendance'),
-      'routing': RouteName.attend,
-    },
-  ];
+  List<Map<String, dynamic>> _menuItems = [];
+
+  Map userData;
+
+  @override
+  void initState() {
+    _manager.get("customer", "{}").then((value) {
+      userData = json.decode(value);
+      _menuItems = [
+        {
+          'image': 'assets/icons/appointment.svg',
+          'title': lang.text('Daily school schedule'),
+          'routing': RouteName.schedule,
+        },
+        {
+          'image': 'assets/icons/score.svg',
+          'title': lang.text('The Exams'),
+          'routing': RouteName.exams,
+        },
+        {
+          'image': 'assets/icons/charge.svg',
+          'title': lang.text('Pay the fees'),
+          'routing': RouteName.invoices,
+          // 'show': userData["user_type"].toString() == "T"
+        },
+        {
+          'image': 'assets/icons/charge.svg',
+          'title': lang.text('Attendance'),
+          'routing': RouteName.attend,
+        },
+        {
+          'image': 'assets/icons/news.svg',
+          'title': lang.text('Advertisements board'),
+          'routing': RouteName.news,
+        },
+      ];
+
+      _menuItems.removeWhere((element) => element.containsKey("show"));
+    });
+    loadStudents();
+    super.initState();
+  }
+
+  void loadStudents() async {
+    setState(() {
+      loading = true;
+    });
+    Map user = json.decode(await _manager.get("customer", "{}"));
+    Map response = await _repository.getStudents(int.parse("${user["id"]}"));
+    setState(() {
+      loading = false;
+    });
+
+    if (response.containsKey("success") && response["success"]) {
+      bool saved = await _manager.set(
+          "students", json.encode(response["available_student"]));
+      print('Saved students: ${await _manager.get("students", "[]")}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +120,10 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -84,7 +132,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         padding: const EdgeInsets.all(8.0),
-        child: StaggeredGridView.countBuilder(
+        child: loading
+            ? Center(
+            child: LoadingWidget(
+              useLoader: true,
+            ))
+            : StaggeredGridView.countBuilder(
           itemCount: _menuItems.length,
           primary: false,
           shrinkWrap: true,
@@ -121,8 +174,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMenuItemView(
-      BuildContext context, String image, String title, String pageRoute) {
+  Widget _buildMenuItemView(BuildContext context, String image, String title, String pageRoute) {
     return Container(
       //color: Theme.of(context).primaryColor.withOpacity(.5),
       margin: EdgeInsets.all(20),

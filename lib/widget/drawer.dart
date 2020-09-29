@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/config/router_manager.dart';
 import 'package:tabee/utils/lang.dart';
@@ -42,16 +41,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   CircleImage(
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "https://cdn.pixabay.com/photo/2016/04/26/07/20/woman-1353803__340.png",
-                      width: 60,
-                      height: 60,
-                      placeholder: (error, url) => Image(
-                        image: AssetImage('assets/images/profile.jpg'),
-                        fit: BoxFit.cover,
-                        width: 60,
-                        height: 60,
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      child: Center(
+                        child: Text(
+                          (userData["name"] ?? "User")
+                              .toString()
+                              .characters
+                              .elementAt(0),
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                     borderColor: Theme.of(context).primaryColor,
@@ -115,17 +118,23 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 //            color: Theme.of(context).primaryColor,
 //          ),
 //        ),
-        ListTile(
+        userData["user_type"] == "T"
+            ? Container()
+            : ListTile(
           onTap: () {
-            Navigator.pushNamed(context, RouteName.tuitions);
+            Navigator.pushNamed(context, RouteName.invoices);
           },
           title: Text(lang.text('Pay the fees')),
           leading: Icon(
             Icons.payment,
-            color: Theme.of(context).primaryColor,
+            color: Theme
+                .of(context)
+                .primaryColor,
           ),
         ),
-        ListTile(
+        userData["user_type"] == "T"
+            ? Container()
+            : ListTile(
           onTap: () {
             Navigator.pop(context);
             Navigator.pushNamed(context, RouteName.registerRequest);
@@ -133,7 +142,21 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('Register new student')),
           leading: Icon(
             Icons.person_add,
-            color: Theme.of(context).primaryColor,
+            color: Theme
+                .of(context)
+                .primaryColor,
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            Navigator.pushNamed(context, RouteName.exams);
+          },
+          title: Text(lang.text('Exams')),
+          leading: Icon(
+            Icons.dashboard,
+            color: Theme
+                .of(context)
+                .primaryColor,
           ),
         ),
         ListTile(
@@ -143,7 +166,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('About us')),
           leading: Icon(
             Icons.people,
-            color: Theme.of(context).primaryColor,
+            color: Theme
+                .of(context)
+                .primaryColor,
           ),
         ),
         ListTile(

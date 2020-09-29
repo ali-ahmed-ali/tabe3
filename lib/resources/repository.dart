@@ -68,4 +68,15 @@ class Repository {
 
   Future<Map<String, dynamic>> getRegisterStudent(int customerId) =>
       apiProvider.getRegisterStudent(customerId);
+
+  Future<Map<String, dynamic>> getPayslips(int studentId) =>
+      apiProvider.getPayslips(studentId);
+
+  Future<Map<String, dynamic>> getPayslipLines(int payslipId) =>
+      apiProvider.getPayslipLines(payslipId);
+
+  Future<Map<String, dynamic>> confirmLinesPayment(List<int> payslipLineIds) =>
+      apiProvider.confirmLinesPayment(payslipLineIds);
+
+  Future<Map<String, dynamic>> getClasses() => apiProvider.getClasses();
 }

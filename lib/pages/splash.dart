@@ -67,6 +67,7 @@ class _SplashPageState extends State<SplashPage> {
     await configLang();
     String token = await _manager.get("token", null);
     String user = await _manager.get("customer", null);
+    print('user: $user');
     bool firstLaunch = await _manager.get("firstLaunch", true);
     if (firstLaunch) {
       Navigator.pushReplacementNamed(context, RouteName.startPage);

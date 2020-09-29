@@ -184,8 +184,8 @@ class _ChatPageState extends State<ChatPage> {
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withOpacity(0.1),
           image: DecorationImage(
-              image: AssetImage("assets/images/chat_pg.jpg"),
-              fit: BoxFit.fitHeight,
+              image: AssetImage("assets/images/chat.png"),
+              fit: BoxFit.contain,
               repeat: ImageRepeat.repeatY,
               colorFilter: ColorFilter.linearToSrgbGamma())),
       child: Scaffold(
@@ -233,7 +233,9 @@ class _ChatPageState extends State<ChatPage> {
                             ),
                             SizedBox(height: 4.0),
                             Text(
-                              lang.text("Teacher"),
+                              userData["user_type"].toString().contains("P")
+                                  ? lang.text("Teacher")
+                                  : lang.text("Parent"),
                               style: TextStyle(color: Colors.white),
                             ),
                           ],

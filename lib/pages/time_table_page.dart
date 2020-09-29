@@ -31,14 +31,14 @@ class _TimeTablePageState extends State<TimeTablePage> {
   ];
   List<Widget> mainColumns = [
     Container(),
-    Text(lang.text("Lecture 1")),
-    Text(lang.text("Lecture 2")),
-    Text(lang.text("Lecture 3")),
-    Text(lang.text("Lecture 4")),
-    Text(lang.text("Lecture 5")),
-    Text(lang.text("Lecture 6")),
-    Text(lang.text("Lecture 7")),
-    Text(lang.text("Lecture 8")),
+    Text(lang.text("Lecture") + " 1"),
+    Text(lang.text("Lecture") + " 2"),
+    Text(lang.text("Lecture") + " 3"),
+    Text(lang.text("Lecture") + " 4"),
+    Text(lang.text("Lecture") + " 5"),
+    Text(lang.text("Lecture") + " 6"),
+    Text(lang.text("Lecture") + " 7"),
+    Text(lang.text("Lecture") + " 8"),
   ];
   List<Widget> days = [];
   List<List> data = [];
@@ -50,7 +50,15 @@ class _TimeTablePageState extends State<TimeTablePage> {
       "student_name": lang.text("-- Select Student --"),
     }
   ];
+
+  List classes = [
+    {
+      "id": -1,
+      "name": lang.text("-- Select Class --"),
+    }
+  ];
   Map selectedStudent = {};
+  Map selectedClass = {};
   Map userData = {};
 
   final Repository _repository = new Repository();
@@ -65,7 +73,10 @@ class _TimeTablePageState extends State<TimeTablePage> {
     _manager.get("customer", "{}").then((value) {
       userData = json.decode(value);
       if (userData.containsKey("id") && userData["id"] != null) {
-        getStudents();
+        if (userData["user_type"] == "P")
+          getStudents();
+        else
+          getClasses();
       }
     });
     super.initState();
@@ -83,8 +94,34 @@ class _TimeTablePageState extends State<TimeTablePage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        students.addAll(response["available_student"]);
+        students.addAll(response["result"]["available_student"]);
         if (students.isNotEmpty) selectedStudent = students[0];
+      });
+    } else {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(
+          response["message"],
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ));
+    }
+  }
+
+  void getClasses() async {
+    setState(() {
+      loading = true;
+    });
+    Map response = await _repository.getClasses();
+    setState(() {
+      loading = false;
+    });
+    print('students response: $response');
+    if (response.containsKey("success") && response["success"]) {
+      setState(() {
+        classes.addAll(response["data"]);
+        if (students.isNotEmpty) selectedClass = classes[0];
       });
     } else {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -117,7 +154,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
     if (response.containsKey("success") && response["success"]) {
       response["timetable"].forEach((key, value) {
         setState(() {
-          days.add(new Text(key.toString()));
+          days.add(new Text(lang.text(key.toString())));
           max = (value as List).length > max ? (value as List).length : max;
           print('MAX >>>>>>>>>>>> $max');
         });
@@ -215,61 +252,93 @@ class _TimeTablePageState extends State<TimeTablePage> {
         title: Text(lang.text("Daily school schedule")),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                SizedBox(height: 16),
-                loading
-                    ? Container(
-                        height: 32,
-                        child: LoadingWidget(useLoader: true, size: 24),
-                      )
-                    : CustomDropdownList(
-                        labels: students,
-                        selectedId: selectedStudent != null
-                            ? selectedStudent["student_id"].toString()
-                            : students[0]["student_id"].toString(),
-                        onChange: (data) {
-                          print('Data: $data');
-                          setState(() {
-                            selectedStudent = data;
-                          });
-                          getTimeTable(data["student_id"]);
-                        },
-                        displayLabel: "student_name",
-                        selectedKey: "student_id",
-                        label: lang.text("Select student"),
-                      ),
-                SizedBox(height: 16),
-                loadingTable
-                    ? Flexible(
-                        child: LoadingWidget(
-                          useLoader: true,
-                          size: 64,
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              SizedBox(height: 16),
+              loading
+                  ? Container(
+                      height: 32,
+                      child: LoadingWidget(useLoader: true, size: 24),
+                    )
+                  : userData["user_type"] == "P"
+                      ? CustomDropdownList(
+                          labels: students,
+                          selectedId: selectedStudent != null
+                              ? selectedStudent["student_id"].toString()
+                              : students[0]["student_id"].toString(),
+                          onChange: (data) {
+                            print('Data: $data');
+                            setState(() {
+                              selectedStudent = data;
+                            });
+                            getTimeTable(data["student_id"]);
+                          },
+                          displayLabel: "student_name",
+                          selectedKey: "student_id",
+                        )
+                      : CustomDropdownList(
+                          labels: classes,
+                          selectedId: selectedStudent != null
+                              ? selectedStudent["id"].toString()
+                              : students[0]["id"].toString(),
+                          onChange: (data) {
+                            print('Data: $data');
+                            setState(() {
+                              selectedStudent = data;
+                            });
+                            getClassStudents(data["id"]);
+                          },
+                          displayLabel: "name",
+                          selectedKey: "id",
+                          label: lang.text("Select class"),
                         ),
-                      )
-                    : data.isNotEmpty
-                        ? CustomTable(
-                            title: lang.text("Daily school schedule"),
-                            data: data,
-                            columnData: columns,
-                            firstColumnData: days,
-                            columnSpacing: 16,
-                            divider: 0,
-                          )
-                        : EmptyWidget(
-                            subMessage:
-                                lang.text("Please select student to get table"),
-                          ),
-              ],
-            ),
+              SizedBox(height: 16),
+              loadingTable
+                  ? Flexible(
+                      child: LoadingWidget(
+                        useLoader: true,
+                        size: 64,
+                      ),
+                    )
+                  : data.isNotEmpty
+                      ? userData["user_type"] == "P"
+                          ? Container(
+                              child: getParentView(),
+                            )
+                          : Container()
+                      : selectedStudent["student_id"] != -1
+                          ? EmptyWidget(
+                              subMessage: lang
+                                  .text("Please select student to get table"),
+                            )
+                          : Container(),
+            ],
           ),
         ),
       ),
     );
   }
+
+  Widget getParentView() {
+    return CustomTable(
+      title: lang.text("Daily school schedule"),
+      data: data,
+      columnData: columns,
+      firstColumnData: days,
+      columnSpacing: 16,
+      divider: 0,
+    );
+  }
+
+  Widget getTeacherView() {
+    return ListView.builder(itemBuilder: (context, index) {
+      return ListTile();
+    });
+  }
+
+  void getClassStudents(int classId) async {}
 }

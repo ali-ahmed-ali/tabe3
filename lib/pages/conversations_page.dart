@@ -53,8 +53,8 @@ class _ConversationsPageState extends State<ConversationsPage> {
     if (response.containsKey("success") && response["success"]) {
       setState(() {
         conversations = (response["data"]);
-        conversations.sort((a, b) => DateTime.parse(a["time"].toString())
-            .compareTo(DateTime.parse(b["time"].toString())));
+        // conversations.sort((a, b) => DateTime.parse(a["time"].toString())
+        //     .compareTo(DateTime.parse(b["time"].toString())));
       });
     } else {
       print(response["msg"]);
@@ -174,7 +174,8 @@ class _ConversationsPageState extends State<ConversationsPage> {
   }
 
   Widget getChatRow(Map conversation) {
-    Map lastMessage = conversation["list_msg"][0];
+    Map lastMessage = {};
+    lastMessage = (conversation["list_msg"] as List)[0];
     print('Last message: $lastMessage');
     int unreadMessages = 0;
     (conversation["list_msg"] as List).forEach((element) {

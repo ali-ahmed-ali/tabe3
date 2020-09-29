@@ -53,3 +53,26 @@ String getStatus(String status) {
       return lang.text("Pending");
   }
 }
+
+String getDay(String day) {
+  switch (day) {
+    case "saturday":
+      return lang.text("Saturday");
+    case "sunday":
+      return lang.text("Sunday");
+    case "monday":
+      return lang.text("Registered");
+    case "monday":
+      return lang.text("Monday");
+    case "tuesday":
+      return lang.text("Tuesday");
+    case "wednesday":
+      return lang.text("Wednesday");
+    case "thursday":
+      return lang.text("Thursday");
+    case "friday":
+      return lang.text("Friday");
+    default:
+      return lang.text("Pending");
+  }
+}

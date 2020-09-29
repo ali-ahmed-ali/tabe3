@@ -27,7 +27,7 @@ class _NewsPageState extends State<NewsPage> {
   List students = [
     {
       "student_id": -1,
-      "student_name": lang.text("-- Select student --"),
+      "student_name": lang.text("-- Select Student --"),
     }
   ];
   List exams = [];
@@ -57,7 +57,7 @@ class _NewsPageState extends State<NewsPage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        students.addAll(response["available_student"]);
+        students.addAll(response["result"]["available_student"]);
         if (students.isNotEmpty) selectedStudent = students[0];
       });
     } else {
@@ -144,7 +144,9 @@ class _NewsPageState extends State<NewsPage> {
                     itemBuilder: (BuildContext context, int index) {
                       return buildNewsRow(news[index]);
                     })
-                : EmptyWidget(),
+                : selectedStudent["student_id"] != -1
+                    ? EmptyWidget()
+                    : Container(),
           ],
         ),
       ),

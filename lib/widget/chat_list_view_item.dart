@@ -54,7 +54,7 @@ class ChatListViewItem extends StatelessWidget {
                           : Container(),
                       Flexible(
                         child: Text(
-                          lastMessage,
+                          lastMessage ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

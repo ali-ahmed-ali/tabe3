@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabee/config/router_manager.dart';
+import 'package:tabee/pages/student_table.dart';
 import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
@@ -120,7 +121,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
     print('students response: $response');
     if (response.containsKey("success") && response["success"]) {
       setState(() {
-        classes.addAll(response["data"]);
+        classes.addAll(response["result"]);
         if (students.isNotEmpty) selectedClass = classes[0];
       });
     } else {
@@ -205,6 +206,19 @@ class _TimeTablePageState extends State<TimeTablePage> {
           }
           data.add(newdayvalue);
         }
+      });
+    }
+  }
+
+  void getClassStudents(int classId) async {
+    students.clear();
+    showLoadingDialog(context);
+    Map response = await _repository.getClassStudents(classId);
+    Navigator.pop(context);
+    print('classes response: $response');
+    if (response.containsKey("success") && response["success"]) {
+      setState(() {
+        students = response["result"];
       });
     }
   }
@@ -299,23 +313,18 @@ class _TimeTablePageState extends State<TimeTablePage> {
               SizedBox(height: 16),
               loadingTable
                   ? Flexible(
-                      child: LoadingWidget(
-                        useLoader: true,
-                        size: 64,
-                      ),
-                    )
-                  : data.isNotEmpty
-                      ? userData["user_type"] == "P"
-                          ? Container(
-                              child: getParentView(),
-                            )
-                          : Container()
-                      : selectedStudent["student_id"] != -1
-                          ? EmptyWidget(
-                              subMessage: lang
-                                  .text("Please select student to get table"),
-                            )
-                          : Container(),
+                child: LoadingWidget(
+                  useLoader: true,
+                  size: 64,
+                ),
+              )
+                  : userData["user_type"] == "P"
+                  ? Container(
+                child: getParentView(),
+              )
+                  : Container(
+                child: getTeacherView(),
+              )
             ],
           ),
         ),
@@ -324,21 +333,48 @@ class _TimeTablePageState extends State<TimeTablePage> {
   }
 
   Widget getParentView() {
-    return CustomTable(
+    return data.isNotEmpty
+        ? CustomTable(
       title: lang.text("Daily school schedule"),
       data: data,
       columnData: columns,
       firstColumnData: days,
       columnSpacing: 16,
       divider: 0,
+    )
+        : Container(
+      child: EmptyWidget(
+        /*subMessage: lang
+                                  .text("Please select student to get table"),*/
+      ),
     );
   }
 
   Widget getTeacherView() {
-    return ListView.builder(itemBuilder: (context, index) {
-      return ListTile();
-    });
+    return students.isNotEmpty
+        ? ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return StudentTable(student: students[index]);
+                },
+              ),
+            );
+          },
+          title: Text(students[index]["name"] ?? ""),
+          subtitle: Text(
+              "${lang.text(
+                  "Student code")}: ${students[index]["student_code"] ?? ""}"),
+        );
+      },
+      shrinkWrap: true,
+      itemCount: students.length,
+      primary: false,
+    )
+        : EmptyWidget();
   }
-
-  void getClassStudents(int classId) async {}
 }

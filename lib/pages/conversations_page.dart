@@ -288,6 +288,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
               ),
             ),
             title: Text(contacts[index]["customer_name"] ?? ""),
+            subtitle: Text(contacts[index]["title"] ?? ""),
           ),
         );
       },

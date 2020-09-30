@@ -179,6 +179,12 @@ class ApiProvider {
     return await _doRequest("/getClasses", Method.POST, {});
   }
 
+  Future<Map<String, dynamic>> getClassStudents(int classId) async {
+    return await _doRequest("/getClassStudents", Method.POST, {
+      "class_id": classId,
+    });
+  }
+
   Future<Map<String, dynamic>> _doRequest(String path, Method method,
       [Map<String, dynamic> requestFromUser]) async {
     var connectivityResult = await Connectivity().checkConnectivity();

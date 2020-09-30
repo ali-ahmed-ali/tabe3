@@ -121,32 +121,28 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         userData["user_type"] == "T"
             ? Container()
             : ListTile(
-          onTap: () {
-            Navigator.pushNamed(context, RouteName.invoices);
-          },
-          title: Text(lang.text('Pay the fees')),
-          leading: Icon(
-            Icons.payment,
-            color: Theme
-                .of(context)
-                .primaryColor,
-          ),
-        ),
+                onTap: () {
+                  Navigator.pushNamed(context, RouteName.invoices);
+                },
+                title: Text(lang.text('Pay the fees')),
+                leading: Icon(
+                  Icons.payment,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
         userData["user_type"] == "T"
             ? Container()
             : ListTile(
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, RouteName.registerRequest);
-          },
-          title: Text(lang.text('Register new student')),
-          leading: Icon(
-            Icons.person_add,
-            color: Theme
-                .of(context)
-                .primaryColor,
-          ),
-        ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, RouteName.registerRequest);
+                },
+                title: Text(lang.text('Register new student')),
+                leading: Icon(
+                  Icons.person_add,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
         ListTile(
           onTap: () {
             Navigator.pushNamed(context, RouteName.exams);
@@ -154,9 +150,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('Exams')),
           leading: Icon(
             Icons.dashboard,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         ListTile(

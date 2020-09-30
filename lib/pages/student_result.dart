@@ -112,9 +112,7 @@ class _ResultPageState extends State<TestResultPage>
                   ),
                 ),
               ),
-              borderColor: Theme
-                  .of(context)
-                  .primaryColor,
+              borderColor: Theme.of(context).primaryColor,
               borderWidth: 1,
             ),
             SizedBox(height: 8),

@@ -120,10 +120,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -134,32 +131,32 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(8.0),
         child: loading
             ? Center(
-            child: LoadingWidget(
-              useLoader: true,
-            ))
+                child: LoadingWidget(
+                useLoader: true,
+              ))
             : StaggeredGridView.countBuilder(
-          itemCount: _menuItems.length,
-          primary: false,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            Map item = _menuItems[index];
-            return DashboardCard(
-              icon: SvgPicture.asset(
-                item["image"],
-                color: Colors.white,
-                width: 64,
+                itemCount: _menuItems.length,
+                primary: false,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  Map item = _menuItems[index];
+                  return DashboardCard(
+                    icon: SvgPicture.asset(
+                      item["image"],
+                      color: Colors.white,
+                      width: 64,
+                    ),
+                    title: item["title"],
+                    onPressed: () {
+                      print('Route to: ${item["routing"]}');
+                      Navigator.pushNamed(context, item["routing"]);
+                    },
+                  );
+                },
+                crossAxisCount: 2,
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(1, index.isEven ? 2 : 1),
               ),
-              title: item["title"],
-              onPressed: () {
-                print('Route to: ${item["routing"]}');
-                Navigator.pushNamed(context, item["routing"]);
-              },
-            );
-          },
-          crossAxisCount: 2,
-          staggeredTileBuilder: (int index) =>
-              StaggeredTile.count(1, index.isEven ? 2 : 1),
-        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -174,7 +171,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMenuItemView(BuildContext context, String image, String title, String pageRoute) {
+  Widget _buildMenuItemView(BuildContext context, String image, String title,
+      String pageRoute) {
     return Container(
       //color: Theme.of(context).primaryColor.withOpacity(.5),
       margin: EdgeInsets.all(20),

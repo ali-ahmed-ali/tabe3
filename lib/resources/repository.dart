@@ -79,4 +79,7 @@ class Repository {
       apiProvider.confirmLinesPayment(payslipLineIds);
 
   Future<Map<String, dynamic>> getClasses() => apiProvider.getClasses();
+
+  Future<Map<String, dynamic>> getClassStudents(int classId) =>
+      apiProvider.getClassStudents(classId);
 }

@@ -143,19 +143,19 @@ class _StudentAttendCalenderPageState extends State<StudentAttendCalenderPage> {
                           getCal(data["student_id"]);
                         },
                         displayLabel: "student_name",
-                  selectedKey: "student_id",
-                ),
+                        selectedKey: "student_id",
+                      ),
                 SizedBox(height: 16),
                 loadingCal
                     ? Center(
-                  child: LoadingWidget(
-                    useLoader: true,
-                    size: 32,
-                  ),
-                )
+                        child: LoadingWidget(
+                          useLoader: true,
+                          size: 32,
+                        ),
+                      )
                     : selectedStudent["student_id"] != -1
-                    ? weekend.isEmpty ? EmptyWidget() : _buildCalender()
-                    : Container(),
+                        ? weekend.isEmpty ? EmptyWidget() : _buildCalender()
+                        : Container(),
                 SizedBox(
                   height: 16,
                 ),

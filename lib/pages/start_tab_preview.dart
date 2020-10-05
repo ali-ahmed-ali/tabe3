@@ -97,7 +97,6 @@ class _StartTabPreviewState extends State<StartTabPreview> {
                                     ),
                                     textAlign: TextAlign.center,
                                     softWrap: true,
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 )
                               ],

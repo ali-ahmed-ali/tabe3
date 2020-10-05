@@ -108,6 +108,8 @@ class _TuitionsState extends State<TuitionsPage> {
                       Divider(
                         height: 8,
                       ),
+                      Text(lang.text("Please choose a batch")),
+                      SizedBox(height: 8),
                       ListView.separated(
                         itemBuilder: (context, index) {
                           return _buildCheckBoxes(index);
@@ -141,7 +143,9 @@ class _TuitionsState extends State<TuitionsPage> {
                               SizedBox(height: 16),
                               CustomButton(
                                 label: lang.text("Confirm Payment"),
-                                onPressed: confirmPayment,
+                                onPressed: selectedIds.isNotEmpty
+                                    ? confirmPayment
+                                    : null,
                               ),
                               SizedBox(
                                 height: 20,
@@ -205,6 +209,12 @@ class _TuitionsState extends State<TuitionsPage> {
 
   void confirmPayment() async {
     print('ids: $selectedIds');
+    if (selectedIds.isEmpty) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(lang.text("Please choose a batch")),
+      ));
+      return;
+    }
     showLoadingDialog(context);
     print('selected lines: $selectedIds');
     Map response = await _repository.confirmLinesPayment(selectedIds);

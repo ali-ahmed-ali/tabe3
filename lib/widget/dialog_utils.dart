@@ -49,11 +49,11 @@ Future<bool> showUpdateDialog(BuildContext context,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   RaisedButton(
-                      child: Text(lang.text("update")),
+                      child: Text(lang.text("Update")),
                       onPressed: () async {
                         Navigator.of(context).pop(true);
                       },
-                      color: Colors.green,
+                      color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
@@ -63,9 +63,9 @@ Future<bool> showUpdateDialog(BuildContext context,
                       onPressed: isRequired
                           ? null
                           : () {
-                              Navigator.of(context).pop(false);
-                            },
-                      color: Colors.red[300],
+                        Navigator.of(context).pop(false);
+                      },
+                      color: Colors.grey[700],
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0))),
                 ],
@@ -325,7 +325,9 @@ void showLoadingDialog(BuildContext context, [String message]) {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             CircularProgressIndicator(),
-            SizedBox(width: 32,),
+            SizedBox(
+              width: 32,
+            ),
             Expanded(child: Text(message ?? lang.text("Loading"))),
           ],
         ),

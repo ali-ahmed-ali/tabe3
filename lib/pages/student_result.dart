@@ -33,10 +33,13 @@ class _ResultPageState extends State<TestResultPage>
       "obtained_marks": lang.text("Obtained Mark"),
       "minimum_marks": lang.text("Minimum Mark"),
       "maximum_marks": lang.text("Maximum Mark"),
+      "has_background": true,
     }
   ];
   String _comment =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip';
+
+  Size screenSize;
 
   @override
   void initState() {
@@ -64,11 +67,12 @@ class _ResultPageState extends State<TestResultPage>
 
   @override
   Widget build(BuildContext context) {
-    print('>>>>>>>>>> ${_subjectsGrade}');
+    print('>>>>>>>>>> ${widget.student}');
+    screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text("${widget.student["student_name"] ?? lang.text("Undefined")}"),
+        title: Text(
+            "${widget.student["student_name"] ?? widget.student["name"] ?? lang.text("Undefined")}"),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
@@ -99,7 +103,9 @@ class _ResultPageState extends State<TestResultPage>
                 height: 80,
                 child: Center(
                   child: Text(
-                    (widget.student["student_name"] ?? lang.text("Undefined"))
+                    (widget.student["student_name"] ??
+                        widget.student["name"] ??
+                        lang.text("Undefined"))
                         .toString()
                         .characters
                         .elementAt(0),
@@ -117,7 +123,9 @@ class _ResultPageState extends State<TestResultPage>
             ),
             SizedBox(height: 8),
             Text(
-              widget.student["student_class"] ?? lang.text("Undefined"),
+              widget.student["student_class"] ??
+                  widget.student["class"] ??
+                  lang.text("Undefined"),
               style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -176,41 +184,45 @@ class _ResultPageState extends State<TestResultPage>
   }
 
   _buildTabs() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-          child: new TabBar(controller: _controller, tabs: [
-            Tab(
-              text: lang.text('Degrees'),
-            ),
-          ]),
-        ),
-        Container(
-          margin: EdgeInsets.only(bottom: 20),
-          height: 200,
-          child: TabBarView(controller: _controller, children: <Widget>[
-            _subjectsGrade.isNotEmpty
-                ? ListView(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          children: [
-                            _getTableRows(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                : Center(
-                    child: EmptyWidget(),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            decoration: BoxDecoration(color: Theme
+                .of(context)
+                .primaryColor),
+            child: new TabBar(controller: _controller, tabs: [
+              Tab(
+                text: lang.text('Degrees'),
+              ),
+            ]),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 20),
+            height: screenSize.height,
+            child: TabBarView(controller: _controller, children: <Widget>[
+              _subjectsGrade.isNotEmpty
+                  ? ListView(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        _getTableRows(),
+                      ],
+                    ),
                   ),
-          ]),
-        )
-      ],
+                ],
+              )
+                  : Center(
+                child: EmptyWidget(),
+              ),
+            ]),
+          )
+        ],
+      ),
     );
   }
 
@@ -232,8 +244,9 @@ class _ResultPageState extends State<TestResultPage>
 //      "obtained_marks": double.parse("0.0"),
 //      "subject": "Subject name",
 //    });
+    int x = 0;
     return _subjectsGrade.map((item) {
-      print('item >>>>>> $item');
+      ++x;
       return TableRow(
           decoration: BoxDecoration(
             // color: _getColorsFromPercent(
@@ -241,20 +254,109 @@ class _ResultPageState extends State<TestResultPage>
           ),
           children: [
             Container(
-              margin: EdgeInsets.all(10),
-              child: Text(item['subject'] ?? lang.text("Undefined")),
+              color: (item as Map).containsKey("has_background") &&
+                  item["has_background"]
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  : x.isOdd
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  .withOpacity(.2)
+                  : Colors.white,
+              padding: const EdgeInsets.all(8),
+              child: Center(
+                child: Text(
+                  item['subject'] ?? lang.text("Undefined"),
+                  style: TextStyle(
+                    color: (item as Map).containsKey("has_background") &&
+                        item["has_background"]
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
             Container(
-              margin: EdgeInsets.all(10),
-              child: Text(item['obtained_marks'].toString()),
+              color: (item as Map).containsKey("has_background") &&
+                  item["has_background"]
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  : x.isOdd
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  .withOpacity(.2)
+                  : Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Center(
+                child: Text(
+                  item['obtained_marks'].toString(),
+                  style: TextStyle(
+                    color: (item as Map).containsKey("has_background") &&
+                        item["has_background"]
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
             Container(
-              margin: EdgeInsets.all(10),
-              child: Text(item['minimum_marks'].toString()),
+              color: (item as Map).containsKey("has_background") &&
+                  item["has_background"]
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  : x.isOdd
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  .withOpacity(.2)
+                  : Colors.white,
+              padding: const EdgeInsets.all(8),
+              child: Center(
+                child: Text(
+                  item['minimum_marks'].toString(),
+                  style: TextStyle(
+                    color: (item as Map).containsKey("has_background") &&
+                        item["has_background"]
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
             Container(
-              margin: EdgeInsets.all(10),
-              child: Text(item['maximum_marks'].toString()),
+              color: (item as Map).containsKey("has_background") &&
+                  item["has_background"]
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  : x.isOdd
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  .withOpacity(.2)
+                  : Colors.white,
+              padding: const EdgeInsets.all(8),
+              child: Center(
+                child: Text(
+                  item['maximum_marks'].toString(),
+                  style: TextStyle(
+                    color: (item as Map).containsKey("has_background") &&
+                        item["has_background"]
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ]);
     }).toList();

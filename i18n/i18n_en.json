@@ -8,7 +8,7 @@
   "Follow the academic path of the student": "Follow the academic path of the student",
   "Know the dates of the tests, your son's level, and the teacher's notes": "Know the dates of the tests, your son's level, and the teachers notes",
   "Follow up the results of the tests": "Follow up the results of the tests",
-  "Know the results of the tests and rank your son among his colleagues": "Know the results of the tests and rank your son among his colleagues",
+  "Know the results of the tests and rank your son among his colleagues": "Know the results of the tests.",
   "Continue": "Continue",
   "Sign in": "Sign in",
   "Email address": "Email address",
@@ -93,5 +93,12 @@
   "thursday": "Thursday",
   "friday": "Friday",
   "Paid": "Paid",
-  "Student code": "Student code"
+  "Student code": "Student code",
+  "App Update": "App Update",
+  "Update": "Update",
+  "Cancel": "Cancel",
+  "New version available in store, do you want to install it?": "New version available in store, do you want to install it?",
+  "Please choose a batch": "Please choose a batch",
+  "No Conversations yet": "No Conversations yet",
+  "To start conversation please press the button": "To start conversation please press the button"
 }

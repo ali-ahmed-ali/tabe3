@@ -45,24 +45,27 @@ class _HomePageState extends State<HomePage> {
           'routing': RouteName.exams,
         },
         {
-          'image': 'assets/icons/charge.svg',
-          'title': lang.text('Pay the fees'),
-          'routing': RouteName.invoices,
-          // 'show': userData["user_type"].toString() == "T"
-        },
-        {
-          'image': 'assets/icons/charge.svg',
+          'image': 'assets/icons/attend.svg',
           'title': lang.text('Attendance'),
           'routing': RouteName.attend,
         },
         {
-          'image': 'assets/icons/news.svg',
+          'image': 'assets/icons/news2.svg',
           'title': lang.text('Advertisements board'),
           'routing': RouteName.news,
         },
       ];
 
-      _menuItems.removeWhere((element) => element.containsKey("show"));
+      if (userData["user_type"] == "P") {
+        _menuItems.add(
+          {
+            'image': 'assets/icons/cash-payment.svg',
+            'title': lang.text('Pay the fees'),
+            'routing': RouteName.invoices,
+            'show': userData["user_type"].toString() == "P"
+          },
+        );
+      }
     });
     loadStudents();
     super.initState();
@@ -95,7 +98,7 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         elevation: 0,
-        title: Text(lang.text('Home')),
+        title: Text(!loading ? userData["school_name"] : lang.text('Home')),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -171,8 +174,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMenuItemView(BuildContext context, String image, String title,
-      String pageRoute) {
+  Widget _buildMenuItemView(
+      BuildContext context, String image, String title, String pageRoute) {
     return Container(
       //color: Theme.of(context).primaryColor.withOpacity(.5),
       margin: EdgeInsets.all(20),

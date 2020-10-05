@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,13 @@ import 'package:tabee/utils/app_builder.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/utils/push_notification.dart';
+import 'package:tabee/widget/dialog_utils.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
+
+const String VERSION = "1.1.0.1";
+const String PLAY_STORE_LINK =
+    "https://play.google.com/store/apps/details?id=com.moggal.tab3";
 
 class SplashPage extends StatefulWidget {
   @override
@@ -24,8 +31,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     init();
-    Future.delayed(Duration(milliseconds: 700), () {
-      checkSession();
+    Future.delayed(Duration(milliseconds: 700), () async {
+      await configLang();
+      checkForUpdates();
     });
     super.initState();
   }
@@ -38,6 +46,28 @@ class _SplashPageState extends State<SplashPage> {
       timeago.setLocaleMessages('tr', timeago.TrMessages());
       AppBuilder.of(context).rebuild();
     }
+  }
+
+  Future checkForUpdates() async {
+    Map response = await _repository.getVersion();
+    if (response.containsKey("success") && response["success"]) {
+      if (response.containsKey("Vcode") && response["Vcode"] != VERSION) {
+        bool openPlay = await showUpdateDialog(context,
+            body: lang.text(
+                "New version available in store, do you want to install it?"),
+            isRequired: (response["action"] ?? "w") == "b");
+        if (openPlay) {
+          if (Platform.isAndroid) {
+            if (await canLaunch(PLAY_STORE_LINK)) {
+              await launch(PLAY_STORE_LINK);
+            } else {
+              print('Cannot launch google play');
+            }
+          }
+        }
+      }
+    }
+    checkSession();
   }
 
   void init() async {
@@ -64,7 +94,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void checkSession() async {
-    await configLang();
     String token = await _manager.get("token", null);
     String user = await _manager.get("customer", null);
     print('user: $user');

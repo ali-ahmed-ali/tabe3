@@ -112,7 +112,7 @@ class _StudentTableState extends State<StudentTable> {
               //data.elementAt(i).removeAt(k);
               newdayvalue.add(InkWell(
                 onTap: () {
-                  openChatWithTeacher(day.elementAt(k));
+                  // openChatWithTeacher(day.elementAt(k));
                 },
                 child: Column(
                   children: <Widget>[

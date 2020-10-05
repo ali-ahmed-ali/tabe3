@@ -313,11 +313,11 @@ class _TimeTablePageState extends State<TimeTablePage> {
               SizedBox(height: 16),
               loadingTable
                   ? Flexible(
-                child: LoadingWidget(
-                  useLoader: true,
-                  size: 64,
-                ),
-              )
+                      child: LoadingWidget(
+                        useLoader: true,
+                        size: 64,
+                      ),
+                    )
                   : userData["user_type"] == "P"
                   ? Container(
                 child: getParentView(),
@@ -342,12 +342,14 @@ class _TimeTablePageState extends State<TimeTablePage> {
       columnSpacing: 16,
       divider: 0,
     )
-        : Container(
+        : selectedStudent["student_id"] != -1
+        ? Container(
       child: EmptyWidget(
         /*subMessage: lang
                                   .text("Please select student to get table"),*/
       ),
-    );
+    )
+        : Container();
   }
 
   Widget getTeacherView() {

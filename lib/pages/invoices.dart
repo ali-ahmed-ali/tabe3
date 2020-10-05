@@ -78,6 +78,7 @@ class _InvoicesState extends State<Invoices> {
   }
 
   void getInvoices(int studentId) async {
+    invoices.clear();
     showLoadingDialog(context);
     Map response = await _repository.getPayslips(studentId);
     Navigator.pop(context);

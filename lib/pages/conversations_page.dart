@@ -30,8 +30,13 @@ class _ConversationsPageState extends State<ConversationsPage> {
 
   @override
   void initState() {
-    loadConversations();
-    getContacts();
+    _manager.get("customer", "{}").then((value) {
+      userData = json.decode(value);
+      if (userData != null && userData.isNotEmpty) {
+        loadConversations();
+        getContacts();
+      }
+    });
     super.initState();
   }
 
@@ -67,7 +72,9 @@ class _ConversationsPageState extends State<ConversationsPage> {
     setState(() {
       loadingContact = true;
     });
-    Map response = await _repository.getContacts(9);
+    print('userData: $userData');
+    Map response =
+        await _repository.getContacts(int.parse("${userData["id"]}"));
     print('contact response: $response');
     setState(() {
       loadingContact = false;

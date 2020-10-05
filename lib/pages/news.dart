@@ -127,7 +127,6 @@ class _NewsPageState extends State<NewsPage> {
                     },
                     displayLabel: "student_name",
                     selectedKey: "student_id",
-                    label: lang.text("Select student"),
                   ),
             SizedBox(height: 8),
             Divider(

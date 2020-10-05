@@ -30,6 +30,10 @@ class ApiProvider {
     };
   }
 
+  Future<Map<String, dynamic>> getVersion() async {
+    return await _doRequest("/getVersion", Method.POST, {});
+  }
+
   Future<Map<String, dynamic>> getCountryAndState() async {
     return await _doRequest("getCountyAndState?", Method.POST, {});
   }
@@ -110,7 +114,7 @@ class ApiProvider {
 
   Future<Map<String, dynamic>> getContacts(int customerId) async {
     return await _doRequest("/getContacts", Method.POST, {
-      "customer_id": 9,
+      "customer_id": customerId,
     });
   }
 

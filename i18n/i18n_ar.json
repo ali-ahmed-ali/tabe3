@@ -8,7 +8,7 @@
   "Follow the academic path of the student": "اتبع المسار الأكاديمي للطالب",
   "Know the dates of the tests, your son's level, and the teacher's notes": "تعرف على مواعيد الاختبارات ومستوى ابنك وملاحظات المعلم",
   "Follow up the results of the tests": "متابعة نتائج الاختبارات",
-  "Know the results of the tests and rank your son among his colleagues": "اعرف نتائج الاختبارات وصنف ابنك بين زملائه",
+  "Know the results of the tests and rank your son among his colleagues": "اعرف نتائج الاختبارات.",
   "Continue": "استمر",
   "Sign in": "تسجيل الدخول",
   "Email address": "البريد الإلكتروني",
@@ -76,7 +76,7 @@
   "-- Select Class --": "-- إختر صف --",
   "Parent": "ولي أمر",
   "Subject": "المادة",
-  "Obtained Mark": "الدرجة المتحصل عليها",
+  "Obtained Mark": "المتحصل عليها",
   "Minimum Mark": "الدرجة الدنيا",
   "Maximum Mark": "الدرجة العليا",
   "Contact with teacher": "تواصل مع الاستاذ",
@@ -92,5 +92,12 @@
   "thursday": "الخميس",
   "friday": "الجمعة",
   "Paid": "مدفوعة",
-  "Student code": "الرمز الخاص بالطالب"
+  "Student code": "الرمز الخاص بالطالب",
+  "App Update": "تحديث التطبيق",
+  "Update": "تحديث",
+  "Cancel": "إلغاء",
+  "New version available in store, do you want to install it?": "توجد نسخة جديدة على المتجر، هل تريد تثبيتها؟",
+  "Please choose a batch": "الرجاء اختيار الدفعية",
+  "No Conversations yet": "لا توجد محادثات",
+  "To start conversation please press the button": "لبدء المحادثة اضغط على الزر"
 }

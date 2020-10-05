@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tabee/pages/studnet_attend.dart';
 import 'package:tabee/resources/repository.dart';
 import 'package:tabee/utils/lang.dart';
 import 'package:tabee/utils/pref_manager.dart';
 import 'package:tabee/widget/custom_dropdown_list.dart';
+import 'package:tabee/widget/dialog_utils.dart';
 import 'package:tabee/widget/empty_widget.dart';
 import 'package:tabee/widget/loading_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -32,7 +34,16 @@ class _StudentAttendCalenderPageState extends State<StudentAttendCalenderPage> {
       "student_name": lang.text("-- Select Student --"),
     }
   ];
+
+  List classes = [
+    {
+      "id": -1,
+      "name": lang.text("-- Select Class --"),
+    }
+  ];
+
   Map selectedStudent = {};
+  Map selectedClass = {};
   Map userData = {};
 
   final Repository _repository = new Repository();
@@ -47,7 +58,10 @@ class _StudentAttendCalenderPageState extends State<StudentAttendCalenderPage> {
     _manager.get("customer", "{}").then((value) {
       userData = json.decode(value);
       if (userData.containsKey("id") && userData["id"] != null) {
-        getStudents();
+        if (userData["user_type"] == "P")
+          getStudents();
+        else
+          getClasses();
       }
     });
     _controller = CalendarController();
@@ -81,9 +95,51 @@ class _StudentAttendCalenderPageState extends State<StudentAttendCalenderPage> {
     }
   }
 
+  void getClasses() async {
+    setState(() {
+      loading = true;
+    });
+    Map response = await _repository.getClasses();
+    setState(() {
+      loading = false;
+    });
+    print('students response: $response');
+    if (response.containsKey("success") && response["success"]) {
+      setState(() {
+        classes.addAll(response["result"]);
+        if (students.isNotEmpty) selectedClass = classes[0];
+      });
+    } else {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(
+          response["message"],
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ));
+    }
+  }
+
+  void getClassStudents(int classId) async {
+    students.clear();
+    showLoadingDialog(context);
+    Map response = await _repository.getClassStudents(classId);
+    Navigator.pop(context);
+    print('classes response: $response');
+    if (response.containsKey("success") && response["success"]) {
+      setState(() {
+        students = response["result"];
+      });
+    }
+  }
+
   void getCal(int studentID) async {
     setState(() {
       loadingCal = true;
+      absence.clear();
+      weekend.clear();
+      holidays.clear();
     });
     Map response = await _repository.getAttendance(studentID);
     setState(() {
@@ -130,140 +186,45 @@ class _StudentAttendCalenderPageState extends State<StudentAttendCalenderPage> {
                         height: 64,
                         child: LoadingWidget(useLoader: true, size: 24),
                       )
-                    : CustomDropdownList(
-                        labels: students,
-                        selectedId: selectedStudent != null
-                            ? selectedStudent["student_id"].toString()
-                            : students[0]["student_id"].toString(),
-                        onChange: (data) {
-                          print('Data: $data');
-                          setState(() {
-                            selectedStudent = data;
-                          });
-                          getCal(data["student_id"]);
-                        },
-                        displayLabel: "student_name",
-                        selectedKey: "student_id",
-                      ),
+                    : userData["user_type"] == "P"
+                        ? CustomDropdownList(
+                            labels: students,
+                            selectedId: selectedStudent != null
+                                ? selectedStudent["student_id"].toString()
+                                : students[0]["student_id"].toString(),
+                            onChange: (data) {
+                              print('Data: $data');
+                              setState(() {
+                                selectedStudent = data;
+                              });
+                              getCal(data["student_id"]);
+                            },
+                            displayLabel: "student_name",
+                            selectedKey: "student_id",
+                          )
+                        : CustomDropdownList(
+                            labels: classes,
+                            selectedId: selectedStudent != null
+                                ? selectedStudent["id"].toString()
+                                : students[0]["id"].toString(),
+                            onChange: (data) {
+                              print('Data: $data');
+                              setState(() {
+                                selectedStudent = data;
+                              });
+                              getClassStudents(data["id"]);
+                            },
+                            displayLabel: "name",
+                            selectedKey: "id",
+                            label: lang.text("Select class"),
+                          ),
                 SizedBox(height: 16),
-                loadingCal
-                    ? Center(
-                        child: LoadingWidget(
-                          useLoader: true,
-                          size: 32,
-                        ),
-                      )
-                    : selectedStudent["student_id"] != -1
-                        ? weekend.isEmpty ? EmptyWidget() : _buildCalender()
-                        : Container(),
                 SizedBox(
                   height: 16,
                 ),
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 32),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              width: 80,
-                              child: Text(
-                                lang.text("Selected day"),
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(),
-                            ),
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                color: Colors.redAccent,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              width: 80,
-                              child: Text(
-                                lang.text("absence"),
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              width: 80,
-                              child: Text(
-                                lang.text("holiday"),
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(),
-                            ),
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              width: 80,
-                              child: Text(
-                                lang.text("weekend"),
-                                style: TextStyle(
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ))
+                userData["user_type"] == "P"
+                    ? getParentView()
+                    : getTeacherView()
               ],
             ),
           ),
@@ -379,6 +340,162 @@ class _StudentAttendCalenderPageState extends State<StudentAttendCalenderPage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget getTeacherView() {
+    return students.isNotEmpty && selectedClass["id"] != -1
+        ? ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return StudentAttend(
+                    student: students[index],
+                  );
+                },
+              ),
+            );
+          },
+          title: Text(students[index]["name"] ?? ""),
+          subtitle: Text(
+              "${lang.text(
+                  "Student code")}: ${students[index]["student_code"] ?? ""}"),
+        );
+      },
+      shrinkWrap: true,
+      itemCount: students.length,
+      primary: false,
+    )
+        : EmptyWidget();
+  }
+
+  Widget getParentView() {
+    return Column(
+      children: [
+        loadingCal
+            ? Center(
+          child: LoadingWidget(
+            useLoader: true,
+            size: 32,
+          ),
+        )
+            : weekend.isEmpty
+            ? selectedStudent["student_id"] != -1
+            ? EmptyWidget()
+            : Container()
+            : _buildCalender(),
+        Container(
+            margin: EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      width: 80,
+                      child: Text(
+                        lang.text("Selected day"),
+                        style: TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(),
+                    ),
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      width: 80,
+                      child: Text(
+                        lang.text("absence"),
+                        style: TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      width: 80,
+                      child: Text(
+                        lang.text("holiday"),
+                        style: TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(),
+                    ),
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      width: 80,
+                      child: Text(
+                        lang.text("weekend"),
+                        style: TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ))
+      ],
     );
   }
 }

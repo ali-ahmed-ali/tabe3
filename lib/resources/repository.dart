@@ -5,6 +5,8 @@ class Repository {
 
   Repository();
 
+  Future<Map<String, dynamic>> getVersion() => apiProvider.getVersion();
+
   Future<Map<String, dynamic>> getCountryAndState() =>
       apiProvider.getCountryAndState();
 

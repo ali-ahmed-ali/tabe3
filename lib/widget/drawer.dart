@@ -42,8 +42,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 children: <Widget>[
                   CircleImage(
                     child: Container(
-                      width: 80,
-                      height: 80,
+                      width: 60,
+                      height: 60,
                       child: Center(
                         child: Text(
                           (userData["name"] ?? "User")
@@ -160,9 +160,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           title: Text(lang.text('About us')),
           leading: Icon(
             Icons.people,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         ListTile(
